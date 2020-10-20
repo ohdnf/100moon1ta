@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    # swagger
+    'drf_yasg',
+    
     # cors, restframework
     'corsheaders',
     'rest_framework',
