@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'l00moon1ta.wsgi.application'
 DATABASES = {
     'default' : {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'l00moon1ta',                
+        'NAME': 'l00moon1ta',   # 'l' 은 알파벳             
         'USER': 'root',                       
         'PASSWORD': config('MYSQL_PASSWORD'),             
         'HOST': config('MYSQL_HOST'),                    
