@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/rest-auth/', include("rest_auth.urls")),
     path('api/rest-auth/signup/', include('rest_auth.registration.urls')),
+    path('accounts/', include('allauth.urls')),
 ]
 
 # swagger setting

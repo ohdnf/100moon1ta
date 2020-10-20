@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     
     # swagger
     'drf_yasg',
-    
+
     # cors, restframework
     'corsheaders',
     'rest_framework',
@@ -85,6 +85,14 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 WSGI_APPLICATION = 'l00moon1ta.wsgi.application'
 
@@ -141,6 +149,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# social login setting
+SOCIALACCOUNT_PROVIDERS = {
+    'github': {
+        # 'SCOPE': [
+        #     'user',
+        #     'repo',
+        #     'read:org',
+        # ],
+    }
+}
 
 # django sites app setting
 SITE_ID = 1
