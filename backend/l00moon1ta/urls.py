@@ -20,24 +20,12 @@ from rest_framework import  permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
-from allauth.socialaccount.providers.oauth2.client import OAuth2Client
-from rest_auth.registration.views import SocialLoginView
-
-class GitHubLogin(SocialLoginView):
-    adapter_class = GitHubOAuth2Adapter
-    callback_url = 'http://localhost:8000/accounts/github/login/callback'
-    client_class = OAuth2Client
-
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/rest-auth/', include("rest_auth.urls")),
     path('api/rest-auth/signup/', include('rest_auth.registration.urls')),
-    # path('api/rest-auth/accounts/', include('allauth.urls')),
-   
-    path('api/rest-auth/github/', GitHubLogin.as_view())
+    path('api/rest-auth/accounts/', include('allauth.urls')),
 ]
 
 # swagger setting
