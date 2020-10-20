@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'rest_auth',
     'rest_auth.registration',
-    
+
     # github login
     'allauth.socialaccount.providers.github',
 ]
@@ -141,6 +141,27 @@ STATIC_URL = '/static/'
 
 # django sites app setting
 SITE_ID = 1
+
+# DRF auth settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',  
+    ]
+}
+
+# DRF auth가 JWT를 사용하게 하는 설정
+REST_USE_JWT = True
+
+import datetime
+JWT_AUTH = {
+    'JWT_SECRET_KEY': SECRET_KEY,
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_ALLOW_REFRESH': True,
+		# 1주일간 유효한 토큰
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+		# 28일 마다 갱신됨(유효 기간 연장시)
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=28),
+}
 
 # CORS Allow
 CORS_ORIGIN_ALLOW_ALL = True
