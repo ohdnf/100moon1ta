@@ -6,7 +6,7 @@ from .managers import CustomUserManager
 
 
 class CustomUser(AbstractUser):
-    username = None
+    # username = None
     email = models.EmailField(_('email address'), unique=True)
 
     USERNAME_FIELD = 'email'
@@ -14,8 +14,9 @@ class CustomUser(AbstractUser):
 
     objects = CustomUserManager()
 
-    spouse_name = models.CharField(blank=True, max_length=100)
-    date_of_birth = models.DateField(blank=True, null=True)
+    username = models.CharField(blank=True, max_length=100)
+    profile_image = models.ImageField(upload_to='%Y/%m/%d', blank=True)
+    # date_of_birth = models.DateField(blank=True, null=True)
     
 
     def __str__(self):
