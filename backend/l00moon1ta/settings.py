@@ -105,7 +105,7 @@ WSGI_APPLICATION = 'l00moon1ta.wsgi.application'
 DATABASES = {
     'default' : {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'l00moon1ta',   # 'l' 은 알파벳             
+        'NAME': config('MYSQL_NAME'),   # 'l' 은 알파벳             
         'USER': 'root',                       
         'PASSWORD': config('MYSQL_PASSWORD'),             
         'HOST': config('MYSQL_HOST'),                    
@@ -157,6 +157,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 # social login setting
 SOCIALACCOUNT_PROVIDERS = {
     'github': {
+        'VERIFIED_EMAIL': True  # 이메일 인증 스킵
         # 'SCOPE': [
         #     'user',
         #     'repo',
@@ -165,6 +166,8 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+
+LOGIN_REDIRECT_URL = '/api/rest-auth/social/' # allauth에서 어째서인지 여기로 보내준다
 # django sites app setting
 SITE_ID = 1
 
@@ -210,11 +213,9 @@ REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
     'LOGIN_SERIALIZER': 'users.serializers.LoginSerializer'
 }
-
-
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
+ # smtp setting
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # 개발용
 EMAIL_HOST = 'smtp.naver.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
