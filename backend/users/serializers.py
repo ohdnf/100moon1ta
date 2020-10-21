@@ -7,7 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['id', 'email','username']
+        fields = ['id', 'email','username','profile_image']
 
 
 from rest_auth.serializers import LoginSerializer as RestAuthLoginSerializer
