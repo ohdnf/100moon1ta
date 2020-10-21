@@ -71,9 +71,9 @@
 ### 디렉토리 구조도
 
 ```
-📁project_folder
+📁100moon1ta
 ├─📁backend
-│   ├─📁project_name
+│   ├─📁l00moon1ta
 │   ├─main.py
 │   └─requirements.py
 └─📁frontend
