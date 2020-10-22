@@ -167,7 +167,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-LOGIN_REDIRECT_URL = '/api/rest-auth/social/' # allauth에서 어째서인지 여기로 보내준다
+LOGIN_REDIRECT_URL = '/'
 # django sites app setting
 SITE_ID = 1
 

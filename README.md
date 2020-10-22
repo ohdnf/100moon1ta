@@ -58,6 +58,7 @@ POST api/rest-auth/signup/
     password1: string,
     password2: string
 }
+
 ```
 
 ### Social
