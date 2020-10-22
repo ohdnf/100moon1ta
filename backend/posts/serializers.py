@@ -3,6 +3,7 @@ from users.serializers import UserSerializer
 from .models import Post, PostComment, Tag
 
 
+# class PostListSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     tag = TagSerializer(many=True, required=False)
