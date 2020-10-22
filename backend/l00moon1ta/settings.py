@@ -105,8 +105,8 @@ WSGI_APPLICATION = 'l00moon1ta.wsgi.application'
 DATABASES = {
     'default' : {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME': config('MYSQL_NAME'),   # 'l' 은 알파벳             
-        'USER': 'root',                       
+        'NAME': config('MYSQL_NAME'),            
+        'USER': config('MYSQL_USER'),                       
         'PASSWORD': config('MYSQL_PASSWORD'),             
         'HOST': config('MYSQL_HOST'),                    
         'PORT': '3306',                          
@@ -152,6 +152,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# django sites app setting
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = '/'
+
+
 AUTH_USER_MODEL = 'users.CustomUser'
 
 # social login setting
@@ -167,9 +173,8 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-LOGIN_REDIRECT_URL = '/'
-# django sites app setting
-SITE_ID = 1
+
+
 
 # DRF auth settings
 REST_FRAMEWORK = {

@@ -96,3 +96,10 @@ header = { Authorization : JWT {JWT token} }
     profile_image,
 }
 ```
+
+### Username 중복 검사
+
+```
+GET api/rest-auth/username/?username={username}
+
+```
