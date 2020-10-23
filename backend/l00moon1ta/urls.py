@@ -23,6 +23,7 @@ from users.views import Nickname, GitHubLogin
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('posts/', include('posts.urls')),
     path('api/rest-auth/', include("rest_auth.urls")),
     path('api/rest-auth/nickname-duplicated/', Nickname.as_view()),
     path('api/rest-auth/signup/', include('rest_auth.registration.urls')),
