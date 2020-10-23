@@ -14,9 +14,9 @@ class CustomUser(AbstractUser):
 
     objects = CustomUserManager()
 
-    username = models.CharField(blank=True, max_length=100)
+    # nickname = models.CharField(max_length=100) # nickname
     profile_image = models.ImageField(upload_to='%Y/%m/%d', blank=True)
-    # date_of_birth = models.DateField(blank=True, null=True)
+    comment = models.TextField(blank=True, max_length=100)
     
 
     def __str__(self):

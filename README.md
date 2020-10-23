@@ -53,7 +53,7 @@ POST api/rest-auth/password/reset/
 POST api/rest-auth/signup/
 
 {
-    username: string,
+    username: string,  # 아직 안바꿈
     email: string,
     password1: string,
     password2: string
@@ -94,12 +94,13 @@ header = { Authorization : JWT {JWT token} }
     email: string,
     username: string,
     profile_image,
+    comment,
 }
 ```
 
 ### Username 중복 검사
 
 ```
-GET api/rest-auth/username/?username={username}
+GET api/rest-auth/nickname-duplicated/?nickname={nickname}
 
 ```
