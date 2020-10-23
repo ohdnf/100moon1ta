@@ -2,19 +2,19 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import CustomUser # get_user_model?
+
 from allauth.socialaccount.providers.github import views as github_views
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from django.urls import reverse
 from rest_auth.registration.views import SocialLoginView
 # Create your views here.
 
-class Username(APIView):
+class Nickname(APIView):
     def get(self, request):
-        username = request.GET.get('username',0)
-        if username:
-            return Response({"duplicate" : CustomUser.objects.filter(username=username).exists()})
-
-
+        nickname = request.GET.get('nickname',0)
+        if nickname:
+            return Response({"duplicate" : CustomUser.objects.filter(username=nickname).exists()})
+    
 class GitHubLogin(SocialLoginView):
     adapter_class = github_views.GitHubOAuth2Adapter
     client_class = OAuth2Client
