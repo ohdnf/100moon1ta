@@ -5,7 +5,7 @@ const NotFoundPage = () => {
   return (
     <>
       <Helmet>
-        <title>PreEnter | DODGEANGLE</title>
+        <title>NotFound | 100moon1ta</title>
       </Helmet>
       <h1>
         404 Not Found
