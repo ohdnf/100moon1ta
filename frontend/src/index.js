@@ -1,22 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import { HelmetProvider } from 'react-helmet-async';
-import { BrowserRouter } from 'react-router-dom';
-// import { createStore } from 'redux';
-// import { Provider } from 'react-redux';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
+import { HelmetProvider } from "react-helmet-async";
+import { BrowserRouter } from "react-router-dom";
+
+import { Provider } from "react-redux";
+
+import configureStore from './configureStore'
+import { rootSaga } from './modules/index'
+
+const store = configureStore()
+store.runSaga(rootSaga)
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <BrowserRouter>
       <HelmetProvider>
         <App />
       </HelmetProvider>
     </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </Provider>,
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

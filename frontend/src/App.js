@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 // import './App.css';
-import { Helmet } from 'react-helmet-async';
-import { Route, Switch } from 'react-router-dom';
-import MainPage from './pages/MainPage'
-import NotFoundPage from './pages/NotFoundPage'
+import { Helmet } from "react-helmet-async";
+import { Route, Switch } from "react-router-dom";
+import MainPage from "./pages/MainPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -12,8 +12,8 @@ function App() {
         <title>100moon1ta</title>
       </Helmet>
       <Switch>
-        <Route component={MainPage} path='/' exact />
-        <Route component={NotFoundPage} path='*' />
+        <Route component={MainPage} path="/" exact />
+        <Route component={NotFoundPage} path="*" />
       </Switch>
     </div>
   );
