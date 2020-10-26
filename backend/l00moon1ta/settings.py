@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
 
     'users',
+    'games',
 ]
 
 MIDDLEWARE = [
@@ -106,12 +107,12 @@ WSGI_APPLICATION = 'l00moon1ta.wsgi.application'
 
 DATABASES = {
     'default' : {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': config('MYSQL_NAME'),   # 'l' 은 알파벳             
-        'USER': 'root',                       
-        'PASSWORD': config('MYSQL_PASSWORD'),             
-        'HOST': config('MYSQL_HOST'),                    
-        'PORT': '3306',                          
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': config('MYSQL_NAME'),   # 'l' 은 알파벳
+        'USER': config('MYSQL_USER'),
+        'PASSWORD': config('MYSQL_PASSWORD'),
+        'HOST': config('MYSQL_HOST'),
+        'PORT': '3306',
     }
 }
 
@@ -217,10 +218,10 @@ REST_AUTH_SERIALIZERS = {
 }
  # smtp setting
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # 개발용
-EMAIL_HOST = 'smtp.naver.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER =  config('NAVER_ID')
-EMAIL_HOST_PASSWORD = config('NAVER_PASSWORD')
-DEFAULT_FROM_EMAIL = config('NAVER_ID') # 보내는 이를 변경, 네이버는 이게 사용하는 smtp와 일치하지 않으면 차단때림
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # 개발용
+# EMAIL_HOST = 'smtp.naver.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER =  config('NAVER_ID')
+# EMAIL_HOST_PASSWORD = config('NAVER_PASSWORD')
+# DEFAULT_FROM_EMAIL = config('NAVER_ID') # 보내는 이를 변경, 네이버는 이게 사용하는 smtp와 일치하지 않으면 차단때림

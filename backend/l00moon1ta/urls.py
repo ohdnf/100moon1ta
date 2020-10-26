@@ -24,7 +24,7 @@ from users.views import Username
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('posts/', include('posts.urls')),
+    path('games/', include('games.urls')),
     path('api/rest-auth/', include("rest_auth.urls")),
     path('api/rest-auth/username/', Username.as_view()),
     path('api/rest-auth/signup/', include('rest_auth.registration.urls')),
