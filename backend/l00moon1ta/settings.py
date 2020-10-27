@@ -162,6 +162,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# django sites app setting
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = '/'
+
+
 AUTH_USER_MODEL = 'users.CustomUser'
 
 # social login setting
@@ -177,9 +183,8 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-LOGIN_REDIRECT_URL = '/'
-# django sites app setting
-SITE_ID = 1
+
+
 
 # DRF auth settings
 REST_FRAMEWORK = {
@@ -221,8 +226,12 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/?verification=1'
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
-    'LOGIN_SERIALIZER': 'users.serializers.LoginSerializer'
+    'LOGIN_SERIALIZER': 'users.serializers.LoginSerializer',
 }
+# REST_AUTH_REGISTER_SERIALIZERS = {
+#     'REGISTER_SERIALIZER': 'users.serializers.SignupSerializer',
+# }
+
  # smtp setting
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # 개발용
