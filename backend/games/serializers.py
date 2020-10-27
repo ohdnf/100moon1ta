@@ -10,9 +10,9 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class SourceSerializer(serializers.ModelSerializer):
-    likers = serializers.UserSerializer(many=True, required=False)
-    subscribers = serializers.UserSerializer(many=True, required=False)
-    tags = serializers.TagSerializer(many=True)
+    likers = UserSerializer(many=True, required=False)
+    subscribers = UserSerializer(many=True, required=False)
+    tags = TagSerializer(many=True)
 
     class Meta:
         model = Source
