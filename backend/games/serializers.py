@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Tag, Source
+from .models import Tag, Source, GameHistory
 from users.serializers import UserSerializer
 
 
@@ -16,4 +16,10 @@ class SourceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Source
-        fields = ('id', 'category','length', 'difficulty', 'likers', 'subscribers')
+        fields = ('id', 'category', 'length', 'difficulty', 'likers', 'subscribers', 'tags')
+
+
+class GameHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GameHistory
+        fields = ('id', 'user', 'source', 'game_time', 'precision', 'typo', 'points')
