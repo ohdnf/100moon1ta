@@ -7,9 +7,9 @@ const MainPage = () => {
       <Helmet>
         <title>Main | 100moon1ta</title>
       </Helmet>
-      <h1>
+      <div>
         Main Page
-      </h1>
+      </div>
     </>
   );
 };

@@ -2,6 +2,11 @@ import React from 'react';
 // import './App.css';
 import { Helmet } from 'react-helmet-async';
 import { Route, Switch } from 'react-router-dom';
+
+// 공통 컴포넌트
+import NavbarContainer from './containers/common/NavbarContainer';
+
+// Page
 import MainPage from './pages/MainPage'
 import NotFoundPage from './pages/NotFoundPage'
 
@@ -11,6 +16,7 @@ function App() {
       <Helmet>
         <title>100moon1ta</title>
       </Helmet>
+      <NavbarContainer />
       <Switch>
         <Route component={MainPage} path='/' exact />
         <Route component={NotFoundPage} path='*' />
