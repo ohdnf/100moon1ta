@@ -16,4 +16,4 @@ class SourceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Source
-        fields = ('id', 'category','length', 'difficulty', 'likers', 'subscribers')
+        fields = ('id', 'category','length', 'difficulty', 'likers', 'subscribers', 'tags')
