@@ -19,22 +19,14 @@ from django.conf import settings
 from rest_framework import  permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from users.views import Nickname, GitHubLogin
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('games/', include('games.urls')),
-    path('api/rest-auth/', include("rest_auth.urls")),
-    path('api/rest-auth/nickname-duplicated/<str:nickname>/', Nickname.as_view()),
-    path('api/rest-auth/signup/', include('rest_auth.registration.urls')),
-    path('api/rest-auth/social/', GitHubLogin.as_view() ),
-    
-    path('accounts/', include('allauth.urls')),
-
-    path('api/v1/accounts/', include('users.urls')),
+    path('accounts/', include('users.urls')),
 ]
 
-# swagger setting
+# swagger_setting
 schema_view = get_schema_view(
     openapi.Info(
         title="Snippets API",
