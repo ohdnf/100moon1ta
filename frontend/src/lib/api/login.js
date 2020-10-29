@@ -12,9 +12,3 @@ export const login = (data) =>
         }
     */
   });
-
-  export const gets = (params) =>
-  client({
-    method: 'get',
-    params: params
-  });
