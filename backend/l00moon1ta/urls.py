@@ -20,12 +20,15 @@ from rest_framework import  permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('games/', include('games.urls')),
     path('accounts/', include('users.urls')),
 ]
 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # 개발자용에서만
 # swagger_setting
 schema_view = get_schema_view(
     openapi.Info(
