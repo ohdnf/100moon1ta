@@ -7,6 +7,7 @@ from allauth.socialaccount.providers.github import views as github_views
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from django.urls import reverse
 from rest_auth.registration.views import SocialLoginView
+
 # Create your views here.
 
 class Nickname(APIView):
@@ -16,6 +17,8 @@ class Nickname(APIView):
             return Response({"possible" : not CustomUser.objects.filter(username=nickname).exists()})
         # else:
         #     return Res
+
+     
 class GitHubLogin(SocialLoginView):
     adapter_class = github_views.GitHubOAuth2Adapter
     client_class = OAuth2Client
