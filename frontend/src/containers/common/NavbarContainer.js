@@ -24,7 +24,6 @@ const NavbarContainer = () => {
     setUserName("");
     setIsLogin(false);
   };
-
   return (
     <>
       <Navbar

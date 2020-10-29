@@ -10,7 +10,7 @@ const JoinContainer = ({
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   //   const [nextUrl, setNextUrl] = useStae("");
-
+  
   const onChange = (e) => {
     if (e.target.name === "email") {
       setEmail(e.target.value);

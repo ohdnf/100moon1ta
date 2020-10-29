@@ -37,7 +37,6 @@ const Join = ({
         <Button onClick={onJoin}>회원가입</Button><br />
         <Button onClick={() => changeModal("login")}>로그인으로</Button>
         <Button onClick={() => changeModal("")}>닫기</Button>
-      
       </SelectMeModal>
     </>
   );
