@@ -37,7 +37,7 @@ urlpatterns = [
     # path('api-auth/', include('rest_framework.urls')),
 ]
 
-# swagger setting
+# swagger_setting
 schema_view = get_schema_view(
     openapi.Info(
         title="Snippets API",

@@ -9,6 +9,7 @@ defusedxml==0.6.0
 Django==2.2.16
 django-allauth==0.43.0
 django-cors-headers==3.5.0
+django-mysql==3.9.0
 django-rest-auth==0.9.5
 djangorestframework==3.11.1
 djangorestframework-jwt==1.11.0
