@@ -21,10 +21,10 @@ class Source(models.Model):
     content = models.TextField()
     length = models.IntegerField()
     difficulty = models.IntegerField()
-    likers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_source')
-    subscribers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='subscribed_source')
-    players = models.ManyToManyField(settings.AUTH_USER_MODEL, through='GameHistory')
-    tags = models.ManyToManyField(Tag)
+    likers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_source', blank=True)
+    subscribers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='subscribed_source', blank=True)
+    players = models.ManyToManyField(settings.AUTH_USER_MODEL, through='GameHistory', blank=True)
+    tags = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self):
         return self.content[:10]

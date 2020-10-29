@@ -110,6 +110,7 @@ WSGI_APPLICATION = 'l00moon1ta.wsgi.application'
 
 DATABASES = {
     'default' : {
+        # 'ENGINE': 'django.db.backends.sqlite3',
         'ENGINE': 'django.db.backends.mysql',
         'NAME': config('MYSQL_NAME'),   # 'l' 은 알파벳
         'USER': config('MYSQL_USER'),
@@ -234,7 +235,7 @@ REST_AUTH_SERIALIZERS = {
 
  # smtp setting
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # 개발용
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # 개발용
 # EMAIL_HOST = 'smtp.naver.com'
 # EMAIL_PORT = 587
 # EMAIL_USE_TLS = True
