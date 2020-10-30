@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from django.db.models import Sum
 
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
@@ -7,12 +8,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .models import Tag, Source, GameHistory
-from .serializers import TagSerializer, SourceSerializer, GameHistorySerializer
+from .serializers import TagSerializer, SourceSerializer, GameHistorySerializer, RankSerializer
+from users.models import CustomUser
 
+
+# 타자 연습 소스 관련 API
 
 @api_view(['GET', 'POST'])
 def source_retrieve_create(request):
-    def source_retrieve(requets):
+    def source_retrieve(request):
         """
         타자 연습 소스 목록 보기
         """
@@ -42,7 +46,7 @@ def source_retrieve_create(request):
 
 
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
-def source_detail_create_update_destroy(request, pk):
+def source_detail_update_destroy(request, pk):
     source = get_object_or_404(Source, pk=pk)
 
     def source_detail(request):
@@ -52,23 +56,6 @@ def source_detail_create_update_destroy(request, pk):
         """
         serializer = SourceSerializer(source)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
-    @permission_classes([IsAuthenticated])
-    def game_history_create(request):
-        """
-        게임 결과 등록하기
-        게임 결과 정보는 클라이언트에서 request.body.data로 받는다.
-        """
-        # 기존 게임 기록이 있으면
-        if GameHistory.objects.filter(user=request.user, source=source).exists():
-            history = GameHistory.objects.get(user=request.user, source=source)
-            serializer = GameHistorySerializer(data=request.data, instance=history) # 업데이트
-        else:
-            serializer = GameHistorySerializer(data=request.data)   # 신규 생성
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     @permission_classes([IsAuthenticated])
     def source_update(request):
@@ -99,33 +86,43 @@ def source_detail_create_update_destroy(request, pk):
     
     if request.method == 'GET':
         return source_detail(request)
-    elif request.method == 'POST':
-        return game_history_create(request)
     elif request.method == 'PUT':
         return source_update(request)
     elif request.method == 'DELETE':
         return source_delete(request)
 
 
+# 태그 관련 API
+
 @api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticated])
-def tag_retrieve_create(request, pk):
-    """
-    태그 전체 불러오기 또는 태그 생성
-    """
-    if request.user.is_staff or request.user.is_superuser:
-        if request.method == 'GET': # 태그 전체 목록 불러오기
-            tags = Tag.objects.all()
-            serializer = TagSerializer(tags, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        elif request.method == 'POST':  # 태그 생성
+def tag_retrieve_create(request):
+    def tag_retrieve(request):
+        """
+        전체 태그 목록 불러오기
+        """
+        tags = Tag.objects.all()
+        serializer = TagSerializer(tags, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @permission_classes([IsAuthenticated])
+    def tag_create(request):
+        """
+        태그 생성하기
+        관리자 계정만 허용
+        """
+        if request.user.is_staff or request.user.is_superuser:
             serializer = TagSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(status=status.HTTP_400_BAD_REQUEST)
-    else:
-        return Response(status=status.HTTP_403_FORBIDDEN)
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+    
+    if request.method == 'GET':
+        return tag_retrieve(request)
+    elif request.method == 'POST':
+        return tag_create(request)
 
 
 @api_view(['PUT', 'DELETE'])
@@ -147,3 +144,51 @@ def tag_update_destroy(request, pk):
             return Response(status=status.HTTP_204_NO_CONTENT)
     else:
         return Response(status=status.HTTP_403_FORBIDDEN)
+
+
+# 게임 결과 관련 API
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def history_retrieve_create(request, pk):
+    source = get_object_or_404(Source, pk=pk)
+
+    def history_retrieve(request):
+        game_histories = GameHistory.objects.filter(player=request.user, source=source)
+        serializer = GameHistorySerializer(game_histories, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def history_create(request):
+        """
+        게임 결과 등록하기
+        게임 결과 정보는 클라이언트에서 request.body.data로 받는다.
+        현재 소스에 대한 기존 게임 기록이 존재하는 경우 신기록(기존 기록보다 높은 점수)만 반영한다.
+        """
+        # 기존 게임 기록이 있으면
+        if GameHistory.objects.filter(player=request.user, source=source).exists():
+            history = GameHistory.objects.get(player=request.user, source=source)
+            serializer = GameHistorySerializer(data=request.data, instance=history) # 업데이트
+        # 없으면
+        else:
+            serializer = GameHistorySerializer(data=request.data) # 신규 생성
+        if serializer.is_valid():
+            serializer.save(player=request.user, source=source)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    if request.method == 'GET':
+        return history_retrieve(request)
+    elif request.method == 'POST':
+        return history_create(request)
+
+
+# 사용자 순위 관련 API
+
+@api_view(['GET'])
+def rank_retrieve(request):
+    """
+    각 플레이어마다 갖고 있는 모든 점수를 합산하여 30위까지 랭킹을 반환
+    """
+    queryset = GameHistory.objects.values('player').annotate(total_score=Sum('score')).order_by('-total_score')[:30]
+    serializer = RankSerializer(queryset, many=True)
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
