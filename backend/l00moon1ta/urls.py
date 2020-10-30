@@ -29,14 +29,8 @@ urlpatterns = [
     path('api/v1/games/', include('games.urls')),
     path('tags/', tag_retrieve_create),
     path('tags/<int:pk>/', tag_update_destroy),
-
-    path('api/v1/rest-auth/', include("rest_auth.urls")),
-    path('api/v1/rest-auth/nickname-duplicated/', Nickname.as_view()),
-    path('api/v1/rest-auth/signup/', include('rest_auth.registration.urls')),
-    path('api/v1/rest-auth/social/', GitHubLogin.as_view()),
+    path('api/v1/accounts/', include("users.urls")),
     
-    path('accounts/', include('allauth.urls')),
-    # path('api-auth/', include('rest_framework.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # 개발자용에서만
