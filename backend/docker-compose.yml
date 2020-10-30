@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  back:
+    container_name: django_back
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+        MYSQL_NAME: ${MYSQL_NAME}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        MYSQL_HOST: ${MYSQL_HOST}
+    command: gunicorn l00moon1ta.wsgi:application --bind 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+
+  nginx:
+    container_name: nginx_typo
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - './config/nginx:/etc/nginx.conf.d'
+    depends_on:
+      - back
