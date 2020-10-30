@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from .managers import CustomUserManager
 
 # 프로필 이미지 overwrite
-import os
+import os, random
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage 
 
@@ -28,7 +28,7 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
     
     # nickname = models.CharField(max_length=100) # nickname
-    profile_image = models.ImageField(upload_to=user_directory_path, storage=OverwriteStorage(), blank=True) # OverwritStorage() , callable 해야함
+    profile_image = models.ImageField(upload_to=user_directory_path, storage=OverwriteStorage(), blank=True, default=random.choice(['1','2','3'])) # OverwritStorage() , callable 해야함
     comment = models.TextField(blank=True, max_length=100)
     is_ban = models.BooleanField(default=False)
     
