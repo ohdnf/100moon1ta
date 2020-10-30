@@ -62,7 +62,7 @@ class ModelTest(TestCase):
             "game_time": 123,
             "precision": 97.32,
             "typo": {},
-            "points": 85
+            "score": 85
         }
         user = CustomUser.objects.get(pk=1)
         src = Source.objects.get(pk=1)

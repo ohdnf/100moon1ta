@@ -6,9 +6,8 @@ from . import views
 
 urlpatterns = [
     path('', views.source_retrieve_create),
-    path('<int:pk>/', views.source_detail_create_update_destroy),
-    # path('<int:pk>/tags/', views.source_tag_retrieve),
-    # path('<int:src_pk>/tags/<int:tag_pk>/', views.source_tag_create_destroy),
+    path('<int:pk>/', views.source_detail_update_destroy),
+    path('<int:pk>/history/', views.history_retrieve_create),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -27,18 +27,21 @@ class Source(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self):
-        return self.content[:10]
+        return self.content[:20]
 
 
 class GameHistory(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) # 유저가 삭제되면 기록도 같이 삭제? 어느 소스에 대한 기록
+    player = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) # 유저가 삭제되면 기록도 같이 삭제? 어느 소스에 대한 기록
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
     game_time = models.TextField()
     precision = models.FloatField()
     typo = JSONField()
-    points = models.IntegerField()
+    score = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name_plural = "game histories"
+
     def __str__(self):
-        return f'UserID:{self.user}/SourceID:{self.source} => {self.points} pts'
+        return f'User:{self.player}\nSource:{self.source}\nScore:{self.score} pts'

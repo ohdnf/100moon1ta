@@ -20,15 +20,16 @@ from rest_framework import  permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from users.views import Nickname, GitHubLogin
-from games.views import tag_retrieve_create, tag_update_destroy
+from games.views import tag_retrieve_create, tag_update_destroy, rank_retrieve
 
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/games/', include('games.urls')),
-    path('tags/', tag_retrieve_create),
-    path('tags/<int:pk>/', tag_update_destroy),
+    path('api/v1/tags/', tag_retrieve_create),
+    path('api/v1/tags/<int:pk>/', tag_update_destroy),
+    path('api/v1/rank/', rank_retrieve),
     path('api/v1/accounts/', include("users.urls")),
     
 ]
