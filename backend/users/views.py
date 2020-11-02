@@ -9,6 +9,7 @@ from django.urls import reverse
 from rest_auth.registration.views import SocialLoginView
 
 from games.models import GameHistory
+from django.contrib.auth import get_user_model
 from django.db.models import Sum
 # Create your views here.
 
@@ -21,7 +22,6 @@ class Nickname(APIView):
         #     return Res
 class Record(APIView):
     def get(self, request):
-        
         total_point = GameHistory.objects.filter(user=request.user).aggregate(Sum('points'))
         if total_point['points__sum']:
             return Response({"총점" : total_point})
@@ -30,7 +30,10 @@ class Record(APIView):
 
 class Bookmark(APIView):
     def get(self, request):
-        return Response({"possible" : not CustomUser.objects.filter(username=nickname).exists()})     
+        User = get_user_model()
+        user = get_object_or_404(User, pk=request.user.id)
+        bookmark = user.subscribed_source
+        return Response({"sources" : bookmark.values()})     
 
 class GitHubLogin(SocialLoginView):
     adapter_class = github_views.GitHubOAuth2Adapter
