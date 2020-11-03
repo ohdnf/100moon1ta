@@ -1,5 +1,9 @@
-from django.shortcuts import get_object_or_404
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.db.models import Sum
+from django.shortcuts import get_object_or_404
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
@@ -12,15 +16,18 @@ from .serializers import TagSerializer, SourceSerializer, GameHistorySerializer,
 from users.models import CustomUser
 
 
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
+
 # 타자 연습 소스 관련 API
 
 @api_view(['GET', 'POST'])
+@cache_page(CACHE_TTL)
 def source_retrieve_create(request):
     def source_retrieve(request):
         """
         타자 연습 소스 목록 보기
         """
-        sources = Source.objects.all()
+        sources = cache.get_or_set('sources', Source.objects.all())
         # 추후 정렬 방식 구현
         serializer = SourceSerializer(sources, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -154,6 +161,9 @@ def history_retrieve_create(request, pk):
     source = get_object_or_404(Source, pk=pk)
 
     def history_retrieve(request):
+        """
+        현재 유저의 게임 결과 목록 불러오기
+        """
         game_histories = GameHistory.objects.filter(player=request.user, source=source)
         serializer = GameHistorySerializer(game_histories, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -185,10 +195,11 @@ def history_retrieve_create(request, pk):
 # 사용자 순위 관련 API
 
 @api_view(['GET'])
+@cache_page(CACHE_TTL)
 def rank_retrieve(request):
     """
     각 플레이어마다 갖고 있는 모든 점수를 합산하여 30위까지 랭킹을 반환
     """
-    queryset = GameHistory.objects.values('player').annotate(total_score=Sum('score')).order_by('-total_score')[:30]
+    queryset = cache.get_or_set('queryset', GameHistory.objects.values('player').annotate(total_score=Sum('score')).order_by('-total_score')[:30])
     serializer = RankSerializer(queryset, many=True)
     return Response(serializer.data, status=status.HTTP_201_CREATED)
