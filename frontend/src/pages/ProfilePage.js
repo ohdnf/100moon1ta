@@ -1,15 +1,15 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-const MainPage = () => {
+const ProfilePage = () => {
   return (
     <>
       <Helmet>
-        <title>Main | 100moon1ta</title>
+        <title>ProfilePage | 100moon1ta</title>
       </Helmet>
-      <div>Main Page</div>
+      <div>ProfilePage</div>
     </>
   );
 };
 
-export default MainPage;
+export default ProfilePage;
