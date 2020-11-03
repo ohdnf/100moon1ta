@@ -230,7 +230,7 @@ REST_AUTH_SERIALIZERS = {
 #     'REGISTER_SERIALIZER': 'users.serializers.SignupSerializer',
 # }
 
- # smtp setting
+# smtp setting
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # 개발용
 # EMAIL_HOST = 'smtp.naver.com'
@@ -239,3 +239,19 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # 개발용
 # EMAIL_HOST_USER =  config('NAVER_ID')
 # EMAIL_HOST_PASSWORD = config('NAVER_PASSWORD')
 # DEFAULT_FROM_EMAIL = config('NAVER_ID') # 보내는 이를 변경, 네이버는 이게 사용하는 smtp와 일치하지 않으면 차단때림
+
+
+# Cache
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        },
+        "KEY_PREFIX": "oneta"
+    }
+}
+
+CACHE_TTL = 60 * 15
