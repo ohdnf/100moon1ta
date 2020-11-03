@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Login from '../../components/common/Login';
 
 import { login } from '../../modules/user';
@@ -31,19 +31,9 @@ const LoginContainer = ({ changeUserName, changeIsLogin, changeModal }) => {
       password: password
     }
     dispatch(login(data));
-    console.log("첫번째 디스패치!", data)
-    if (user !== null) {
-      console.log("성공", user)
-      // 성공시
-      changeModal('');
-      changeUserName(email);
-      changeIsLogin(true);
-    } else {
-      // 실패시 ?
-      console.log("실패", user)
-      console.error(error)
-      document.getElementById("password").focus();
-    }
+    // login(data);
+    console.log("첫번째 디스패치!", data, user)
+    // }
   };
   const githubLogin = () => {
     // 소셜 로그인 버튼을 누른다.
@@ -52,6 +42,15 @@ const LoginContainer = ({ changeUserName, changeIsLogin, changeModal }) => {
     // JWT 반환
   };
 
+  useEffect(() => {
+    // console.log (user)
+    if (user && changeModal !== "") {
+      // 로그인 성공시
+      changeModal("")
+      changeIsLogin(true)
+      changeUserName(user.user.email)
+    }
+  }, [dispatch, user]);
   return (
     <Login onChange={onChange} changeModal={changeModal} onLogin={onLogin} />
   );
