@@ -1,13 +1,17 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const StyledInput = styled.input`
   margin-top: 1rem;
-  width: 100%;
   color: SlateGrey;
+  ${(props) =>
+    props.fullWidth &&
+    css`
+      width: 100%;
+    `}
 `;
 
-const Input = ({ name, onChange }) => {
+const Input = ({ name, onChange, fullWidth }) => {
   const type = name === "password" ? "password" : "text";
   return (
     <>
@@ -17,7 +21,7 @@ const Input = ({ name, onChange }) => {
         name={name}
         placeholder={name}
         required
-        fullwidth
+        fullWidth={fullWidth}
         onChange={onChange}
       />
     </>

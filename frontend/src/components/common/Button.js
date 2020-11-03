@@ -5,7 +5,7 @@ import mainTheme from "../../lib/styles/mainTheme";
 const buttonStyle = css`
   border: none;
   border-radius: 15px;
-  height: 60px;
+  height: 3rem;
   font-size: 1.25rem;
   font-weight: bold;
   padding: 0.25rem 1rem;
@@ -26,6 +26,11 @@ const buttonStyle = css`
     props.red &&
     css`
       background: ${mainTheme.mainBorder};
+    `}
+  ${(props) =>
+    props.disabled &&
+    css`
+      background: #ccc;
     `}
 `;
 

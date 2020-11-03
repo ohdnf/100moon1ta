@@ -34,10 +34,10 @@ const NavbarItem = styled.div`
 
 const Navbar = ({ userName, isLogin, changeIsLogin, changeModal, logout }) => {
   const navItems = [
-    { name: "오늘의 타자", toLink: "/#오늘의타자" },
+    { name: "오늘의 타자", toLink: "/today" },
     { name: "소스 목록", toLink: "/games" },
-    { name: "커뮤니티", toLink: "/#커뮤니티" },
-    { name: "내 페이지", toLink: "/#내페이지" },
+    { name: "커뮤니티", toLink: "/community" },
+    { name: "내 페이지", toLink: "/profile" },
   ];
   const history = useHistory();
   return (
