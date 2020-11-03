@@ -1,5 +1,5 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
+import React from 'react';
+import { Helmet } from 'react-helmet-async';
 
 const GamePage = () => {
   return (
@@ -7,9 +7,7 @@ const GamePage = () => {
       <Helmet>
         <title>GamePage | 100moon1ta</title>
       </Helmet>
-      <div>
-        Game Page
-      </div>
+      <div>Game Page</div>
     </>
   );
 };
