@@ -22,7 +22,10 @@ from drf_yasg import openapi
 from users.views import Nickname, GitHubLogin
 from games.views import tag_retrieve_create, tag_update_destroy, rank_retrieve
 
+import debug_toolbar
+
 from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,8 +33,16 @@ urlpatterns = [
     path('api/v1/tags/', tag_retrieve_create),
     path('api/v1/tags/<int:pk>/', tag_update_destroy),
     path('api/v1/rank/', rank_retrieve),
-    path('api/v1/accounts/', include("users.urls")),
+
+    path('api/v1/rest-auth/', include("rest_auth.urls")),
+    path('api/v1/rest-auth/nickname-duplicated/', Nickname.as_view()),
+    path('api/v1/rest-auth/signup/', include('rest_auth.registration.urls')),
+    path('api/v1/rest-auth/social/', GitHubLogin.as_view()),
     
+    path('accounts/', include('allauth.urls')),
+    # path('api-auth/', include('rest_framework.urls')),
+    path('__debug__/', include(debug_toolbar.urls)),
+    path('api/v1/accounts/', include("users.urls")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # 개발자용에서만
