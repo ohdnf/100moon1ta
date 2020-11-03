@@ -1,5 +1,8 @@
-from django.shortcuts import get_object_or_404
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.db.models import Sum
+from django.shortcuts import get_object_or_404
+from django.views.decorators.cache import cache_page
 
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
@@ -11,6 +14,8 @@ from .models import Tag, Source, GameHistory
 from .serializers import TagSerializer, SourceSerializer, GameHistorySerializer, RankSerializer
 from users.models import CustomUser
 
+
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 # 타자 연습 소스 관련 API
 
@@ -154,6 +159,9 @@ def history_retrieve_create(request, pk):
     source = get_object_or_404(Source, pk=pk)
 
     def history_retrieve(request):
+        """
+        현재 유저의 게임 결과 목록 불러오기
+        """
         game_histories = GameHistory.objects.filter(player=request.user, source=source)
         serializer = GameHistorySerializer(game_histories, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -185,6 +193,7 @@ def history_retrieve_create(request, pk):
 # 사용자 순위 관련 API
 
 @api_view(['GET'])
+@cache_page(CACHE_TTL)
 def rank_retrieve(request):
     """
     각 플레이어마다 갖고 있는 모든 점수를 합산하여 30위까지 랭킹을 반환

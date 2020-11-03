@@ -21,6 +21,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from users.views import Nickname, GitHubLogin
 from games.views import tag_retrieve_create, tag_update_destroy, rank_retrieve
+import debug_toolbar
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,6 +37,7 @@ urlpatterns = [
     
     path('accounts/', include('allauth.urls')),
     # path('api-auth/', include('rest_framework.urls')),
+    path('__debug__/', include(debug_toolbar.urls)),
 ]
 
 # swagger_setting
