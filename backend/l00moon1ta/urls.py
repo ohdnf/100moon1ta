@@ -21,7 +21,11 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from users.views import Nickname, GitHubLogin
 from games.views import tag_retrieve_create, tag_update_destroy, rank_retrieve
+
 import debug_toolbar
+
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,8 +42,10 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     # path('api-auth/', include('rest_framework.urls')),
     path('__debug__/', include(debug_toolbar.urls)),
+    path('api/v1/accounts/', include("users.urls")),
 ]
 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # 개발자용에서만
 # swagger_setting
 schema_view = get_schema_view(
     openapi.Info(

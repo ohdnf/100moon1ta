@@ -26,7 +26,7 @@ class SourceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Source
-        fields = ('id', 'category', 'content', 'length', 'difficulty', 'likers', 'subscribers', 'tags',)
+        fields = ('id', 'title', 'description', 'link', 'category', 'content', 'length', 'difficulty', 'likers', 'subscribers', 'tags',)
 
 
 class GameHistorySerializer(serializers.ModelSerializer):
@@ -55,3 +55,4 @@ class RankSerializer(serializers.Serializer):
 
     class Meta:
         field = ('player', 'total_score',)
+

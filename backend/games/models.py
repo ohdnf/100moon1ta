@@ -17,6 +17,9 @@ class Source(models.Model):
         (TEXT, 'Plain text'),
         (CODE, 'Source code')
     ]
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=100, blank=True)
+    link = models.CharField(max_length=200, blank=True)
     category = models.CharField(max_length=2, choices=TYPE_CHOICES, default=CODE)
     content = models.TextField()
     length = models.IntegerField()

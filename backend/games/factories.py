@@ -28,6 +28,9 @@ class SourceFactory(DjangoModelFactory):
     class Meta:
         model = Source
     
+    title = factory.Faker('sentence', nb_words=3)
+    description = factory.Faker('sentence')
+    link = factory.Faker('domain_name')
     category = factory.fuzzy.FuzzyChoice(CATEGORIES)
     content = factory.Faker('paragraph', nb_sentences=3, variable_nb_sentences=True)
     length = factory.Faker('random_number')

@@ -13,11 +13,11 @@ from games.factories import (
 )
 
 
-NUM_USERS = 40
-NUM_TAGS = 5
-NUM_SOURCES = 10
+NUM_USERS = 50
+NUM_TAGS = 10
+NUM_SOURCES = 20
 TAGS_PER_SOURCE = 3
-NUM_GAME_HISTORIES = 20
+NUM_GAME_HISTORIES = 100
 
 
 class Command(BaseCommand):
@@ -50,12 +50,12 @@ class Command(BaseCommand):
             # Add likers and subscribers
             likers = random.choices(
                 users,
-                k=random.randint(0, 40)
+                k=random.randint(0, NUM_USERS)
             )
             source.likers.add(*likers)
             subscribers = random.choices(
                 users,
-                k=random.randint(0, 40)
+                k=random.randint(0, NUM_USERS)
             )
             source.subscribers.add(*subscribers)
             # Add tags
@@ -72,3 +72,4 @@ class Command(BaseCommand):
             user = random.choice(users)
             src = random.choice(sources)
             game_history = GameHistoryFactory(player=user, source=src)
+

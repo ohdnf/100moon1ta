@@ -1,21 +1,71 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import CustomUser # get_user_model?
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
+
 
 from allauth.socialaccount.providers.github import views as github_views
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from django.urls import reverse
 from rest_auth.registration.views import SocialLoginView
+
+from games.models import GameHistory, Source
+from django.contrib.auth import get_user_model
+from django.db.models import Sum
 # Create your views here.
 
 class Nickname(APIView):
     def get(self, request, nickname):
         # nickname = request.GET.get('nickname',0)
+        User = get_user_model()
         if nickname:
-            return Response({"possible" : not CustomUser.objects.filter(username=nickname).exists()})
+            return Response({"possible" : not User.objects.filter(username=nickname).exists()})   
         # else:
         #     return Res
+
+class Record(APIView):
+    def get(self, request):
+        total_point = GameHistory.objects.filter(user=request.user).aggregate(Sum('points'))
+        if total_point['points__sum']:
+            return Response({"총점" : total_point})
+        else:
+            return Response('플레이한 게임이 없습니다.', status=404)
+
+# login으로 redirect 시킴, login_url='/example url you want redirect/' 로 지정가능
+class Bookmark(APIView):
+    permission_classes = [IsAuthenticated] # 이걸로 login 판별
+
+    def get(self, request):
+        user = request.user
+        bookmark = user.subscribed_source
+        return Response({"sources" : bookmark.values()})  
+   
+    def post(self, request):
+        sid = request.POST.get('source_id')
+        user = request.user
+        source = get_object_or_404(Source, pk=sid)
+        if source.subscribers.filter(pk=user.pk).exists():
+            source.subscribers.remove(user)
+            bookmark_status = "북마크 취소"
+        else:
+            source.subscribers.add(user)
+            bookmark_status = "북마크됨"
+        return Response({"sources" : bookmark_status})   
+
+class Like(APIView):
+    def post(self,request):
+        sid = request.POST.get('source_id')
+        user = request.user
+        source = get_object_or_404(Source, pk=sid)
+        if source.likers.filter(pk=user.pk).exists():
+            source.likers.remove(user)
+            like_status = "좋아요 취소"
+        else:
+            source.likers.add(user)
+            like_status = "좋아요!"
+        return Response({"sources" : like_status})   
+
 class GitHubLogin(SocialLoginView):
     adapter_class = github_views.GitHubOAuth2Adapter
     client_class = OAuth2Client
@@ -26,7 +76,7 @@ class GitHubLogin(SocialLoginView):
         # must be absolute:
         return self.request.build_absolute_uri(reverse('github_callback'))
 
-
+# 권한 세부화
 class StaffManagement(APIView):
     def patch(self, request, uid):
         if request.user.is_superuser:
@@ -35,6 +85,7 @@ class StaffManagement(APIView):
             staff.save()
         return  Response({"possible" : request.user.is_superuser })
 
+# 권한 세부화
 class BanManagement(APIView):
     def patch(self, request, uid):
         if request.user.is_staff:
