@@ -1,7 +1,7 @@
 import client from './client';
 
-export const getTodaySource = () =>
+export const getTags = () =>
   client({
     method: 'get',
-    url: `/games/1`,
+    url: `/tags/`,
   });

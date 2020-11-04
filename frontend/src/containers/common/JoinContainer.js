@@ -99,16 +99,11 @@ const JoinContainer = ({
         // 비밀번호가 전부 숫자로 되어 있습니다.
       // if (error.response.status === 400) {
       //   // 닉네임 사전 벨리베이션 => email or password에 문제
-      //   console.log (error.response)
-      //   console.log (error.response.data)
-      //   console.log (typeof error.response.data)
+
       //   let message = ""
       //   Array.prototype.forEach.call(error.response.data,
       //     (key) => {
-
-      //       console.log("맵")
       //       key.forEach((msg) => {
-      //         console.log(msg)
       //         message = message + msg
       //       });
       //   })

@@ -17,24 +17,27 @@ const SelectMeModal = styled.div`
     font-size: 1.5rem;
     color: DeepSkyBlue;
     text-align: center;
-  }ㅇ
+  }
 `;
 
 const Join = ({
   onChange,
   changeModal,
   onJoin,
+  onCheckNickname,
+  submitEnable,
+  nicknameValidation,
 }) => {
   return (
     <>
       <SelectMeModal>
         <div className="modalLabel">회원가입창</div>
-        <Input name="email" onChange={onChange} /><br />
-        <Input name="nickname" onChange={onChange} /><br />
-        <Input name="password" onChange={onChange} /><br />
-        <Input name="passwordConfirm" onChange={onChange} />
+        <Input name="email" onChange={onChange} fullWidth/><br />
+        <Input name="nickname" onChange={onChange} /> <Button onClick={onCheckNickname} disabled={nicknameValidation}>중복체크</Button><br />
+        <Input name="password" onChange={onChange} fullWidth/><br />
+        <Input name="passwordConfirm" onChange={onChange} fullWidth/>
 
-        <Button onClick={onJoin}>회원가입</Button><br />
+        <Button onClick={onJoin} disabled={!submitEnable}>회원가입</Button><br />
         <Button onClick={() => changeModal("login")}>로그인으로</Button>
         <Button onClick={() => changeModal("")}>닫기</Button>
       </SelectMeModal>

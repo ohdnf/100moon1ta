@@ -32,13 +32,7 @@ const GuideBlock = styled.div`
 // cursor: auto / default(화살표) / pointer / wait
 
 const Summary = () => {
-  const { title, tags, content, description, link } = {
-    title: '리액트 함수형 컴포넌트',
-    tags: ['태그1', '태그2', '태그3'],
-    content: "Hi. I'm hyunjun. How are you?",
-    description: '자기소개입니다.',
-    link: 'www.edu.ssafy.com',
-  };
+
   const history = useHistory();
   return (
     <>
