@@ -3,13 +3,19 @@ import client from './client';
 export const signup = (data) =>
   client({
     method: 'post',
-    url: `/api/v1/accounts/signup/`,
+    url: `/accounts/signup/`,
     data: data
   });
 
-  export const login = (data) =>
+export const login = (data) =>
   client({
     method: 'post',
-    url: `/api/v1/accounts/login/`,
+    url: `/accounts/login/`,
     data: data
+  });
+
+export const checkNickname = (nickname) =>
+  client({
+    method: 'get',
+    url: `/accounts/nickname-duplicated/${nickname}/`,
   });
