@@ -36,12 +36,12 @@ const Search = () => {
       <SearchInput placeholder="검색어를 입력하세요" />
       <TagBlock>
         {[0, 1, 2, 3, 4].map((item) => (
-          <TagItem>태그{item}</TagItem>
+          <TagItem key={item}>태그{item}</TagItem>
         ))}
       </TagBlock>
       <TagBlock>
         {[6, 7, 8, 9, 10].map((item) => (
-          <TagItem>태그{item}</TagItem>
+          <TagItem key={item}>태그{item}</TagItem>
         ))}
       </TagBlock>
     </SearchBlock>
