@@ -31,9 +31,6 @@ const LoginContainer = ({ changeUserName, changeIsLogin, changeModal }) => {
       password: password
     }
     dispatch(login(data));
-    // login(data);
-    console.log("첫번째 디스패치!", data, user)
-    // }
   };
   const githubLogin = () => {
     // 소셜 로그인 버튼을 누른다.
@@ -43,7 +40,6 @@ const LoginContainer = ({ changeUserName, changeIsLogin, changeModal }) => {
   };
 
   useEffect(() => {
-    // console.log (user)
     if (user && changeModal !== "") {
       // 로그인 성공시
       changeModal("")

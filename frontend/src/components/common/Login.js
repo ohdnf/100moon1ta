@@ -30,9 +30,8 @@ const Login = ({
       <SelectMeModal>
         <div className="modalLabel">로그인창</div>
         
-        <Input name="email" onChange={onChange} />
-        <br />
-        <Input name="password" onChange={onChange} />
+        <Input name="email" onChange={onChange} fullWidth/>
+        <Input name="password" onChange={onChange} fullWidth/>
 
         <Button onClick={onLogin}>로그인</Button><br />
         <Button onClick={() => changeModal("join")}>회원가입으로</Button>
