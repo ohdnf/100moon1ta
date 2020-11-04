@@ -39,13 +39,13 @@ const LinkDiv = styled.div`
 `;
 // cursor: auto / default(화살표) / pointer / wait
 
-const Source = () => {
+const Source = ({ todayContent }) => {
   const { title, tags, content, description, link } = {
-    title: '리액트 함수형 컴포넌트',
-    tags: ['태그1', '태그2', '태그3'],
-    content: "Hi. I'm hyunjun. How are you?",
-    description: '자기소개입니다.',
-    link: 'www.edu.ssafy.com',
+    title: todayContent?.title || '리액트 함수형 컴포넌트',
+    tags: todayContent?.tags || ['태그1', '태그2', '태그3'],
+    content: todayContent?.content || "Hi. I'm hyunjun. How are you?",
+    description: todayContent?.description || '자기소개입니다.',
+    link: todayContent?.link || 'www.edu.ssafy.com',
   };
   const history = useHistory();
   return (
