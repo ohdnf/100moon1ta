@@ -22,6 +22,6 @@ services:
     ports:
       - "80:80"
     volumes:
-      - './config/nginx:/etc/nginx.conf.d'
+      - './config/nginx.conf:/etc/nginx/conf.d/nginx.conf'
     depends_on:
       - back
