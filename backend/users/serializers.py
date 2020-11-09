@@ -16,3 +16,12 @@ class UserSerializer(serializers.ModelSerializer):
 class LoginSerializer(RestAuthLoginSerializer):
     username = None
 
+class UserListSerializer(serializers.ModelSerializer):
+    verified = serializers.SerializerMethodField()
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'email', 'username', 'is_staff', 'is_ban', 'verified' ]
+
+    def get_verified(self, obj):
+        print(obj.emailaddress_set)
+        return obj.emailaddress_set.values('verified')[0]['verified']

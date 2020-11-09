@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 
 from allauth.socialaccount.providers.github import views as github_views
@@ -13,6 +13,8 @@ from rest_auth.registration.views import SocialLoginView
 from games.models import GameHistory, Source
 from django.contrib.auth import get_user_model
 from django.db.models import Sum
+
+from .serializers import UserListSerializer
 # Create your views here.
 
 class Nickname(APIView):
@@ -23,6 +25,14 @@ class Nickname(APIView):
             return Response({"possible" : not User.objects.filter(username=nickname).exists()})   
         # else:
         #     return Res
+
+class UserList(APIView):
+    permission_classes = [IsAdminUser]
+    def get(self, request):
+        User = get_user_model()
+        users = User.objects.all()
+        serializer = UserListSerializer(users, many=True)
+        return Response(serializer.data)
 
 class Record(APIView):
     def get(self, request):
