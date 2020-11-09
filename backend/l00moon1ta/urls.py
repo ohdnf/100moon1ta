@@ -22,7 +22,7 @@ from drf_yasg import openapi
 from users.views import Nickname, GitHubLogin
 from games.views import tag_retrieve_create, tag_update_destroy, rank_retrieve
 
-# import debug_toolbar
+import debug_toolbar
 
 from django.conf.urls.static import static
 
