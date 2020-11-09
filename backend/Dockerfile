@@ -1,20 +1,17 @@
 FROM python:3.6.8
 
-ARG DJANGO_SECRET_KEY
-ARG MYSQL_NAME
-ARG MYSQL_USER
-ARG MYSQL_PASSWORD
-ARG MYSQL_HOST
+ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
 
-ENV DJANGO_SECRET_KEY $DJANGO_SECRET_KEY
-ENV MYSQL_NAME $MYSQL_NAME
-ENV MYSQL_USER $MYSQL_USER
-ENV MYSQL_PASSWORD $MYSQL_PASSWORD
-ENV MYSQL_HOST $MYSQL_HOST
+RUN mkdir /srv/backend
+WORKDIR /srv/backend
 
-RUN mkdir /backend
-WORKDIR /backend
+COPY requirements.txt /srv/backend/
 
-ADD . /backend/
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
-RUN pip3 install -r requirements.txt
+COPY . /srv/backend/
+
+# EXPOSE 8000
+# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
