@@ -167,6 +167,7 @@ ACCOUNT_ADAPTER = 'users.adapter.CustomAccountAdapter'
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 # media setting
 MEDIA_URL = '/media/'

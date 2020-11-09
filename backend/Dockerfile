@@ -1,20 +1,17 @@
 FROM python:3.6.8
 
-ARG DJANGO_SECRET_KEY
-ARG MYSQL_NAME
-ARG MYSQL_USER
-ARG MYSQL_PASSWORD
-ARG MYSQL_HOST
+ENV PYTHONUNBUFFERED 1
 
-ENV DJANGO_SECRET_KEY $DJANGO_SECRET_KEY
-ENV MYSQL_NAME $MYSQL_NAME
-ENV MYSQL_USER $MYSQL_USER
-ENV MYSQL_PASSWORD $MYSQL_PASSWORD
-ENV MYSQL_HOST $MYSQL_HOST
+RUN apt-get -y update
+RUN apt-get -y install vim
 
-RUN mkdir /backend
-WORKDIR /backend
+RUN mkdir /srv/django-server
+ADD . /srv/django-server
 
-ADD . /backend/
+WORKDIR /srv/django-server
 
-RUN pip3 install -r requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+EXPOSE 8000
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
