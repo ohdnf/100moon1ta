@@ -28,7 +28,7 @@ def source_retrieve_create(request):
         """
         타자 연습 소스 목록 보기
         """
-        sources = cache.get_or_set('sources', Source.objects.all())
+        sources = cache.get_or_set('sources', Source.objects.prefetch_related('tags').prefetch_related('likers').prefetch_related('subscribers'))
         # 추후 정렬 방식 구현
         serializer = SourceSerializer(sources, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
