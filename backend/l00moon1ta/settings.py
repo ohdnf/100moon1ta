@@ -83,7 +83,7 @@ ROOT_URLCONF = 'l00moon1ta.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ os.path.join(BASE_DIR, 'templates'),],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -216,7 +216,7 @@ JWT_AUTH = {
 }
 
 # CORS Allow
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = True    # ALLOW_ALL 말고 WHITELIST 만드는 방식으로 바꿔야 하지 않을까?
 
 # custom user setting
 # ACCOUNT_USER_MODEL_USERNAME_FIELD = None
