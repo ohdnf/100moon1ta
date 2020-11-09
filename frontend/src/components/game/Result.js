@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 const ResultBlock = styled.div`
   background: DeepSkyBlue;
   border: 0.25rem solid BlueViolet;
+  margin-bottom: 20rem;
 `;
 
 const ResultTitleBlock = styled.div`
@@ -17,9 +18,9 @@ const ResultTitle = styled.div`
   font-weight: bolder;
 `;
 
-const HamburgerButton = styled.image`
-  display: block;
-`;
+// const HamburgerButton = styled.image`
+//   display: block;
+// `;
 
 const ResultItemBlock = styled.div`
   margin: 0.25rem;
@@ -33,9 +34,9 @@ const ResultItemDiv = styled.div`
   justify-content: space-between;
 `;
 
-const ItemImage = styled.image`
-  display: block;
-`;
+// const ItemImage = styled.image`
+//   display: block;
+// `;
 
 const ItemTitle = styled.div`
   font-size: 1.25rem;

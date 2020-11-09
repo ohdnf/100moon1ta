@@ -8,29 +8,29 @@ const SourceBlock = styled.div`
   background: Azure;
   border: 0.25rem solid BlueViolet;
 `;
-const SourceTitle = styled.div`
-  font-size: 1.2rem;
-  font-weight: bolder;
-`;
+// const SourceTitle = styled.div`
+//   font-size: 1.2rem;
+//   font-weight: bolder;
+// `;
 
-const SourceInput = styled.input`
-  margin: 1rem;
-  width: 95%;
-`;
-const TagBlock = styled.div`
-  margin: 0.25rem;
-  display: flex;
-  background: Aquamarine;
-`;
+// const SourceInput = styled.input`
+//   margin: 1rem;
+//   width: 95%;
+// `;
+// const TagBlock = styled.div`
+//   margin: 0.25rem;
+//   display: flex;
+//   background: Aquamarine;
+// `;
 
-const TagItem = styled.div`
-  margin-right: 0.25rem;
-  padding: 0.25rem;
-  background: DodgerBlue;
-  border: 0.01rem solid black;
-  border-radius: 0.5rem;
-  text-align: center;
-`;
+// const TagItem = styled.div`
+//   margin-right: 0.25rem;
+//   padding: 0.25rem;
+//   background: DodgerBlue;
+//   border: 0.01rem solid black;
+//   border-radius: 0.5rem;
+//   text-align: center;
+// `;
 
 const Source = () => {
   const [games, setGames] = useState([]);

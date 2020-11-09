@@ -6,29 +6,29 @@ const ProfileBlock = styled.div`
   background: Azure;
   border: 0.25rem solid BlueViolet;
 `;
-const ProfileTitle = styled.div`
-  font-size: 1.2rem;
-  font-weight: bolder;
-`;
+// const ProfileTitle = styled.div`
+//   font-size: 1.2rem;
+//   font-weight: bolder;
+// `;
 
-const ProfileInput = styled.input`
-  margin: 1rem;
-  width: 95%;
-`;
-const TagBlock = styled.div`
-  margin: 0.25rem;
-  display: flex;
-  background: Aquamarine;
-`;
+// const ProfileInput = styled.input`
+//   margin: 1rem;
+//   width: 95%;
+// `;
+// const TagBlock = styled.div`
+//   margin: 0.25rem;
+//   display: flex;
+//   background: Aquamarine;
+// `;
 
-const TagItem = styled.div`
-  margin-right: 0.25rem;
-  padding: 0.25rem;
-  background: DodgerBlue;
-  border: 0.01rem solid black;
-  border-radius: 0.5rem;
-  text-align: center;
-`;
+// const TagItem = styled.div`
+//   margin-right: 0.25rem;
+//   padding: 0.25rem;
+//   background: DodgerBlue;
+//   border: 0.01rem solid black;
+//   border-radius: 0.5rem;
+//   text-align: center;
+// `;
 
 const FlexBox = styled.div`
   display: flex;

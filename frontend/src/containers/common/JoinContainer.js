@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import Join from "../../components/common/Join";
 // import { useHistory } from "react-router-dom";
 
@@ -17,7 +17,7 @@ const JoinContainer = ({
     nickname: false,
   })
   const [submitEnable, setSubmitEnable] = useState(false)
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // const history = useHistory();
   //   const [nextUrl, setNextUrl] = useStae("");
   

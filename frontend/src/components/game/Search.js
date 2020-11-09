@@ -6,10 +6,10 @@ const SearchBlock = styled.div`
   background: Azure;
   border: 0.25rem solid BlueViolet;
 `;
-const SearchTitle = styled.div`
-  font-size: 1.2rem;
-  font-weight: bolder;
-`;
+// const SearchTitle = styled.div`
+//   font-size: 1.2rem;
+//   font-weight: bolder;
+// `;
 
 const SearchInput = styled.input`
   margin: 1rem;

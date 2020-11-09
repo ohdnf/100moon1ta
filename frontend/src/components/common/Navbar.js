@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
-import Button from "./Button";
-import Input from "./Input";
+// import Button from "./Button";
+// import Input from "./Input";
 
 const NavbarBlock = styled.div`
   display: flex;

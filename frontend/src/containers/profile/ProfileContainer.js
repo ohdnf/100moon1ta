@@ -29,9 +29,9 @@ const InfoBlock = styled.div`
   display: flex;
   align-items: center;
 `;
-const ListBlock = styled.div`
-  background: LightBlue;
-`;
+// const ListBlock = styled.div`
+//   background: LightBlue;
+// `;
 
 const Block = styled.div`
   width: 100%;

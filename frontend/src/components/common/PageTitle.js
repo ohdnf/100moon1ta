@@ -1,6 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
-import mainTheme from "../../lib/styles/mainTheme";
+import styled from "styled-components";
 
 const StyledPageTitle = styled.div`
     font-size: 1.25rem;
