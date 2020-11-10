@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PageTitle from '../common/PageTitle'
+import PageTitle from '../common/PageTitle';
 
 const ProfileBlock = styled.div`
   background: Azure;
@@ -37,10 +37,11 @@ const FlexBox = styled.div`
 
 const ImgDiv = styled.img`
   display: block;
-  width: ${100/16}rem;
-  height: ${100/16}rem;
-`
-const Profile = () => {
+  width: ${100 / 16}rem;
+  height: ${100 / 16}rem;
+`;
+const Profile = ({ userProfile }) => {
+  const { email, nickname } = userProfile;
   return (
     <ProfileBlock>
       <PageTitle>내페이지</PageTitle>
@@ -48,8 +49,8 @@ const Profile = () => {
       <FlexBox>
         <ImgDiv src="https://source.unsplash.com/random/100x100" />
         <div>
-          <div>이메일 ssafy@naver.com </div>
-          <div>닉네임 팀원보충합니다ㅠ_ㅠ </div>
+          <div>이메일 {email} </div>
+          <div>닉네임 {nickname} </div>
         </div>
       </FlexBox>
     </ProfileBlock>

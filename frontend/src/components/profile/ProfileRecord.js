@@ -9,23 +9,24 @@ const ProfileRecordBlock = styled.div`
 
 const FlexBox = styled.div`
   display: flex;
-`
-const ProfileRecord = () => {
+  `;
+const ProfileRecord = ({ userRecord }) => {
+  const { grade, time, accuracy } = userRecord;
   return (
     <ProfileRecordBlock>
       <div>종합 기록</div>
       <FlexBox>
         <div>
           <div> 총 점수 </div>
-          <div> 777점 </div>
+          <div> {grade}}점 </div>
         </div>
         <div>
-          <div> 평균 속도 </div>
-          <div> 999초 </div>
+          <div> 평균 시간 </div>
+          <div> {time}초 </div>
         </div>
         <div>
           <div> 평균 정확도 </div>
-          <div> 99.99% </div>
+          <div> {accuracy}% </div>
         </div>
       </FlexBox>
     </ProfileRecordBlock>
