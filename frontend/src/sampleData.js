@@ -13,7 +13,7 @@ const getGames = (n) => ({
     })),
 });
 // 2.getGamesForPage
-// - 1 getGames의 n개의 게임 소스 데이터를, 페이지마다 리로드
+// - 1. getGames의 n개의 게임 소스 데이터를, 페이지마다 리로드
 const getGamesForPage = (numberOfPage, maxPage, numOfGames) =>
   Array(numberOfPage !== maxPage ? 10 :numOfGames - (maxPage-1) * 10)
     .fill(0)
@@ -24,8 +24,26 @@ const getGamesForPage = (numberOfPage, maxPage, numOfGames) =>
       subscribers: [],
     }));
 
+// 3. getRecord
+const getRecords = (n) => 
+  Array(n)
+    .fill(0)
+    .map((a, idx) => ({
+      // Record 하나의 오브젝트
+      id: idx+1, // Record의 Id
+      gameId: idx+1, // 기록에 해당하는 게임 소스의 Id
+      title: `${idx+1} gameId를 갖는 게임 소스 제목입니다.`,
+      time: 33,
+      percent: 11,
+      grade: 77,
+      createAt: "2020.11.10",
+      tags: [{ content: '태그1' }, { content: '태그2' }, { content: '태그3' }],
+      subscribers: [],
+    }));
+
 const sampleData = {
   getGames,
   getGamesForPage,
+  getRecords,
 };
 export default sampleData;
