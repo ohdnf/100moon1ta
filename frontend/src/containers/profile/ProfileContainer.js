@@ -13,9 +13,8 @@ import styled, { css } from 'styled-components';
 
 import Profile from '../../components/profile/Profile';
 import ProfileRecord from '../../components/profile/ProfileRecord';
-// import Record from '../../components/profile/Record';
 import RecordContainer from './RecordContainer';
-import Source from '../../components/profile/Source';
+import BookmarkContainer from './BookmarkContainer';
 import Post from '../../components/profile/Post';
 
 import sampleData from '../../sampleData'
@@ -80,7 +79,7 @@ const ProfileContainer = () => {
             // <Record records={records}/>
             <RecordContainer />
           ) : tab === 'source' ? (
-            <Source />
+            <BookmarkContainer />
           ) : (
             <Post />
           )}
