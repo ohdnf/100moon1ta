@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Navbar from "../../components/common/Navbar";
 import LoginContainer from "./LoginContainer";
@@ -9,10 +9,7 @@ import { logout } from '../../modules/user';
 
 const NavbarContainer = () => {
   const [modal, setModal] = useState("");
-  // const { user, error } = useSelector(({ user }) => ({
-  //   user: user.user,
-  //   error: user.error,
-  // }));
+  const { user } = useSelector(({ user }) => ({ user: user.user }));
   // const [nextUrl, setNextUrl] = useState("");
 
   const changeModal = (target) => {
@@ -21,9 +18,10 @@ const NavbarContainer = () => {
   const dispatch = useDispatch();
 
   const onLogout = () => {
-    dispatch(logout());
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    alert("로그아웃 되었습니다.")
+    dispatch(logout());    
   };
 
   return (
