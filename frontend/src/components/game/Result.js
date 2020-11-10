@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom'
 // import { useSelector } from 'react-redux';
 
+import { bookmarkGame } from '../../lib/api/user'
+import { useSelector } from 'react-redux';
+
 const ResultBlock = styled.div`
   background: DeepSkyBlue;
   border: 0.25rem solid BlueViolet;
@@ -43,6 +46,9 @@ const ItemTitle = styled.div`
   font-size: 1.25rem;
   font-weight: bold;
   height: 100%;
+  :hover {
+    cursor: pointer;
+  }
 `;
 const ItemTagBlock = styled.div`
   margin: 0.25rem;
@@ -63,13 +69,20 @@ const FlexDiv = styled.div`
   display: flex;
 `;
 
+const ImgDiv = styled.img`
+  display: block;
+  :hover {
+    cursor: pointer;
+  }
+`
+
 const ResultItem = ({ game }) => {
   const { id, title, tags, subscribers } = game;
-  // const { user } = useSelector(({ user }) => ({
-  //   user: user.user,
-  // }));
+  const { user, token } = useSelector(({ user }) => ({
+    user: user.user,
+    token: user.token,
+  }));
   const history = useHistory()
-  const user = { email: 'gabrielshaw@hunter.net' };
   let isBookmarked = false;
   if (subscribers) {
     subscribers.forEach((subscriber) => {
@@ -78,13 +91,35 @@ const ResultItem = ({ game }) => {
       }
     });
   }
+  const onBookmark = () => {
+    if (!user) {
+      alert("로그인이 필요합니다")
+    } else {
+      bookmarkGame({
+        data: { source_id: id}
+      })
+      .then((res) => {
+        // 성공시 북마크 여부를 바군다
+        isBookmarked = !isBookmarked
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+    }
+  }
+
+
   return (
-    <ResultItemDiv onClick={() => history.push(`/games/${id}`)}>
+    <ResultItemDiv>
       <div>
         <FlexDiv>
           <img src={require('../../images/js.png')} height="40rem" alt="JS" />
           {/* <div>{category}</div> */}
-          <ItemTitle> {title || '기본 타이틀'} </ItemTitle>
+          <ItemTitle
+             onClick={() => history.push(`/games/${id}`)}
+          >
+            {title || '기본 타이틀'}
+          </ItemTitle>
         </FlexDiv>
       </div>
       <div>
@@ -93,12 +128,13 @@ const ResultItem = ({ game }) => {
             {tags?.length &&
               tags.map((tag) => <ItemTag key={tag.content}>{tag.content}</ItemTag>)}
           </ItemTagBlock>
-          <img
+          <ImgDiv
             src={require(isBookmarked
               ? '../../images/bookmark3.png'
               : '../../images/bookmark2.png')}
             height="40rem"
             alt="bookmark1"
+            onClick={onBookmark}
           />
         </FlexDiv>
       </div>
