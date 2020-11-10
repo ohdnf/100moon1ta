@@ -1,5 +1,7 @@
 import client from './client';
 
+// accounts에 해당하는 API콜
+
 export const signup = (data) =>
   client({
     method: 'post',
@@ -25,3 +27,17 @@ export const checkNickname = (nickname) =>
     method: 'get',
     url: `/accounts/nickname-duplicated/${nickname}/`,
   });
+
+export const bookmarkGame = (data) =>
+  client({
+    method: 'post',
+    url: `/accounts/bookmark/`,
+    data: data,
+    //{ source_id: source_id}
+  });
+  
+export const getBookmarkedGames = () =>
+  client({
+    method: 'post',
+    url: `/accounts/bookmark/`,
+  })
