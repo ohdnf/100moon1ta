@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Navbar from "../../components/common/Navbar";
 import LoginContainer from "./LoginContainer";
@@ -9,10 +9,10 @@ import { logout } from '../../modules/user';
 
 const NavbarContainer = () => {
   const [modal, setModal] = useState("");
-  const { user, error } = useSelector(({ user }) => ({
-    user: user.user,
-    error: user.error,
-  }));
+  // const { user, error } = useSelector(({ user }) => ({
+  //   user: user.user,
+  //   error: user.error,
+  // }));
   // const [nextUrl, setNextUrl] = useState("");
 
   const changeModal = (target) => {

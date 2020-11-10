@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 const SummaryBlock = styled.div`
   width: 100%;
@@ -33,7 +33,7 @@ const GuideBlock = styled.div`
 
 const Summary = () => {
 
-  const history = useHistory();
+  // const history = useHistory();
   return (
     <>
       <div>타자연습 Summary</div>

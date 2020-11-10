@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 const SourceBlock = styled.div`
   width: 100%;
@@ -47,7 +47,7 @@ const Source = ({ todayContent }) => {
     description: todayContent?.description || '자기소개입니다.',
     link: todayContent?.link || 'www.edu.ssafy.com',
   };
-  const history = useHistory();
+  // const history = useHistory();
   return (
     <SourceBlock>
       <div>오늘의 타자</div>

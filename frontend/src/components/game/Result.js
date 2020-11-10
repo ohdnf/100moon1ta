@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom'
+// import { useSelector } from 'react-redux';
 
 const ResultBlock = styled.div`
   background: DeepSkyBlue;
   border: 0.25rem solid BlueViolet;
+  margin-bottom: 20rem;
 `;
 
 const ResultTitleBlock = styled.div`
@@ -17,9 +19,9 @@ const ResultTitle = styled.div`
   font-weight: bolder;
 `;
 
-const HamburgerButton = styled.image`
-  display: block;
-`;
+// const HamburgerButton = styled.image`
+//   display: block;
+// `;
 
 const ResultItemBlock = styled.div`
   margin: 0.25rem;
@@ -33,9 +35,9 @@ const ResultItemDiv = styled.div`
   justify-content: space-between;
 `;
 
-const ItemImage = styled.image`
-  display: block;
-`;
+// const ItemImage = styled.image`
+//   display: block;
+// `;
 
 const ItemTitle = styled.div`
   font-size: 1.25rem;
@@ -62,10 +64,11 @@ const FlexDiv = styled.div`
 `;
 
 const ResultItem = ({ game }) => {
-  const { title, tags, subscribers } = game;
+  const { id, title, tags, subscribers } = game;
   // const { user } = useSelector(({ user }) => ({
   //   user: user.user,
   // }));
+  const history = useHistory()
   const user = { email: 'gabrielshaw@hunter.net' };
   let isBookmarked = false;
   if (subscribers) {
@@ -76,7 +79,7 @@ const ResultItem = ({ game }) => {
     });
   }
   return (
-    <ResultItemDiv>
+    <ResultItemDiv onClick={() => history.push(`/games/${id}`)}>
       <div>
         <FlexDiv>
           <img src={require('../../images/js.png')} height="40rem" alt="JS" />
@@ -104,27 +107,6 @@ const ResultItem = ({ game }) => {
 };
 
 const Result = ({ games }) => {
-
-  /* 
-  game
-  "id": Int,
-  "category": Stirng,
-  "length": Int,
-  "difficulty": Int,
-  "likers": [ objects ]
-    "id": Int,
-    "email": String,
-    "username": String,
-    "profile_image": null, => 아직 구현아닌듯
-    "comment": "", => 뭘까(랭킹의 그 문구인듯)
-  "subscribers" : [ objects ]
-    위와 동일
-  요청중
-  "title" : 타이틀
-  "description": 설명
-  출처는 안해도 됨
-*/
-
   return (
     <ResultBlock>
       <ResultTitleBlock>
@@ -143,3 +125,23 @@ const Result = ({ games }) => {
 };
 
 export default Result;
+
+ /* 
+  game
+  "id": Int,
+  "category": Stirng,
+  "length": Int,
+  "difficulty": Int,
+  "likers": [ objects ]
+    "id": Int,
+    "email": String,
+    "username": String,
+    "profile_image": null, => 아직 구현아닌듯
+    "comment": "", => 뭘까(랭킹의 그 문구인듯)
+  "subscribers" : [ objects ]
+    위와 동일
+  요청중
+  "title" : 타이틀
+  "description": 설명
+  출처는 안해도 됨
+*/

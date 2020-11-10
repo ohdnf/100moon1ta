@@ -12,44 +12,30 @@ const FlexDiv = styled.div`
   display: flex;
 `;
 const StyledDiv = styled.div`
-  width: 1rem;
-  height: 1rem;
-  backgrount: ${(props) => props.now ? "blue" : "white" };
+  width: 2rem;
+  height: 2rem;
+  background: ${(props) => props.now ? "blue" : "white" };
 `;
-/*
-	페이지 네이션
-	1. 한 페이지에 10개씩
-	2. 한 번에 5페이지씩
-	=> 한 세트 : 50개
-    
-	1. 계산
-		cnt_pages : n // 10 + 1 if n % 10
-		cnt_set : cnt_pages // 5 + 1 if cnt_pages % 5
-	2. 버튼
-		우측 now_set != cnt_set => enable
-		좌측 set != 1 => enable
-		(now_set*5)-4 ~ min( (now_set*5) , cnt_set ) 
-	3. 출력
-		items 걍 출력?
-*/
+
 const Pagination = ({page, setPage, pageIndex, setPageIndex, maxPage}) => {
+  const isFirstPageIndex = pageIndex > 1 ? false : true
+  const isLastPageIndex = maxPage > pageIndex*10 ? false : true
   const PageRange = function() {
-    if (maxPage === 0) return [];
-    if (maxPage <= pageIndex*10) {
-      // 1, 1
-      // 100 < 10
-      // 1,2,3,4,5,6,7,8,9,10
-      // 0 => 
-      return new Array(maxPage % 10 ? parseInt(maxPage % 10) + 1 : parseInt(maxPage % 10) ).fill(0).map((a, i) => i+1+(pageIndex-1)*10);
+    if (!maxPage) return [];
+    if (isLastPageIndex) {
+      // 라스트 인덱스
+      const numberOfPageAtLastIndex = maxPage-((pageIndex-1)*10)
+      return new Array(numberOfPageAtLastIndex).fill(0).map((a, i) => (i+1)+(pageIndex-1)*10);
     } else {
-      return new Array(10).fill(0).map((a, i) => i+1+(pageIndex-1)*10);
+      // 라스트 인덱스 아님 => 무조건 10개
+      return new Array(10).fill(0).map((a, i) => (i+1)+(pageIndex-1)*10);
     }
   }
   return (
     <PaginationBlock>
       <FlexDiv>
         {
-          pageIndex >= 2 &&
+          !isFirstPageIndex &&
           <StyledDiv onClick={()=>{setPageIndex(pageIndex-1)}}> {"<"} </StyledDiv>
         }
         {maxPage !== 0 &&
@@ -65,7 +51,7 @@ const Pagination = ({page, setPage, pageIndex, setPageIndex, maxPage}) => {
             </StyledDiv>
           ))}
         {
-          maxPage > pageIndex*10 &&
+          !isLastPageIndex &&
           <StyledDiv onClick={()=>{setPageIndex(pageIndex+1)}}> {">"} </StyledDiv>
         }
 
