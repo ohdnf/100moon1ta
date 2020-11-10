@@ -34,8 +34,8 @@ const Join = ({
         <div className="modalLabel">회원가입창</div>
         <Input name="email" onChange={onChange} fullWidth/><br />
         <Input name="nickname" onChange={onChange} /> <Button onClick={onCheckNickname} disabled={nicknameValidation}>중복체크</Button><br />
-        <Input name="password" onChange={onChange} fullWidth/><br />
-        <Input name="passwordConfirm" onChange={onChange} fullWidth/>
+        <Input name="password" placeholderString={"password1"} onChange={onChange} fullWidth/><br />
+        <Input name="passwordConfirm" placeholderString={"password2"} onChange={onChange} fullWidth/>
 
         <Button onClick={onJoin} disabled={!submitEnable}>회원가입</Button><br />
         <Button onClick={() => changeModal("login")}>로그인으로</Button>

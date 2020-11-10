@@ -82,6 +82,7 @@ const user = handleActions(
   {
     [SIGNUP_SUCCESS]: (state, { payload: detail, meta: response }) => ({
       ...state,
+      error: null,
       detail: detail,
     }),
     [SIGNUP_FAILURE]: (state, { payload: error }) => ({
@@ -92,6 +93,7 @@ const user = handleActions(
     ...state,
       user: user.user,
       token: user.token,
+      error: null,
     }),
     [LOGIN_FAILURE]: (state, { payload: error }) => ({
     ...state,
@@ -101,7 +103,8 @@ const user = handleActions(
       ...state,
       user: null,
       token: null,
-      }),
+      error: null
+    }),
   },
   initialState,
 );

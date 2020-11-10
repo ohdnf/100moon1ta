@@ -6,8 +6,9 @@ import { login } from '../../modules/user';
 import sampleData from '../../sampleData';
 
 const LoginContainer = ({ changeModal }) => {
-  const { user, token } = useSelector(({ user }) => ({
+  const { user, token, error } = useSelector(({ user }) => ({
     user: user.user,
+    error: user.error,
     token: user.token,
   }));
   const [email, setEmail] = useState('');
@@ -25,27 +26,13 @@ const LoginContainer = ({ changeModal }) => {
     }
   };
   
-  // temp는 개발용
-  const [ temp, setTemp ] = useState({
-    user: null,
-    token: null,
-  })
-  // temp는 개발용, 이후 삭제 바람
-  
   const onLogin = () => {
     const data = {
       email: email,
       password: password,
     };
-    // 목업 코드
-    setTemp({
-      ...temp,
-      user: sampleData.getLoginUser().user,
-      token: sampleData.getLoginUser().token,
-    })
-    // 위는 목업 코드
-    // 아래는 찐 코드
-    // dispatch(login(data));
+    dispatch(login(data));
+
   };
 
   // const githubLogin = () => {
@@ -56,22 +43,24 @@ const LoginContainer = ({ changeModal }) => {
   // };
 
   useEffect(() => {
-    if (temp.user) {
-      localStorage.setItem('user', JSON.stringify(temp.user));
-      localStorage.setItem('token', temp.token);
-      alert("로그인 되었습니다.")
-      changeModal('');
-    }
-    // 위는 개발용 목업 코드
-    // 아래는 리얼 코드
-    if (user && changeModal !== '') {
+    if (user) {
       // 로그인 성공시
       localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('token', JSON.stringify(token));
+      localStorage.setItem('token', token);
       alert("로그인 되었습니다.")
       changeModal('');
     }
-  }, [dispatch, changeModal, login, temp, setTemp]);
+  }, [dispatch, changeModal, login]);
+
+  useEffect(() => {
+    if (error) {
+      if(error.message.indexOf('400') === -1) {
+        alert(error.message + '\n' + '로그인 요청에 실패했습니다.')
+      } else {
+        alert(error.message + '\n' + '이메일 혹은 비밀번호가 잘못되었습니다.')
+      }
+    }
+  }, [dispatch, error])
   return (
     <Login onChange={onChange} changeModal={changeModal} onLogin={onLogin} />
   );
