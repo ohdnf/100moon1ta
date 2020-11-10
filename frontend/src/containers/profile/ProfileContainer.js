@@ -13,9 +13,12 @@ import styled, { css } from 'styled-components';
 
 import Profile from '../../components/profile/Profile';
 import ProfileRecord from '../../components/profile/ProfileRecord';
-import Record from '../../components/profile/Record';
+// import Record from '../../components/profile/Record';
+import RecordContainer from './RecordContainer';
 import Source from '../../components/profile/Source';
 import Post from '../../components/profile/Post';
+
+import sampleData from '../../sampleData'
 
 // grid-template-columns : 좌우로 프레임 분할
 // grid-template-rows : 상하로 프레임 분할
@@ -55,6 +58,7 @@ const StyledDiv = styled.div`
 const ProfileContainer = () => {
   // 유저 정보 => redux
   const [tab, setTab] = useState('record');
+  console.log(tab)
   return (
     <>
       <MainBlock>
@@ -73,7 +77,8 @@ const ProfileContainer = () => {
             <StyledDiv onClick={() => setTab('post')}>작성글</StyledDiv>
           </FlexBox>
           {tab === 'record' ? (
-            <Record />
+            // <Record records={records}/>
+            <RecordContainer />
           ) : tab === 'source' ? (
             <Source />
           ) : (

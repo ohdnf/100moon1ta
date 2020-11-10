@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import styled, { css } from 'styled-components';
 
 const RecordBlock = styled.div`
@@ -9,6 +10,9 @@ const RecordTitle = styled.div`
   font-size: 1.2rem;
   font-weight: bolder;
   margin-right: 1rem;
+  :hover {
+    cursor: pointer;
+  }
 `;
 const RecordItem = styled.div`
   font-weight: bolder;
@@ -27,26 +31,22 @@ const FlexBox = styled.div`
   }
 `
 
-const Record = () => {
-  const sampleData = [
-    { title: "기록 샘플 첫번째 타이틀", time:20, percent:92, grade:92, createAt: "2020.10.03"},
-    { title: "기록 샘플 두번째 타이틀", time:51, percent:95, grade:95, createAt: "2020.10.05"},
-    { title: "기록 샘플 세번째 타이틀", time:33, percent:90, grade:90, createAt: "2020.10.07"},
-  ]
+const Record = ({ records }) => {
+  const history = useHistory()
   return (
-    <RecordBlock>
-      {sampleData &&
-        sampleData.map((item) => (
-          <FlexBox spaceBetween key={item.title}>
+    <RecordBlock >
+      {records &&
+        records.map((record) => (
+          <FlexBox spaceBetween key={record.id} >
             <div>
               <FlexBox>
-                <RecordTitle>{item.title}</RecordTitle>
-                <RecordItem>{ item.time }초</RecordItem>
-                <RecordItem>{ item.percent }%</RecordItem>
-                <RecordItem>{ item.grade }점</RecordItem>
+                <RecordTitle onClick={()=>{history.push(`/games/${record.id}`)}} >{record.title}</RecordTitle>
+                <RecordItem>{ record.time }초</RecordItem>
+                <RecordItem>{ record.percent }%</RecordItem>
+                <RecordItem>{ record.grade }점</RecordItem>
               </FlexBox>
             </div>
-            <RecordItem>{ item.createAt }</RecordItem>
+            <RecordItem>{ record.createAt }</RecordItem>
           </FlexBox>
         ))}
     </RecordBlock>
