@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom'
 // import { useSelector } from 'react-redux';
@@ -76,31 +76,34 @@ const ImgDiv = styled.img`
   }
 `
 
-const ResultItem = ({ game }) => {
+export const ResultItem = ({ game }) => {
   const { id, title, tags, subscribers } = game;
-  const { user, token } = useSelector(({ user }) => ({
-    user: user.user,
-    token: user.token,
-  }));
+  const { user } = useSelector(({ user }) => ({ user: user.user, }));
   const history = useHistory()
-  let isBookmarked = false;
+  const [ isBookmarked, setIsBookmarked ] = useState(game.isBookmarked || false)
+  
+  // 해당 코드는 isBookmarked가 column에 추가 되면 불필요
   if (subscribers) {
     subscribers.forEach((subscriber) => {
       if (subscriber.email === user.email) {
-        isBookmarked = true;
+        // isBookmarked = true;
+        setIsBookmarked(true)
       }
     });
   }
+  // 해당 코드는 isBookmarked가 column에 추가 되면 불필요
+
   const onBookmark = () => {
     if (!user) {
       alert("로그인이 필요합니다")
     } else {
+      // API 요청
       bookmarkGame({
         data: { source_id: id}
       })
       .then((res) => {
-        // 성공시 북마크 여부를 바군다
-        isBookmarked = !isBookmarked
+        // 성공시 북마크 여부를 바꾼다
+        setIsBookmarked(!isBookmarked)
       })
       .catch((err) => {
         console.error(err)

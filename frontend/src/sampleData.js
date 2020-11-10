@@ -25,6 +25,7 @@ const getGamesForPage = (numberOfPage, maxPage, numOfGames) =>
     }));
 
 // 3. getRecord
+// - 프로필/기록 탭의 데이터 생성
 const getRecords = (n) => 
   Array(n)
     .fill(0)
@@ -41,9 +42,23 @@ const getRecords = (n) =>
       subscribers: [],
     }));
 
+// 4. getBookmarkedGame
+// - 프로필/기록 탭의 데이터 생성
+const getBookmarkedGame = (n) => 
+Array(n)
+  .fill(0)
+  .map((a, idx) => ({
+    // Record 하나의 오브젝트
+    id: idx + 1,
+    title: `1페이지 ${idx + 1}번째 게임 소스`,
+    tags: [{ content: '태그1' }, { content: '태그2' }, { content: '태그3' }],
+    subscribers: idx%3 !== 0 ? [] : [ "sample@naver.com"],
+    isBookmarked: idx%3 !== 0 ? false : true,
+  }));
 const sampleData = {
   getGames,
   getGamesForPage,
   getRecords,
+  getBookmarkedGame,
 };
 export default sampleData;

@@ -72,7 +72,7 @@ const initialState = {
     ? JSON.parse(localStorage.getItem('user'))
     : null,
   token: localStorage.getItem('token')
-  ? JSON.parse(localStorage.getItem('token'))
+  ? localStorage.getItem('token')
   : null,
   error: null,
 };
