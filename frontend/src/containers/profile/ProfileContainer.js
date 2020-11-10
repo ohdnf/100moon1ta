@@ -8,7 +8,7 @@
 // 3-2. 북마크한 소스 => SourceContainer.js
 // 3-3. 작성글 => PostsContainer.js
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import Profile from '../../components/profile/Profile';
@@ -57,16 +57,27 @@ const StyledDiv = styled.div`
 const ProfileContainer = () => {
   // 유저 정보 => redux
   const [tab, setTab] = useState('record');
-  console.log(tab)
+  const userProfile = {
+    nickname: "팀원보충합니다ㅠ_ㅠ",
+    email: "ssafy@naver.com",
+  }
+  const userRecord = {
+    grade:999,
+    time: 77,
+    accuracy: 99.99,
+  }
+  useEffect(()=> {
+    
+  }, [])
   return (
     <>
       <MainBlock>
         <InfoBlock>
           <Block backColor="Yellow">
-            <Profile />
+            <Profile userProfile={userProfile}/>
           </Block>
           <Block backColor="Blue">
-            <ProfileRecord />
+            <ProfileRecord userRecord={userRecord}/>
           </Block>
         </InfoBlock>
         <Block backColor="Pink">
