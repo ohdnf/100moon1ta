@@ -1,5 +1,5 @@
-import React from "react";
-import styled, { css } from "styled-components";
+import React from 'react';
+import styled, { css } from 'styled-components';
 
 const StyledInput = styled.input`
   margin-top: 1rem;
@@ -11,15 +11,16 @@ const StyledInput = styled.input`
     `}
 `;
 
-const Input = ({ name, onChange, fullWidth }) => {
-  const type = name === "password" ? "password" : "text";
+const Input = ({ name, onChange, fullWidth, placeholderString }) => {
+  const type =
+    name === 'password' || name === 'passwordConfirm' ? 'password' : 'text';
   return (
     <>
       <StyledInput
         id={name}
         type={type}
         name={name}
-        placeholder={name}
+        placeholder={placeholderString||name}
         required
         fullWidth={fullWidth}
         onChange={onChange}

@@ -18,7 +18,7 @@ export const login = (data) =>
 
 export const logout = () =>
   client({
-    method: 'get',
+    method: 'post',
     url: `/accounts/logout/`,
   });
 
