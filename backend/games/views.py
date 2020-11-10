@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
-from django.db.models import Sum
+from django.db.models import Sum, Avg, F, FloatField, Func
 from django.shortcuts import get_object_or_404
 from django.views.decorators.cache import cache_page
 from django.core.cache import cache
@@ -194,6 +194,12 @@ def history_retrieve_create(request, pk):
 
 
 # 사용자 순위 관련 API
+class float2str(Func):
+    function = 'float2str'
+    
+   
+    
+    
 
 @api_view(['GET'])
 @cache_page(CACHE_TTL)
@@ -201,7 +207,9 @@ def rank_retrieve(request):
     """
     각 플레이어마다 갖고 있는 모든 점수를 합산하여 30위까지 랭킹을 반환
     """
-    queryset = cache.get_or_set('queryset', GameHistory.objects.values('player').annotate(total_score=Sum('score')).order_by('-total_score')[:30])
+    queryset = cache.get_or_set('queryset', GameHistory.objects.values('player__username',)
+    .annotate(total_score=Sum('score')).
+    annotate(avg_speed=F('source__length')-Func('game_time', function='float2str')).order_by('-total_score')[:30])
     serializer = RankSerializer(queryset, many=True)
     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
