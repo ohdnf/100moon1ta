@@ -55,10 +55,23 @@ Array(n)
     subscribers: idx%3 !== 0 ? [] : [ "sample@naver.com"],
     isBookmarked: idx%3 !== 0 ? false : true,
   }));
+
+// 5. getLoginUser
+// - 로그인 성공시 받을 데이터
+const getLoginUser = () =>({
+  user: {
+    username: "jhj",
+    email: "jhj@naver.com",
+    userid: 3395,
+  },
+  token: "토오큰"
+})
+
 const sampleData = {
   getGames,
   getGamesForPage,
   getRecords,
   getBookmarkedGame,
+  getLoginUser,
 };
 export default sampleData;
