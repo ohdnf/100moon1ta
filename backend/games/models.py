@@ -36,7 +36,7 @@ class Source(models.Model):
 class GameHistory(models.Model):
     player = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) # 유저가 삭제되면 기록도 같이 삭제? 어느 소스에 대한 기록
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
-    game_time = models.CharField(max_length=8, default='00:00:00')
+    game_time = models.FloatField()
     precision = models.FloatField()
     typo = JSONField()
     score = models.IntegerField()

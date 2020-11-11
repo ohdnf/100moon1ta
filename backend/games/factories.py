@@ -41,7 +41,7 @@ class GameHistoryFactory(DjangoModelFactory):
     class Meta:
         model = GameHistory
     
-    game_time = factory.Faker('time')
+    game_time = factory.Faker('random_int',min=0, max=100)
     precision = factory.Faker('random_int', min=0, max=100)
     typo = factory.Faker('json')
     score = factory.Faker('random_int', min=0, max=100)

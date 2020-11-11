@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
-from django.db.models import Sum
+from django.db.models import Sum, Avg, Count, F, FloatField, ExpressionWrapper, Func
 from django.shortcuts import get_object_or_404
 from django.views.decorators.cache import cache_page
 from django.core.cache import cache
@@ -192,16 +192,24 @@ def history_retrieve_create(request, pk):
     elif request.method == 'POST':
         return history_create(request)
 
+# 반올림 용
+class Round(Func):
+    function = 'ROUND'
+    template='%(function)s(%(expressions)s, 2)'
 
-# 사용자 순위 관련 API
-
+# 사용자 순위 관련 API   
 @api_view(['GET'])
 @cache_page(CACHE_TTL)
 def rank_retrieve(request):
     """
     각 플레이어마다 갖고 있는 모든 점수를 합산하여 30위까지 랭킹을 반환
     """
-    queryset = cache.get_or_set('queryset', GameHistory.objects.values('player').annotate(total_score=Sum('score')).order_by('-total_score')[:30])
+    queryset = cache.get_or_set('queryset', GameHistory.objects.values('player__username', 'player__comment')
+        .annotate(game_count=Count('source'))
+        .annotate(avg_precision=Round(Avg('precision')))
+        .annotate(total_score=Sum('score'))
+        .annotate(avg_speed=Round(Avg(ExpressionWrapper(F('source__length')/F('game_time'), output_field=FloatField()))))
+        .order_by('-total_score')[:30])
     serializer = RankSerializer(queryset, many=True)
     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
