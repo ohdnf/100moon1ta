@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import Search from '../../components/game/Search';
 import Result from '../../components/game/Result';
 import Pagination from '../../components/game/Pagination';
-
-// import { getGames } from '../../lib/api/game';
-
+// 아래는 request 나가는 API
+import { getGames } from '../../lib/api/game';
+// 아래는 샘플데이터 생성코드
 import sampleData from '../../sampleData'
+
 const GameContainer = () => {
   // const [tags, setTags] = useState([]);
   // const [query, setQuery] = useState('');
@@ -25,29 +26,39 @@ const GameContainer = () => {
   }
   useEffect(() => {
     // 브라우저 API를 이용하여 문서 타이틀을 업데이트합니다.
-    // getGames()
-    //   .then((response) => {
-    //     setGames(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     console.error(error.response);
-    //     console.error(error.request);
-    //     console.error(error.message);
-    //   });
+    getGames()
+      .then((response) => {
+        const gameList = response.data
+        setGames(gameList)
+        settingForPage(gameList.length)
+      })
+      .catch((error) => {
+        console.log(error);
+        console.error(error.response);
+        console.error(error.request);
+        console.error(error.message);
+      });
 
-    //아래 코드는 목업데이터활용 => API로 바꿔주면 됩니다.
-    const { numberOfGames } = sampleData.getGames(123)
-    
-    // setGames(firstPageOfGames) // getGames로 첫페이지 데이터 받아온다면.
-    settingForPage(numberOfGames)
+    // //아래 코드는 목업데이터활용 => API로 바꿔주면 됩니다.
+    // const { numberOfGames } = sampleData.getGames(123) // 데이터 갯수. 
+    // // setGames(firstPageOfGames) // getGames로 첫페이지 데이터 받아온다면.
+    // settingForPage(numberOfGames)
   }, []);
 
   useEffect(() => {
     if(page === 0) return;
     if(page > 0) {
-      // 아래 코드는 목업데이터활용 => API로만 바꿔주면 됩니다.      
-      setGames(sampleData.getGamesForPage(page, maxPage, numOfGames));
+      getGames()
+      .then((response) => {
+        const gameList = response.data
+        setGames(gameList)
+      })
+      .catch((error) => {
+        console.log(error);
+        console.error(error.response);
+        console.error(error.request);
+        console.error(error.message);
+      });
     }
   }, [page, maxPage]);
   return (

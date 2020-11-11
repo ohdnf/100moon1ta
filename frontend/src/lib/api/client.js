@@ -9,12 +9,16 @@ const client = axios.create({
   baseURL: requestURL + apiURL,
 });
 
-// JWT 헤더
+// // JWT 헤더
 const token = localStorage.getItem('token') // 없으면 null
 if (token) {
   console.log("token헤더에 설정합니다", token)
-  client.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+  client.defaults.headers.common['Authorization'] = 'JWT ' + token;
+} else {
+  console.log("token헤더 삭제합니다")
+  delete client.defaults.headers.common["Authorization"];
 }
+
 export default client;
 
 /*

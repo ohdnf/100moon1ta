@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 // import { useSelector } from 'react-redux';
 
-import { bookmarkGame } from '../../lib/api/user'
+import { bookmarkGame } from '../../lib/api/user';
 import { useSelector } from 'react-redux';
 
 const ResultBlock = styled.div`
@@ -74,43 +74,52 @@ const ImgDiv = styled.img`
   :hover {
     cursor: pointer;
   }
-`
+`;
 
 export const ResultItem = ({ game }) => {
   const { id, title, tags, subscribers } = game;
-  const { user } = useSelector(({ user }) => ({ user: user.user, }));
-  const history = useHistory()
-  const [ isBookmarked, setIsBookmarked ] = useState(game.isBookmarked || false)
-  
-  // 해당 코드는 isBookmarked가 column에 추가 되면 불필요
-  if (subscribers) {
-    subscribers.forEach((subscriber) => {
-      if (subscriber.email === user.email) {
-        // isBookmarked = true;
-        setIsBookmarked(true)
-      }
-    });
-  }
-  // 해당 코드는 isBookmarked가 column에 추가 되면 불필요
+
+  const { user } = useSelector(({ user }) => ({ user: user.user }));
+  const history = useHistory();
+
+  // // 해당 코드는 isBookmarked가 column에 추가 되면 불필요
+  // let initialBookmarked = false;
+  // if (subscribers && user) {
+  //   subscribers.forEach((subscriber) => {
+  //     if (subscriber.id === user.id) {
+  //       // isBookmarked = true;
+  //       initialBookmarked = true;
+  //     }
+  //   });
+  // };
+  // // 해당 코드는 isBookmarked가 column에 추가 되면 불필요
+
+  const [isBookmarked, setIsBookmarked] = useState(
+    game.isBookmarked || false
+  );
 
   const onBookmark = () => {
+    // 비로그인 유저
     if (!user) {
-      alert("로그인이 필요합니다")
-    } else {
-      // API 요청
-      bookmarkGame({
-        data: { source_id: id}
-      })
+      alert('로그인이 필요합니다');
+      return;
+    }
+
+    // API 요청
+    const data = {
+      source_id: id
+    };
+    bookmarkGame(data)
       .then((res) => {
         // 성공시 북마크 여부를 바꾼다
-        setIsBookmarked(!isBookmarked)
+        // setIsBookmarked(!isBookmarked);
+        setIsBookmarked(!isBookmarked);
       })
       .catch((err) => {
-        console.error(err)
-      })
-    }
-  }
-
+        // 따로 반응하지 않는다.
+        console.error(err);
+      });
+  };
 
   return (
     <ResultItemDiv>
@@ -118,9 +127,7 @@ export const ResultItem = ({ game }) => {
         <FlexDiv>
           <img src={require('../../images/js.png')} height="40rem" alt="JS" />
           {/* <div>{category}</div> */}
-          <ItemTitle
-             onClick={() => history.push(`/games/${id}`)}
-          >
+          <ItemTitle onClick={() => history.push(`/games/${id}`)}>
             {title || '기본 타이틀'}
           </ItemTitle>
         </FlexDiv>
@@ -129,8 +136,11 @@ export const ResultItem = ({ game }) => {
         <FlexDiv>
           <ItemTagBlock>
             {tags?.length &&
-              tags.map((tag) => <ItemTag key={tag.content}>{tag.content}</ItemTag>)}
+              tags.map((tag) => (
+                <ItemTag key={tag.content}>{tag.content}</ItemTag>
+              ))}
           </ItemTagBlock>
+          {isBookmarked ? "t" : "f"}
           <ImgDiv
             src={require(isBookmarked
               ? '../../images/bookmark3.png'
@@ -164,23 +174,3 @@ const Result = ({ games }) => {
 };
 
 export default Result;
-
- /* 
-  game
-  "id": Int,
-  "category": Stirng,
-  "length": Int,
-  "difficulty": Int,
-  "likers": [ objects ]
-    "id": Int,
-    "email": String,
-    "username": String,
-    "profile_image": null, => 아직 구현아닌듯
-    "comment": "", => 뭘까(랭킹의 그 문구인듯)
-  "subscribers" : [ objects ]
-    위와 동일
-  요청중
-  "title" : 타이틀
-  "description": 설명
-  출처는 안해도 됨
-*/
