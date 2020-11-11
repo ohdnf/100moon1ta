@@ -93,9 +93,8 @@ export const ResultItem = ({ game }) => {
   //   });
   // };
   // // 해당 코드는 isBookmarked가 column에 추가 되면 불필요
-
   const [isBookmarked, setIsBookmarked] = useState(
-    game.isBookmarked || false
+    game.isBookmarked || window.location.pathname === "/profile" ? true : false
   );
 
   const onBookmark = () => {
