@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { getRanking } from '../../lib/api/rank';
+import { getUserList } from '../../lib/api/admin';
+import CheckBox from '../../components/admin/CheckBox';
 
-const Rank = () => {
-  const [ranking, setRanking] = useState([]);
+const UserList = () => {
+  const [ userList, setUserList] = useState([]);
 
   useEffect(() => {
     // 브라우저 API를 이용하여 문서 타이틀을 업데이트합니다.
-    getRanking()
+    getUserList()
       .then((response) => {
         // 성공시 => 뭐가 성공인지는 확인 필요
         if (typeof response.data === 'object') {
-          setRanking(response.data);
+          setUserList(response.data);
         } else {
           console.log('타입이 object가 아닙니다!', typeof response.data);
         }
@@ -26,13 +27,16 @@ const Rank = () => {
 
   return (
     <ol>
-      {ranking.map((e, index) => (
+      asdf
+      {userList.map((e, index) => (
         <li key={index}>
-          {e.player__username} : {e.total_score}
+          {e.email} : {e.username}
+          <CheckBox uid={e.id} verified={e.verified} isStaff={e.is_staff} isBan={e.is_ban}/>
         </li>
       ))}
+
     </ol>
   );
 };
 
-export default Rank;
+export default UserList;

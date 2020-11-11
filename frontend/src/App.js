@@ -14,6 +14,7 @@ import CommunityPage from './pages/CommunityPage';
 import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 import RankPage from './pages/RankPage';
+import AdminPage from './pages/AdminPage';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route component={CommunityPage} path="/community/" exact />
         <Route component={ProfilePage} path="/profile/" exact />
         <Route component={RankPage} path="/rank/" exact />
+        <Route component={AdminPage} path="/admin/" exact />
         <Route component={NotFoundPage} path="*" />
       </Switch>
     </div>

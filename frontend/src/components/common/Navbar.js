@@ -46,6 +46,7 @@ const Navbar = ({ changeModal, onLogout }) => {
     { name: '커뮤니티', toLink: '/community' },
     { name: '내 페이지', toLink: '/profile' },
     { name: '랭킹', toLink: '/rank' },
+    { name: 'ADMIN', toLink: '/admin' },
   ];
   const history = useHistory();
   return (
