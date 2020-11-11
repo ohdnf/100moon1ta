@@ -18,6 +18,7 @@ import BookmarkContainer from './BookmarkContainer';
 import Post from '../../components/profile/Post';
 
 import sampleData from '../../sampleData'
+import { getMy } from '../../lib/api/user';
 
 // grid-template-columns : 좌우로 프레임 분할
 // grid-template-rows : 상하로 프레임 분할
@@ -57,27 +58,55 @@ const StyledDiv = styled.div`
 const ProfileContainer = () => {
   // 유저 정보 => redux
   const [tab, setTab] = useState('record');
-  const userProfile = {
-    nickname: "팀원보충합니다ㅠ_ㅠ",
-    email: "ssafy@naver.com",
+//   {
+//     "id": 52,
+//     "email": "jhj9109@naver.com",
+//     "username": "jhj9109",
+//     "profile_image": "http://localhost:8000/media/2",
+//     "comment": "",
+//     "record": 0
+// }
+  const [userProfile, setUserProfile] = useState(null)
+  const [userRecord, setUserRecord] = useState(null)
+  const emptyProfile = {
+    id: 0,
+    email: "",
+    username: "",
+    profile_image: "",
+    comment: "",
+    record: 0,
   }
-  const userRecord = {
-    grade:999,
-    time: 77,
-    accuracy: 99.99,
+  const emptyRecord = {
+    grade: 0,
+    time: 0,
+    accuracy: 0,
   }
   useEffect(()=> {
-    
+    getMy()
+    .then((res) => {
+      const userData = res.data
+      if (userProfile === null) {
+        setUserProfile(userData)
+      } else {
+        setUserProfile({
+          ...userProfile,
+          userData
+        })
+      }
+      /* 
+        이 부분엔 userRecord를 바꾸는 코드가 있어야 할듯
+      */
+    })
   }, [])
   return (
     <>
       <MainBlock>
         <InfoBlock>
           <Block backColor="Yellow">
-            <Profile userProfile={userProfile}/>
+            <Profile userProfile={userProfile === null ? emptyProfile : userProfile}/>
           </Block>
           <Block backColor="Blue">
-            <ProfileRecord userRecord={userRecord}/>
+            <ProfileRecord userRecord={userRecord === null ? emptyRecord : userRecord}/>
           </Block>
         </InfoBlock>
         <Block backColor="Pink">
