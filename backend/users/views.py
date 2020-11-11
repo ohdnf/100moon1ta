@@ -52,7 +52,7 @@ class Bookmark(APIView):
         return Response({"sources" : bookmark.values()})  
    
     def post(self, request):
-        sid = request.POST.get('source_id')
+        sid = request.data.get('source_id')
         user = request.user
         source = get_object_or_404(Source, pk=sid)
         if source.subscribers.filter(pk=user.pk).exists():
@@ -65,7 +65,7 @@ class Bookmark(APIView):
 
 class Like(APIView):
     def post(self,request):
-        sid = request.POST.get('source_id')
+        sid = request.data.get('source_id')
         user = request.user
         source = get_object_or_404(Source, pk=sid)
         if source.likers.filter(pk=user.pk).exists():
