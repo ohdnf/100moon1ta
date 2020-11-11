@@ -19,15 +19,17 @@ class TagSerializer(serializers.ModelSerializer):
         return Tag.objects.create(content=new_tag)
 
 
-class SourceSerializer(serializers.ModelSerializer):
-    likers = UserSerializer(many=True, required=False)
-    subscribers = UserSerializer(many=True, required=False)
-    tags = TagSerializer(many=True, required=False)
-
+class SourceListSerializer(serializers.ModelSerializer):
+    isLike = serializers.IntegerField()
+    isSubscribe = serializers.IntegerField()
     class Meta:
         model = Source
-        fields = ('id', 'title', 'description', 'link', 'category', 'content', 'length', 'difficulty', 'likers', 'subscribers', 'tags',)
+        fields = ('id', 'title', 'description', 'link', 'category', 'content', 'length', 'difficulty', 'tags', 'isLike','isSubscribe')
 
+class SourceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Source
+        fields = ('id', 'title', 'description', 'link', 'category', 'content', 'length', 'difficulty', 'tags',)
 
 class GameHistorySerializer(serializers.ModelSerializer):
     class Meta:
