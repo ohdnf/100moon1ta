@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Login from '../../components/common/Login';
+import client from '../../lib/api/client';
 
 import { login } from '../../modules/user';
 import sampleData from '../../sampleData';
@@ -32,7 +33,6 @@ const LoginContainer = ({ changeModal }) => {
       password: password,
     };
     dispatch(login(data));
-
   };
 
   // const githubLogin = () => {
@@ -47,6 +47,7 @@ const LoginContainer = ({ changeModal }) => {
       // 로그인 성공시
       localStorage.setItem('user', JSON.stringify(user));
       localStorage.setItem('token', token);
+      client.defaults.headers.common['Authorization'] = 'JWT ' + token;
       alert("로그인 되었습니다.")
       changeModal('');
     }

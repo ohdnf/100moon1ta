@@ -6,6 +6,7 @@ import LoginContainer from "./LoginContainer";
 import JoinContainer from "./JoinContainer";
 
 import { logout } from '../../modules/user';
+import client from "../../lib/api/client";
 
 const NavbarContainer = () => {
   const [modal, setModal] = useState("");
@@ -20,6 +21,7 @@ const NavbarContainer = () => {
   const onLogout = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    delete client.defaults.headers.common["Authorization"];
     alert("로그아웃 되었습니다.")
     dispatch(logout());
     changeModal('') //이 코드는 혹시 몰라 modal 닫기위해 추가
