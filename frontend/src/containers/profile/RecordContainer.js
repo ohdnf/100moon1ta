@@ -4,6 +4,7 @@ import sampleData from '../../sampleData'
 
 import { getAllRecord } from '../../lib/api/game'
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const RecordContainer = () => {
   // 유저 정보 => redux
@@ -11,9 +12,15 @@ const RecordContainer = () => {
   const { user } = useSelector(({user})=>({
     user: user.user
   }))
+  const history = useHistory()
   console.log(user)
   useEffect(()=>{
     // 1. 레코드 받아오기
+    if (!user) {
+      alert("로그인이 필요합니다.")
+      history.goBack()
+      return
+    }
     getAllRecord(user.id)
     .then((res) => {
       // 아래 코드 동작하는지 확인 요망
