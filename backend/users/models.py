@@ -9,7 +9,7 @@ import os, random
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage 
 
-class OverwriteStorage(FileSystemStorage): # 프로필 이지미 중복 시 overwrite
+class OverwriteStorage(FileSystemStorage): # 프로필 이미지 중복 시 overwrite
     def get_available_name(self, name, max_length=None):
         if self.exists(name):
             os.remove(os.path.join(settings.MEDIA_ROOT, name))
