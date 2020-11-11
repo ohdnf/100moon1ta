@@ -51,8 +51,11 @@ class GameHistorySerializer(serializers.ModelSerializer):
 
 class RankSerializer(serializers.Serializer):
     player__username = serializers.CharField(max_length=100)
-    total_score = serializers.FloatField()
+    player__comment = serializers.CharField()
+    game_count = serializers.IntegerField()
     avg_speed = serializers.FloatField()
+    avg_precision = serializers.FloatField()
+    total_score = serializers.FloatField()
     class Meta:
-        field = ('player__username' 'total_score', 'avg_speed' )
+        field = ('player__username', 'player__comment','game_count', 'avg_speed', 'avg_precision', 'total_score', )
 
