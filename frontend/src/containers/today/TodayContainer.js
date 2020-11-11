@@ -18,9 +18,9 @@ import { useEffect } from 'react';
 const TodayContainer = () => {
   //
   const { todayContent, setTodayContent } = useState({})
-  const { hitmap, setHitmap } = useState({})
-  const { startTime, setStartTime } = useState("")
-  const { ok, setOk } = useState(0)
+  // const { hitmap, setHitmap } = useState({})
+  // const { startTime, setStartTime } = useState("")
+  // const { ok, setOk } = useState(0)
 
   useEffect(() => {
     // 브라우저 API를 이용하여 문서 타이틀을 업데이트합니다.

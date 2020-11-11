@@ -26,7 +26,7 @@ function App() {
       <Switch>
         <Route component={MainPage} path="/" exact />
         <Route component={TodayPage} path="/today/" exact />
-        <Route component={GamePage} path="/games/" exact />
+        <Route component={GamePage} path="/games/" />
         <Route component={CommunityPage} path="/community/" exact />
         <Route component={ProfilePage} path="/profile/" exact />
         <Route component={RankPage} path="/rank/" exact />

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
+import styled, { css } from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import Button from './Button';
-import Input from './Input';
+// import Button from "./Button";
+// import Input from "./Input";
 
 const NavbarBlock = styled.div`
   display: flex;
@@ -26,6 +26,12 @@ const NavbarItem = styled.div`
   align-items: center;
   background: DeepSkyBlue;
   margin: 0 0.5rem 0 0.5rem;
+  opacity: 0.3;
+  ${(props) =>
+    props.now &&
+    css`
+      opacity: 1;
+    `}
   :hover {
     cursor: pointer;
   }
@@ -38,8 +44,7 @@ const Navbar = ({ changeModal, onLogout }) => {
     user: user.user,
   }));
   const isLogin = user === null ? false : true;
-  const userName = user === null ? '' : user.username || '기본 유저네임^^';
-
+  const userName = user === null ? '' : user.username;
   const navItems = [
     { name: '오늘의 타자', toLink: '/today' },
     { name: '소스 목록', toLink: '/games' },
@@ -49,18 +54,34 @@ const Navbar = ({ changeModal, onLogout }) => {
     { name: 'ADMIN', toLink: '/admin' },
   ];
   const history = useHistory();
+  // const nowActive = window.location.pathname
+  const [nowActive, setNowActive] = useState(window.location.pathname);
+  useEffect(() => {
+    setNowActive(window.location.pathname);
+  }, [history]);
   return (
     <>
       <NavbarBlock>
         <div>
           <NavbarItemBlock>
             {navItems.map((item) => (
-              <NavbarItem
-                key={item.name}
-                onClick={() => history.push(item.toLink)}
-              >
-                {item.name}
-              </NavbarItem>
+              <>
+                {nowActive === item.toLink ? (
+                  <NavbarItem
+                    key={item.name}
+                    onClick={() => history.push(item.toLink)}
+                  >
+                    {item.name}
+                  </NavbarItem>
+                ) : (
+                  <NavbarItem
+                    key={item.name}
+                    onClick={() => history.push(item.toLink)}
+                  >
+                    {item.name}
+                  </NavbarItem>
+                )}
+              </>
             ))}
           </NavbarItemBlock>
         </div>

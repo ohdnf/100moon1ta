@@ -1,5 +1,7 @@
 import client from './client';
 
+// accounts에 해당하는 API콜
+
 export const signup = (data) =>
   client({
     method: 'post',
@@ -16,7 +18,7 @@ export const login = (data) =>
 
 export const logout = () =>
   client({
-    method: 'get',
+    method: 'post',
     url: `/accounts/logout/`,
   });
 
@@ -24,4 +26,23 @@ export const checkNickname = (nickname) =>
   client({
     method: 'get',
     url: `/accounts/nickname-duplicated/${nickname}/`,
+  });
+
+export const bookmarkGame = (data) =>
+  client({
+    method: 'post',
+    url: `/accounts/bookmark/`,
+    data: data,
+  });
+
+export const getBookmarkedGames = () =>
+  client({
+    method: 'get',
+    url: `/accounts/bookmark/`,
+  })
+
+export const getMy = () =>
+  client({
+    method: 'get',
+    url: `/accounts/user/`,
   });
