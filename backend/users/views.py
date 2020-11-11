@@ -15,6 +15,9 @@ from django.contrib.auth import get_user_model
 from django.db.models import Sum
 
 from .serializers import UserListSerializer
+
+from django.views.decorators.cache import never_cache
+
 # Create your views here.
 
 class Nickname(APIView):
@@ -28,6 +31,7 @@ class Nickname(APIView):
 
 class UserList(APIView):
     permission_classes = [IsAdminUser]
+    @never_cache
     def get(self, request):
         User = get_user_model()
         users = User.objects.all()
@@ -52,7 +56,7 @@ class Bookmark(APIView):
         return Response({"sources" : bookmark.values()})  
    
     def post(self, request):
-        sid = request.POST.get('source_id')
+        sid = request.data.get('source_id')
         user = request.user
         source = get_object_or_404(Source, pk=sid)
         if source.subscribers.filter(pk=user.pk).exists():
@@ -65,7 +69,7 @@ class Bookmark(APIView):
 
 class Like(APIView):
     def post(self,request):
-        sid = request.POST.get('source_id')
+        sid = request.data.get('source_id')
         user = request.user
         source = get_object_or_404(Source, pk=sid)
         if source.likers.filter(pk=user.pk).exists():
@@ -89,20 +93,23 @@ class GitHubLogin(SocialLoginView):
 # 권한 세부화
 class StaffManagement(APIView):
     def patch(self, request, uid):
+        User = get_user_model()
         if request.user.is_superuser:
-            staff = CustomUser.objects.get(pk=uid)
+            staff = User.objects.get(pk=uid)
             staff.is_staff = not staff.is_staff
             staff.save()
-        return  Response({"possible" : request.user.is_superuser })
+            return  Response(status=200)
+        return Response(status=403)
 
 # 권한 세부화
 class BanManagement(APIView):
     def patch(self, request, uid):
+        User = get_user_model()
         if request.user.is_staff:
-            ban = CustomUser.objects.get(pk=uid)
+            ban = User.objects.get(pk=uid)
             if not ban.is_staff: # user만 밴가능
                 ban.is_ban = not ban.is_ban
                 ban.save()
             else:
-                return Response({"possible" : not ban.is_staff })
-        return  Response({"possible" : request.user.is_staff })
+                return Response(status=200)
+        return  Response(status=403)

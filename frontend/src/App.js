@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 // import './App.css';
 import { Helmet } from 'react-helmet-async';
 import { Route, Switch } from 'react-router-dom';
@@ -13,6 +13,8 @@ import GamePage from './pages/GamePage';
 import CommunityPage from './pages/CommunityPage';
 import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
+import RankPage from './pages/RankPage';
+import AdminPage from './pages/AdminPage';
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
         <Route component={GamePage} path="/games/" />
         <Route component={CommunityPage} path="/community/" exact />
         <Route component={ProfilePage} path="/profile/" exact />
+        <Route component={RankPage} path="/rank/" exact />
+        <Route component={AdminPage} path="/admin/" exact />
         <Route component={NotFoundPage} path="*" />
       </Switch>
     </div>

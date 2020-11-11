@@ -3,15 +3,15 @@ FROM python:3.6.8
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
-RUN mkdir /srv/backend
-WORKDIR /srv/backend
+RUN mkdir /code
+WORKDIR /code
 
-COPY requirements.txt /srv/backend/
+COPY requirements.txt /code/
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-COPY . /srv/backend/
+COPY . /code/
 
 # EXPOSE 8000
 # CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
