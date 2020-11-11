@@ -6,6 +6,17 @@ export const getGames = () =>
     url: `/games/`,
   });
 
+export const getAllRecord = (userId) =>
+  client({
+    method: 'get',
+    url: `/games/${userId}/history/`,
+  });
+
+export const saveRecord = () =>
+  client({
+    method: 'post',
+    url: `/games/<int:pk>/history/`,
+  });
 /* 
   GET /games/
   "id": Int,

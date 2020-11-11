@@ -18,7 +18,7 @@ const ProfileRecord = ({ userRecord }) => {
       <FlexBox>
         <div>
           <div> 총 점수 </div>
-          <div> {grade}}점 </div>
+          <div> {grade}점 </div>
         </div>
         <div>
           <div> 평균 시간 </div>

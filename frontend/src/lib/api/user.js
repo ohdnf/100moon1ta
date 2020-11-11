@@ -34,18 +34,15 @@ export const bookmarkGame = (data) =>
     url: `/accounts/bookmark/`,
     data: data,
   });
-  
-// JWT 헤더
-// const token = localStorage.getItem('token') // 없으면 null
-// if (token) {
-//   console.log("token헤더에 설정합니다", token)
-//   client.defaults.headers.common['Authorization'] = 'JWT ' + token;
-//   client.defaults.timeout = 2500;
-// }
-
 
 export const getBookmarkedGames = () =>
   client({
     method: 'get',
     url: `/accounts/bookmark/`,
   })
+
+export const getMy = () =>
+  client({
+    method: 'get',
+    url: `/accounts/user/`,
+  });

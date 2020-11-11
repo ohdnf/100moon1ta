@@ -41,13 +41,13 @@ const ImgDiv = styled.img`
   height: ${100 / 16}rem;
 `;
 const Profile = ({ userProfile }) => {
-  const { email, nickname } = userProfile;
+  const { email, nickname, profile_image } = userProfile;
   return (
     <ProfileBlock>
       <PageTitle>내페이지</PageTitle>
       <div>기본정보</div>
       <FlexBox>
-        <ImgDiv src="https://source.unsplash.com/random/100x100" />
+        <ImgDiv src={profile_image} />
         <div>
           <div>이메일 {email} </div>
           <div>닉네임 {nickname} </div>
