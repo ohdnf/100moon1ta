@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
-from django.db.models import Sum, Avg, Count, F, FloatField, ExpressionWrapper, Func
+from django.db.models import Sum, Avg, Count, F, FloatField, ExpressionWrapper, Func, Q
 from django.shortcuts import get_object_or_404
 from django.views.decorators.cache import cache_page
 from django.core.cache import cache
@@ -12,7 +12,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .models import Tag, Source, GameHistory
-from .serializers import TagSerializer, SourceSerializer, GameHistorySerializer, RankSerializer
+from .serializers import TagSerializer, SourceSerializer, GameHistorySerializer, RankSerializer, SourceListSerializer
 from users.models import CustomUser
 
 
@@ -28,9 +28,11 @@ def source_retrieve_create(request):
         """
         타자 연습 소스 목록 보기
         """
-        sources = cache.get_or_set('sources', Source.objects.prefetch_related('tags').prefetch_related('likers').prefetch_related('subscribers'))
+        sources = cache.get_or_set('sources', Source.objects.prefetch_related('tags')
+        .annotate(isLike=Count('likers',filter=Q(likers__id = request.user.id)), 
+        isSubscribe=Count('subscribers',filter=Q(subscribers__id = request.user.id))))
         # 추후 정렬 방식 구현
-        serializer = SourceSerializer(sources, many=True)
+        serializer = SourceListSerializer(sources, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @permission_classes([IsAuthenticated])
@@ -204,6 +206,7 @@ def rank_retrieve(request):
     """
     각 플레이어마다 갖고 있는 모든 점수를 합산하여 30위까지 랭킹을 반환
     """
+    # annotate 하나로 합쳐야됨
     queryset = cache.get_or_set('queryset', GameHistory.objects.values('player__username', 'player__comment')
         .annotate(game_count=Count('source'))
         .annotate(avg_precision=Round(Avg('precision')))

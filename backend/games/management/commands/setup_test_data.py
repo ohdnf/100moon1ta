@@ -9,9 +9,10 @@ from games.factories import (
     UserFactory,
     TagFactory,
     SourceFactory,
-    GameHistoryFactory
+    GameHistoryFactory,
+    EmailAddressFactory
 )
-
+from allauth.account.models import EmailAddress
 
 NUM_USERS = 50
 NUM_TAGS = 10
@@ -26,7 +27,7 @@ class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **kwargs):
         self.stdout.write("Deleting old data...")
-        models = [CustomUser, Tag, Source, GameHistory]
+        models = [CustomUser, Tag, Source, GameHistory, EmailAddress]
         for m in models:
             m.objects.all().delete()
 
@@ -36,7 +37,10 @@ class Command(BaseCommand):
         for _ in range(NUM_USERS):
             user = UserFactory()
             users.append(user)
-        
+        # Create all the emailaddress
+        for user in users:
+            emailaddress = EmailAddressFactory(user=user)
+
         # Create all the tags
         tags = []
         for _ in range(NUM_TAGS):
