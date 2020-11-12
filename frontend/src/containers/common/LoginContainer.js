@@ -5,6 +5,7 @@ import client from '../../lib/api/client';
 
 import { login } from '../../modules/user';
 import sampleData from '../../sampleData';
+import { errorDelete } from '../../modules/user';
 
 const LoginContainer = ({ changeModal }) => {
   const { user, token, error } = useSelector(({ user }) => ({
@@ -61,6 +62,7 @@ const LoginContainer = ({ changeModal }) => {
         alert(error.message + '\n' + '이메일 혹은 비밀번호가 잘못되었습니다.')
       }
     }
+    dispatch(errorDelete())
   }, [dispatch, error])
   return (
     <Login onChange={onChange} changeModal={changeModal} onLogin={onLogin} />
