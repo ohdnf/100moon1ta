@@ -7,7 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
     record = serializers.SerializerMethodField()
     class Meta:
         model = get_user_model()
-        fields = ['id', 'email','username','profile_image', 'comment', 'record']
+        fields = ['id', 'email','username','profile_image', 'comment', 'record', 'is_superuser', 'is_staff']
         read_only_fields = ('email', )
     def get_record(self, obj):
         return 0

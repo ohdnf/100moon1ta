@@ -17,7 +17,7 @@ from django.db.models import Sum
 from .serializers import UserListSerializer
 
 from django.views.decorators.cache import never_cache
-
+from django.core.cache import cache
 # Create your views here.
 
 class Nickname(APIView):
