@@ -34,9 +34,9 @@ class UserList(APIView):
     @never_cache
     def get(self, request):
         User = get_user_model()
-        users = User.objects.all()
+        users = User.objects.prefetch_related('emailaddress_set')
         serializer = UserListSerializer(users, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=200)
 
 class Record(APIView):
     def get(self, request):

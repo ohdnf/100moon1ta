@@ -29,7 +29,7 @@ def source_retrieve_create(request):
         타자 연습 소스 목록 보기
         """
         sources = cache.get_or_set('sources', Source.objects.prefetch_related('tags')
-        .annotate(isLike=Count('likers',filter=Q(likers__id = request.user.id)), 
+        .annotate(likeCount=Count('likers'),isLike=Count('likers',filter=Q(likers__id = request.user.id)), 
         isSubscribe=Count('subscribers',filter=Q(subscribers__id = request.user.id))))
         # 추후 정렬 방식 구현
         serializer = SourceListSerializer(sources, many=True)
