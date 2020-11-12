@@ -49,7 +49,7 @@ const Navbar = ({ changeModal, onLogout }) => {
     { name: '오늘의 타자', toLink: '/today' },
     { name: '소스 목록', toLink: '/games' },
     { name: '커뮤니티', toLink: '/community' },
-    { name: '내 페이지', toLink: '/profile' },
+    // { name: '내 페이지', toLink: '/profile' },
     { name: '랭킹', toLink: '/rank' },
     { name: 'ADMIN', toLink: '/admin' },
   ];
@@ -87,7 +87,7 @@ const Navbar = ({ changeModal, onLogout }) => {
         </div>
         <div>
           <NavbarItemBlock>
-            {isLogin && <NavbarItem>{userName}</NavbarItem>}
+            {isLogin && <NavbarItem onClick={() => history.push('/profile')}>{userName}</NavbarItem>}
             {isLogin ? (
               <NavbarItem onClick={onLogout}>로그아웃</NavbarItem>
             ) : (
