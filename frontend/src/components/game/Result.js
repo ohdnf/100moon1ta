@@ -136,7 +136,7 @@ export const ResultItem = ({ game }) => {
           <ItemTagBlock>
             {tags?.length &&
               tags.map((tag) => (
-                <ItemTag key={tag.content}>{tag.content}</ItemTag>
+                <ItemTag key={tag}>{tag}</ItemTag>
               ))}
           </ItemTagBlock>
           {isBookmarked ? "t" : "f"}
