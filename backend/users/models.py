@@ -19,6 +19,10 @@ def user_directory_path(instance, filename): # media 폴더 내에 email로 폴�
     exe_name = filename.split('.')[-1]
     return f'{instance.email}/profile.{exe_name}'
 
+def random_image():
+    num = random.choice(range(10))
+    return f'{num}.jpg'
+
 class CustomUser(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
 
@@ -28,7 +32,7 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
     
     # nickname = models.CharField(max_length=100) # nickname
-    profile_image = models.ImageField(upload_to=user_directory_path, storage=OverwriteStorage(), blank=True, default=random.choice(['1','2','3'])) # OverwritStorage() , callable 해야함
+    profile_image = models.ImageField(upload_to=user_directory_path, storage=OverwriteStorage(), blank=True, default=random_image) # OverwritStorage() , callable 해야함
     comment = models.TextField(blank=True, max_length=100)
     is_ban = models.BooleanField(default=False)
     
