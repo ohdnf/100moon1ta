@@ -18,6 +18,8 @@ const TypingWindow = styled.pre`
   .incorrect {
     color: red;
   }
+  border: 0.25rem solid Black;
+  background: LightSteelBlue;
 `;
 // const Timer = styled.div``;
 

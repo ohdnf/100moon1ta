@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import TodayContainer from '../containers/today/TodayContainer'
+import TypingContainer from '../containers/typing/TypingContainer'
 
 const TodayPage = () => {
   return (
@@ -8,7 +8,7 @@ const TodayPage = () => {
       <Helmet>
         <title>TodayPage | 100moon1ta</title>
       </Helmet>
-      <TodayContainer />
+      <TypingContainer />
     </>
   );
 };
