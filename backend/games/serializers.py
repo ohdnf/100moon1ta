@@ -22,9 +22,14 @@ class TagSerializer(serializers.ModelSerializer):
 class SourceListSerializer(serializers.ModelSerializer):
     isLike = serializers.IntegerField()
     isSubscribe = serializers.IntegerField()
+    likeCount = serializers.IntegerField()
+    tags = serializers.SlugRelatedField(read_only=True, many=True, slug_field='content')
     class Meta:
         model = Source
-        fields = ('id', 'title', 'description', 'link', 'category', 'content', 'length', 'difficulty', 'tags', 'isLike','isSubscribe')
+        fields = ('id', 'title', 'description', 'link', 'category', 'content', 
+                  'length', 'difficulty', 'tags', 'isLike','isSubscribe', 'likeCount' 
+                 )
+
 
 class SourceSerializer(serializers.ModelSerializer):
     class Meta:
