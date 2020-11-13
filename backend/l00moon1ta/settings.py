@@ -184,7 +184,8 @@ JWT_AUTH = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "http://k3a406.p.ssafy.io:3000",
+    "http://100moon1ta.com",
+    "http://k3a406.p.ssafy.io",
 ]
 
 # CustomUser
@@ -214,7 +215,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # dev
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        # "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": "redis://k3a406.p.ssafy.io:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient"
         },
