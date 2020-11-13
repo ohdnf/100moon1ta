@@ -19,15 +19,22 @@ class TagSerializer(serializers.ModelSerializer):
         return Tag.objects.create(content=new_tag)
 
 
-class SourceSerializer(serializers.ModelSerializer):
-    likers = UserSerializer(many=True, required=False)
-    subscribers = UserSerializer(many=True, required=False)
-    tags = TagSerializer(many=True, required=False)
-
+class SourceListSerializer(serializers.ModelSerializer):
+    isLike = serializers.IntegerField()
+    isSubscribe = serializers.IntegerField()
+    likeCount = serializers.IntegerField()
+    tags = serializers.SlugRelatedField(read_only=True, many=True, slug_field='content')
     class Meta:
         model = Source
-        fields = ('id', 'title', 'description', 'link', 'category', 'content', 'length', 'difficulty', 'likers', 'subscribers', 'tags',)
+        fields = ('id', 'title', 'description', 'link', 'category', 'content', 
+                  'length', 'difficulty', 'tags', 'isLike','isSubscribe', 'likeCount' 
+                 )
 
+
+class SourceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Source
+        fields = ('id', 'title', 'description', 'link', 'category', 'content', 'length', 'difficulty', 'tags',)
 
 class GameHistorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -50,9 +57,12 @@ class GameHistorySerializer(serializers.ModelSerializer):
 
 
 class RankSerializer(serializers.Serializer):
-    player = serializers.CharField(max_length=100)
+    player__username = serializers.CharField(max_length=100)
+    player__comment = serializers.CharField()
+    game_count = serializers.IntegerField()
+    avg_speed = serializers.FloatField()
+    avg_precision = serializers.FloatField()
     total_score = serializers.FloatField()
-
     class Meta:
-        field = ('player', 'total_score',)
+        field = ('player__username', 'player__comment','game_count', 'avg_speed', 'avg_precision', 'total_score', )
 
