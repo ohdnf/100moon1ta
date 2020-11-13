@@ -54,6 +54,7 @@ const TypingWindow = styled.pre`
   }
   border: 0.25rem solid Black;
   background: LightSteelBlue;
+  white-space: normal;
 `;
 // cursor: auto / default(화살표) / pointer / wait
 let typo = [];
