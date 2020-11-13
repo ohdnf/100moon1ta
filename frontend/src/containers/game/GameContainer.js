@@ -4,26 +4,36 @@ import Result from '../../components/game/Result';
 import Pagination from '../../components/game/Pagination';
 // 아래는 request 나가는 API
 import { getGames } from '../../lib/api/game';
+import { getTags } from '../../lib/api/tag';
 
 import PaginationContainer from './PaginationContainer';
 
 const GameContainer = () => {
   const [games, setGames] = useState(null);
+  const [mostTags, setMostTags] = useState(null)
 
   useEffect(() => {
     // 브라우저 API를 이용하여 문서 타이틀을 업데이트합니다.
     getGames()
-      .then((response) => {
-        const gameList = response.data;
+      .then((res) => {
+        const gameList = res.data;
         setGames(gameList);
       })
       .catch((error) => {
         console.log(error);
       });
+    getTags()
+      .then((res) => {
+        setMostTags(res.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }, []);
+  console.log("mostTags", mostTags)
   return (
     <>
-      <Search />
+      <Search mostTags={mostTags}/>
       {games ? (
         <>
           <PaginationContainer
