@@ -12,6 +12,7 @@ const TypingContainer = ({ location, match }) => {
       : match?.params?.gameId;
   const [gameId, setGameId] = useState(initialGameId);
   const [game, setGame] = useState(null);
+  const [num, setNum] = useState(0);
 
   useEffect(() => {
     if (!gameId) {
@@ -32,9 +33,10 @@ const TypingContainer = ({ location, match }) => {
 
   return (
     <>
-      <Source key={gameId} gameId={gameId} game={game} chList={game.content.split('')} />
+      <Source key={num} gameId={gameId} game={game} chList={game.content.split('')} />
+      <button onClick={() => setNum(setRandomGameId())}>다시하기</button>
       { window.location.pathname === '/today' &&
-        <button onClick={() => setGameId(setRandomGameId())}>다른게임</button>
+        <button onClick={() => {setGameId(setRandomGameId()); setNum(setRandomGameId())}}>다른게임</button>
       }
     </>
   );
