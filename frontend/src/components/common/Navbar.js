@@ -55,7 +55,8 @@ const Navbar = ({ changeModal, onLogout }) => {
   const navItems = [
     { name: '오늘의 타자', toLink: '/today' },
     { name: '소스 목록', toLink: '/games' },
-    { name: '커뮤니티', toLink: '/community' },
+    // { name: '커뮤니티', toLink: '/community' },
+    // { name: '내 페이지', toLink: '/profile' },
     { name: '랭킹', toLink: '/rank' },
     { name: 'ADMIN', toLink: '/admin' },
   ];
