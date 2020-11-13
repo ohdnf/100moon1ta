@@ -36,7 +36,7 @@ const TypingContainer = ({ location, match }) => {
       <Source key={num} gameId={gameId} game={game} chList={game.content.split('')} />
       <button onClick={() => setNum(setRandomGameId())}>다시하기</button>
       { window.location.pathname === '/today' &&
-        <button onClick={() => setGameId(setRandomGameId())}>다른게임</button>
+        <button onClick={() => {setGameId(setRandomGameId()); setNum(setRandomGameId())}}>다른게임</button>
       }
     </>
   );

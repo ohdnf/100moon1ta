@@ -171,8 +171,9 @@ const Result = ({ games, step, setStep }) => {
           <div>
             <div>한페이지당 게시물</div>
             <FlexDiv>
-              {[2, 3, 4, 5, 10, 20].map((n) => (
+              {[2, 3, 4, 5, 10, 20].map((n, index) => (
                 <StyledDiv
+                  key={index}
                   selected={step === n}
                   onClick={() => setStep(n)}
                 >
