@@ -21,7 +21,7 @@ export const saveRecord = () =>
 export const getGame = (id) =>
   client({
     method: 'get',
-    url: `/games/${id}`,
+    url: `/games/${id}/`,
   });
 /* 
   GET /games/

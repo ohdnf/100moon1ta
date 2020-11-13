@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Source from '../../components/today/Source';
-import GameContainer from './GameContainer';
 import { getGame } from '../../lib/api/game';
 
 const TypingContainer = ({ location, match }) => {
