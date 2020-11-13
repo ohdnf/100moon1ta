@@ -1,20 +1,20 @@
 version: "3"
 
 services:
-        web:
+        back:
                 build:
                         context: ./backend
                         dockerfile: Dockerfile
                 command: gunicorn l00moon1ta.wsgi:application --bind 0.0.0.0:8000
-                expose:
-                        - "8000"
+                ports:
+                        - "8000:8000"
                 env_file:
                         - ./backend/.env
-        nginx:
+        web:
                 build:
-                        context: ./nginx
+                        context: ./frontend
                         dockerfile: Dockerfile
                 ports:
                         - "80:80"
                 depends_on:
-                        - web
+                        - back
