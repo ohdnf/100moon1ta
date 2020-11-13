@@ -33,12 +33,10 @@ const GameContainer = () => {
       })
   }, []);
 
-  console.log("mostTags", mostTags)
   return (
     <>
       <Search
         mostTags={mostTags}
-        query={query}
         setQuery={setQuery}
         queryTags={queryTags}
         setQueryTags={setQueryTags}

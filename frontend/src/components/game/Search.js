@@ -64,7 +64,7 @@ const Search = ({ mostTags, query, setQuery, queryTags, setQueryTags }) => {
   return (
     <SearchBlock>
       <PageTitle>소스 목록</PageTitle>
-      <SearchInput placeholder="검색어를 입력하세요" />
+      <SearchInput placeholder="검색어를 입력하세요" onChange={(e) => {setQuery(e.target.value)}}/>
       <TagBlock>
         {mostTags &&
           mostTags.map((tag) => (
