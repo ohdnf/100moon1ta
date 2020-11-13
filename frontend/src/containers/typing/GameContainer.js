@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import TimerContainer from './TimerContainer';
+import { saveRecord } from '../../lib/api/game'
 // import ResultContainer from './Result';
 
 // 브라우저마다 keycode는 다르다^^
@@ -45,7 +46,20 @@ const GameContainer = ({ chList }) => {
 			if (e.key === 'Enter') {
         let dtEnd = new Date();
         setPoint(100)  // 게임 종료 시 점수 반환, 정확도랑 속도 추가
-				setEnd((dtEnd-start)/1000)
+        setEnd((dtEnd-start)/1000)
+        const data = {
+          game_time = (dtEnd-start)/1000,
+          precision = 7,
+          typo = typo,
+          score = 1000,
+        }
+        saveRecord(data, sid)
+          .then((res) => {
+            console.log('잘 됨')
+          })
+          .catch((error) => {
+            console.log(error);
+          })
 			}
 		} 
     if (cursor < chList.length){

@@ -12,10 +12,11 @@ export const getAllRecord = (userId) =>
     url: `/games/${userId}/history/`,
   });
 
-export const saveRecord = () =>
+export const saveRecord = (data, sid) =>
   client({
     method: 'post',
-    url: `/games/<int:pk>/history/`,
+    url: `/games/${sid}/history/`,
+    data: data
   });
 
 export const getGame = (id) =>
