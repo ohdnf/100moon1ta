@@ -31,9 +31,7 @@ const GuideBlock = styled.div`
 `;
 // cursor: auto / default(화살표) / pointer / wait
 
-const Summary = () => {
-
-  // const history = useHistory();
+const Summary = ({ point, end, accuracy }) => {
   return (
     <>
       <div>타자연습 Summary</div>
@@ -44,19 +42,19 @@ const Summary = () => {
               <GameDataItemBlock>
                 <GameDataItem>
                   <GameDataItemText>걸린 시간</GameDataItemText>
-                  <GameDataItemText>32초</GameDataItemText>
+                  <GameDataItemText>{end}초</GameDataItemText>
                 </GameDataItem>
               </GameDataItemBlock>
               <GameDataItemBlock>
                 <GameDataItem>
-                  <GameDataItemText>오타율</GameDataItemText>
-                  <GameDataItemText>0.15%</GameDataItemText>
+                  <GameDataItemText>정확도</GameDataItemText>
+                  <GameDataItemText>{accuracy}%</GameDataItemText>
                 </GameDataItem>
               </GameDataItemBlock>
               <GameDataItemBlock>
                 <GameDataItem>
                   <GameDataItemText>획득 점수</GameDataItemText>
-                  <GameDataItemText>85점</GameDataItemText>
+                  <GameDataItemText>{point}점</GameDataItemText>
                 </GameDataItem>
               </GameDataItemBlock>
             </FlexDiv>
