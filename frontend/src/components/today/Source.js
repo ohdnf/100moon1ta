@@ -85,9 +85,8 @@ const Source = ({ game, chList }) => {
       if (e.key === 'Enter') {
         let dtEnd = new Date();
         let game_time = (dtEnd - start) / 1000;
-        let precision = (typo.reduce((a, b) => a + b, 0))/game.length*100;
-        let score = Math.round(precision*game_time/game.length);
-        
+        let precision = (1-((typo.reduce((a, b) => a + b, 0))/game.length))*100;
+        let score = Math.round(precision*game.length/game_time);
         setPoint(score); // 게임 종료 시 점수 반환, 정확도랑 속도 추가
         setEnd(game_time);
         let data = {
