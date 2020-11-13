@@ -20,7 +20,7 @@ def user_directory_path(instance, filename): # media 폴더 내에 email로 폴�
     return f'{instance.email}/profile.{exe_name}'
 
 def random_image():
-    num = random.choice(range(10))
+    num = random.choice(range(5))
     return f'{num}.svg'
 
 class CustomUser(AbstractUser):
