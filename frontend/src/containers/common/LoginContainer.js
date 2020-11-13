@@ -4,7 +4,6 @@ import Login from '../../components/common/Login';
 import client from '../../lib/api/client';
 
 import { login } from '../../modules/user';
-import sampleData from '../../sampleData';
 import { errorDelete } from '../../modules/user';
 
 const LoginContainer = ({ changeModal }) => {

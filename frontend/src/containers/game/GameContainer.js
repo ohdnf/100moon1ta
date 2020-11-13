@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Search from '../../components/game/Search';
-import Result from '../../components/game/Result';
-import Pagination from '../../components/game/Pagination';
-// 아래는 request 나가는 API
 import { getGames } from '../../lib/api/game';
 import { getTags } from '../../lib/api/tag';
 

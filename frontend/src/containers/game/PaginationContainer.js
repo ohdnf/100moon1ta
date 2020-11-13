@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Search from '../../components/game/Search';
 import Result from '../../components/game/Result';
 import Pagination from '../../components/game/Pagination';
-
 
 const PaginationContainer = ({ games }) => {
   const numOfGames = games.length
@@ -13,10 +11,6 @@ const PaginationContainer = ({ games }) => {
   const [page, setPage] = useState(1);//현재 페이지
   const [displayedGame, setDisplayedGame] = useState(games.slice(0, page < step ? page : step));
 
-  const onSetStep = (n) => {
-    // n은 바꿀 step
-    setStep(n)
-  }
   // 페이지네이션 동작
   const onRight = () => {
     if (start+10 > endOfPage) return// 동작X
@@ -55,7 +49,6 @@ const PaginationContainer = ({ games }) => {
         page={page}
         start={start}
         endOfPage={endOfPage}
-        // end={end}
         disableRight={start+10 > endOfPage}
         disableLeft={start-10 < 1}
         onRight={onRight}

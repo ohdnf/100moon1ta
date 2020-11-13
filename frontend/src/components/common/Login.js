@@ -43,6 +43,7 @@ const Login = ({ onChange, changeModal, onLogin }) => {
           <img src={require('../../images/github.png')}
             height="20rem"
             background="white"
+            alt="githubLogin"
           />
           Github Login
         </Button>

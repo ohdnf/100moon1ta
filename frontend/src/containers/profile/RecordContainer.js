@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Record from '../../components/profile/Record';
-import sampleData from '../../sampleData'
 
 import { getAllRecord } from '../../lib/api/game'
 import { useSelector } from 'react-redux';
