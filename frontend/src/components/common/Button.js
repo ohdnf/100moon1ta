@@ -6,14 +6,14 @@ const buttonStyle = css`
   border: none;
   border-radius: 15px;
   height: 3rem;
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: bold;
-  padding: 0.25rem 1rem;
+  padding: 0.1rem 1rem;
   color: White;
   outline: none;
-  margin: 1rem;
+  margin: 0.15rem 0 0 0;
   cursor: pointer;
-  background: DeepSkyBlue;
+  background: #241654;
 
   ${(props) =>
     props.fullWidth &&
@@ -31,6 +31,11 @@ const buttonStyle = css`
     props.disabled &&
     css`
       background: #ccc;
+    `}
+  ${(props) => 
+    props.github &&
+    css`
+      background-color: #222222;
     `}
 `;
 
