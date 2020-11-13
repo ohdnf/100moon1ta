@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { getUserList } from '../../lib/api/admin';
 import CheckBox from '../../components/admin/CheckBox';
 
