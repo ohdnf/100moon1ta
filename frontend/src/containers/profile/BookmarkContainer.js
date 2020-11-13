@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux'
-import sampleData from '../../sampleData'
 
 import { ResultItem } from '../../components/game/Result'
 
@@ -10,9 +8,7 @@ const BookmarkContainer = () => {
   // 유저 정보 => redux
   const [bookmarkedGame, setBookmarkedGame] = useState([])
   const [msg, setMsg] = useState("북마킹된 소스가 없져...")
-  const { user } = useSelector(({user})=>({
-    user: user.user
-  }))
+
   useEffect(()=>{
     // 1. 북마크한 소스들 받아오기
     getBookmarkedGames()

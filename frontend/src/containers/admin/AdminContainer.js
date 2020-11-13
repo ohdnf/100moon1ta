@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
+import React from 'react';
 import UserList from '../../components/admin/UserList';
 
 const AdminContainer = () => {
