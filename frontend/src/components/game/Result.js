@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useHistory } from 'react-router-dom';
 // import { useSelector } from 'react-redux';
 
@@ -67,6 +67,8 @@ const ItemTag = styled.div`
 
 const FlexDiv = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ImgDiv = styled.img`
@@ -76,6 +78,14 @@ const ImgDiv = styled.img`
   }
 `;
 
+const StyledDiv = styled.div`
+  margin-right: 0.25rem;
+  ${(props) =>
+    props.selected &&
+    css`
+      background: blue;
+    `}
+`;
 export const ResultItem = ({ game }) => {
   const { id, title, tags, isSubscribe } = game;
 
@@ -105,7 +115,7 @@ export const ResultItem = ({ game }) => {
 
     // API 요청
     const data = {
-      source_id: id
+      source_id: id,
     };
     bookmarkGame(data)
       .then((res) => {
@@ -138,7 +148,6 @@ export const ResultItem = ({ game }) => {
                 <ItemTag key={index}>{tag}</ItemTag>
               ))}
           </ItemTagBlock>
-          {isBookmarked ? "t" : "f"}
           <ImgDiv
             src={require(isBookmarked
               ? '../../images/bookmark3.png'
@@ -153,16 +162,31 @@ export const ResultItem = ({ game }) => {
   );
 };
 
-const Result = ({ games }) => {
+const Result = ({ games, step, setStep }) => {
   return (
     <ResultBlock>
       <ResultTitleBlock>
         <ResultTitle>검색 결과</ResultTitle>
-        <img
-          src={require('../../images/hamburger.png')}
-          height="40rem"
-          alt="hamburger Button"
-        />
+        <FlexDiv>
+          <div>
+            <div>한페이지당 게시물</div>
+            <FlexDiv>
+              {[2, 3, 4, 5, 10, 20].map((n) => (
+                <StyledDiv
+                  selected={step === n}
+                  onClick={() => setStep(n)}
+                >
+                  {n}
+                </StyledDiv>
+              ))}
+            </FlexDiv>
+          </div>
+          <img
+            src={require('../../images/hamburger.png')}
+            height="40rem"
+            alt="hamburger Button"
+          />
+        </FlexDiv>
       </ResultTitleBlock>
       <ResultItemBlock>
         {games && games.map((game) => <ResultItem key={game.id} game={game} />)}

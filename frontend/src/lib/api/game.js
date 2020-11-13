@@ -17,6 +17,12 @@ export const saveRecord = () =>
     method: 'post',
     url: `/games/<int:pk>/history/`,
   });
+
+export const getGame = (id) =>
+  client({
+    method: 'get',
+    url: `/games/${id}/`,
+  });
 /* 
   GET /games/
   "id": Int,

@@ -65,6 +65,13 @@ export function* logoutsaga() {
   yield takeLatest(LOGOUT, logoutSaga);
 }
 
+// 4. API : Error
+const ERRORDELETE = 'user/ERRORDELETE';
+
+// action creator
+export const errorDelete = createAction(ERRORDELETE);
+
+
 // 위는 API 요청과 saga 코드 //
 
 const initialState = {
@@ -103,6 +110,10 @@ const user = handleActions(
       ...state,
       user: null,
       token: null,
+      error: null
+    }),
+    [ERRORDELETE]: (state) => ({
+      ...state,
       error: null
     }),
   },
