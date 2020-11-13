@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import PageTitle from '../common/PageTitle'
+import React, { useState } from 'react';
+import styled, { css } from 'styled-components';
+import PageTitle from '../common/PageTitle';
 
 const SearchBlock = styled.div`
   background: Azure;
@@ -21,30 +21,60 @@ const TagBlock = styled.div`
   background: Aquamarine;
 `;
 
-const TagItem = styled.div`
+const TagItemBlock = styled.div`
   margin-right: 0.25rem;
   padding: 0.25rem;
   background: DodgerBlue;
   border: 0.01rem solid black;
   border-radius: 0.5rem;
   text-align: center;
+  opacity: 0.5;
+  :hover {
+    cursor: pointer;
+  }
+  ${(props) =>
+    props.selected &&
+    css`
+      opacity: 1;
+    `}
 `;
-
-const Search = () => {
+const TagItem = ({ tag, queryTags, setQueryTags }) => {
+  const [isSelected, setIsSelected] = useState(false);
+  const { content, id } = tag;
+  const onClick = () => {
+    if (isSelected) {
+      // 체크 해제
+      setIsSelected(!isSelected);
+      let nextArray = queryTags.filter((t) => t.id !== id);
+      setQueryTags(nextArray);
+    } else {
+      // 체크
+      setIsSelected(!isSelected);
+      let nextArray = queryTags.concat(tag);
+      setQueryTags(nextArray);
+    }
+  };
+  return (
+    <TagItemBlock selected={isSelected} onClick={onClick}>
+      {content}
+    </TagItemBlock>
+  );
+};
+const Search = ({ mostTags, query, setQuery, queryTags, setQueryTags }) => {
   return (
     <SearchBlock>
-      
       <PageTitle>소스 목록</PageTitle>
       <SearchInput placeholder="검색어를 입력하세요" />
       <TagBlock>
-        {[0, 1, 2, 3, 4].map((item) => (
-          <TagItem key={item}>태그{item}</TagItem>
-        ))}
-      </TagBlock>
-      <TagBlock>
-        {[6, 7, 8, 9, 10].map((item) => (
-          <TagItem key={item}>태그{item}</TagItem>
-        ))}
+        {mostTags &&
+          mostTags.map((tag) => (
+            <TagItem
+              key={tag.id}
+              tag={tag}
+              queryTags={queryTags}
+              setQueryTags={setQueryTags}
+            ></TagItem>
+          ))}
       </TagBlock>
     </SearchBlock>
   );
