@@ -64,8 +64,8 @@ const Navbar = ({ changeModal, onLogout }) => {
       <NavbarBlock>
         <div>
           <NavbarItemBlock>
-            {navItems.map((item) => (
-              <>
+            {navItems.map((item, index) => (
+              <React.Fragment key={index}>
                 {nowActive === item.toLink ? (
                   <NavbarItem
                     key={item.name}
@@ -81,7 +81,7 @@ const Navbar = ({ changeModal, onLogout }) => {
                     {item.name}
                   </NavbarItem>
                 )}
-              </>
+              </React.Fragment>
             ))}
           </NavbarItemBlock>
         </div>
