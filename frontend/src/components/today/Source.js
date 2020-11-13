@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import TimerContainer from '../../containers/typing/TimerContainer';
 import Keyboard from './Keyboard';
 import Summary from './Summary';
+import { saveRecord } from '../../lib/api/game'
 // import { useHistory } from 'react-router-dom';
 
 const SourceBlock = styled.div`
@@ -58,7 +59,7 @@ const TypingWindow = styled.pre`
 `;
 // cursor: auto / default(화살표) / pointer / wait
 let typo = [];
-let typoMap = [];
+let typoMap = {};
 
 const Source = ({ game, chList }) => {
   const { title, tags, description, link } = {
@@ -72,7 +73,7 @@ const Source = ({ game, chList }) => {
   const [start, setStart] = useState();
   const [end, setEnd] = useState();
 
-  const [point, setPoint] = useState();
+  const [point, setPoint] = useState(null);
 
   let indention = 0;
 
@@ -84,8 +85,24 @@ const Source = ({ game, chList }) => {
       // 종료시점
       if (e.key === 'Enter') {
         let dtEnd = new Date();
-        setPoint(100); // 게임 종료 시 점수 반환, 정확도랑 속도 추가
-        setEnd((dtEnd - start) / 1000);
+        let game_time = (dtEnd - start) / 1000;
+        let precision = (1-((typo.reduce((a, b) => a + b, 0))/game.length))*100;
+        let score = Math.round(precision*game.length/game_time);
+        setPoint(score); // 게임 종료 시 점수 반환, 정확도랑 속도 추가
+        setEnd(game_time);
+        let data = {
+          game_time : game_time,
+          precision : precision,
+          typo : JSON.stringify(typoMap),
+          score : score,
+        }
+        saveRecord(data, game.id)
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((error) => {
+            console.log(error);
+          })
       }
     }
     if (cursor >= chList.length) return; // 본문을 초과한 입력 무시
@@ -127,7 +144,6 @@ const Source = ({ game, chList }) => {
       }
     }
   };
-  console.log(cursor, chList[cursor]);
   return (
     <SourceBlock>
       <div>오늘의 타자</div>
@@ -164,7 +180,7 @@ const Source = ({ game, chList }) => {
       </ContentDiv>
       <DescriptionDiv>설명:{description}</DescriptionDiv>
       <LinkDiv>출처:{link}</LinkDiv>
-      {point && end ? (
+      {point>=0 && end ? (
         <Summary point={point} end={end}></Summary>
       ) : (
         <Keyboard />
