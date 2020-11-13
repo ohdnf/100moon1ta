@@ -21,7 +21,7 @@ def user_directory_path(instance, filename): # media 폴더 내에 email로 폴�
 
 def random_image():
     num = random.choice(range(10))
-    return f'{num}.jpg'
+    return f'{num}.svg'
 
 class CustomUser(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
