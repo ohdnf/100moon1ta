@@ -11,6 +11,8 @@ import PaginationContainer from './PaginationContainer';
 const GameContainer = () => {
   const [games, setGames] = useState(null);
   const [mostTags, setMostTags] = useState(null)
+  const [query, setQuery] = useState(null)
+  const [queryTags, setQueryTags] = useState([])
 
   useEffect(() => {
     // 브라우저 API를 이용하여 문서 타이틀을 업데이트합니다.
@@ -30,10 +32,15 @@ const GameContainer = () => {
         console.log(error)
       })
   }, []);
-  console.log("mostTags", mostTags)
+
   return (
     <>
-      <Search mostTags={mostTags}/>
+      <Search
+        mostTags={mostTags}
+        setQuery={setQuery}
+        queryTags={queryTags}
+        setQueryTags={setQueryTags}
+      />
       {games ? (
         <>
           <PaginationContainer
