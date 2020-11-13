@@ -4,7 +4,6 @@ from rest_framework.response import Response
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
-
 from allauth.socialaccount.providers.github import views as github_views
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from django.urls import reverse
@@ -14,11 +13,16 @@ from games.models import GameHistory, Source
 from django.contrib.auth import get_user_model
 from django.db.models import Sum
 
-from .serializers import UserListSerializer
+from .serializers import UserListSerializer, BookmarkSerializer
 
-from django.views.decorators.cache import never_cache
+from django.views.decorators.cache import never_cache, cache_page
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.core.cache import cache
+from django.conf import settings
+
 # Create your views here.
+
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 class Nickname(APIView):
     def get(self, request, nickname):
@@ -49,23 +53,24 @@ class Record(APIView):
 # login으로 redirect 시킴, login_url='/example url you want redirect/' 로 지정가능
 class Bookmark(APIView):
     permission_classes = [IsAuthenticated] # 이걸로 login 판별
-
+    @never_cache
     def get(self, request):
         user = request.user
         bookmark = user.subscribed_source
-        return Response({"sources" : bookmark.values()})  
-   
+        serializer = BookmarkSerializer(bookmark, many=True)
+        return Response(serializer.data, status=200) 
+
     def post(self, request):
         sid = request.data.get('source_id')
         user = request.user
         source = get_object_or_404(Source, pk=sid)
         if source.subscribers.filter(pk=user.pk).exists():
             source.subscribers.remove(user)
-            bookmark_status = "북마크 취소"
+            bookmark_status = False
         else:
             source.subscribers.add(user)
-            bookmark_status = "북마크됨"
-        return Response({"sources" : bookmark_status})   
+            bookmark_status = True
+        return Response({"sources" : bookmark_status}, status=200)   
 
 class Like(APIView):
     def post(self,request):
