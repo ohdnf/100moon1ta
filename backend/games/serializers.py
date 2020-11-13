@@ -32,6 +32,7 @@ class SourceListSerializer(serializers.ModelSerializer):
 
 
 class SourceSerializer(serializers.ModelSerializer):
+    tags = serializers.SlugRelatedField(read_only=True, many=True, slug_field='content')
     class Meta:
         model = Source
         fields = ('id', 'title', 'description', 'link', 'category', 'content', 'length', 'difficulty', 'tags',)

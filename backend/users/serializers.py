@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_auth.serializers import LoginSerializer as RestAuthLoginSerializer
-
+from games.models import Source
 # 보내는 값 변경
 class UserSerializer(serializers.ModelSerializer):
     record = serializers.SerializerMethodField()
@@ -21,3 +21,9 @@ class UserListSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ['id', 'email', 'username', 'is_staff', 'is_ban', 'emailaddress_set' ]
+
+class BookmarkSerializer(serializers.ModelSerializer):
+    tags = serializers.SlugRelatedField(read_only=True, many=True, slug_field='content')
+    class Meta:
+        model = Source
+        fields = ('id', 'title', 'description', 'link', 'category', 'content', 'length', 'difficulty', 'tags',)
