@@ -18,7 +18,7 @@ const BookmarkContainer = () => {
     getBookmarkedGames()
     .then((res) => {
       // 아래 코드 동작하는지 확인 요망
-      const gameList = res.data.sources 
+      const gameList = res.data
       setBookmarkedGame(gameList)
     })
     .catch((err) => {

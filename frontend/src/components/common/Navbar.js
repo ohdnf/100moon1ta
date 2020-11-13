@@ -80,8 +80,8 @@ const Navbar = ({ changeModal, onLogout }) => {
                 history.push('/');
               }}
             />
-            {navItems.map((item) => (
-              <>
+            {navItems.map((item, index) => (
+              <React.Fragment key={index}>
                 {nowActive === item.toLink ? (
                   <NavbarItem
                     // now 기능에 제대로 구현 되기 전까지 보류
@@ -98,7 +98,7 @@ const Navbar = ({ changeModal, onLogout }) => {
                     {item.name}
                   </NavbarItem>
                 )}
-              </>
+              </React.Fragment>
             ))}
           </NavbarItemBlock>
         </div>

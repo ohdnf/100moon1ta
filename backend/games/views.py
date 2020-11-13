@@ -15,6 +15,9 @@ from .models import Tag, Source, GameHistory
 from .serializers import TagSerializer, SourceSerializer, GameHistorySerializer, RankSerializer, SourceListSerializer
 from users.models import CustomUser
 
+from django.views.decorators.cache import never_cache
+
+import random
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
@@ -24,15 +27,18 @@ CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 @api_view(['GET', 'POST'])
 @cache_page(CACHE_TTL)
 def source_retrieve_create(request):
+    
     def source_retrieve(request):
         """
         타자 연습 소스 목록 보기
-        """
+        """    
         sources = cache.get_or_set('sources', Source.objects.prefetch_related('tags')
-        .annotate(isLike=Count('likers',filter=Q(likers__id = request.user.id)), 
+        .annotate(likeCount=Count('likers'),isLike=Count('likers',filter=Q(likers__id = request.user.id)), 
         isSubscribe=Count('subscribers',filter=Q(subscribers__id = request.user.id))))
+      
         # 추후 정렬 방식 구현
         serializer = SourceListSerializer(sources, many=True)
+        
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @permission_classes([IsAuthenticated])
@@ -54,6 +60,29 @@ def source_retrieve_create(request):
     elif request.method == 'POST':
         return source_create(request)
 
+@api_view(['GET'])
+def count(request):
+    return Response(Source.objects.count(), status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def random_source(request):
+    sources = Source.objects.all()
+    rs = sources[random.choice(range(len(sources)))]
+    serializer = SourceSerializer(rs)
+    return Response(serializer.data, status=200)
+
+
+@api_view(['GET'])
+def pages(request):
+    start = request.data.get('start')
+    end = request.data.get('end')
+    # step = request.data.get('step',10)
+    sources = cache.get_or_set('sources', Source.objects.prefetch_related('tags')
+    .annotate(likeCount=Count('likers'),isLike=Count('likers',filter=Q(likers__id = request.user.id)), 
+    isSubscribe=Count('subscribers',filter=Q(subscribers__id = request.user.id))))[start:end]
+    # 추후 정렬 방식 구현
+    serializer = SourceListSerializer(sources, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 def source_detail_update_destroy(request, pk):

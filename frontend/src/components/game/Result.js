@@ -87,11 +87,10 @@ const StyledDiv = styled.div`
     `}
 `;
 export const ResultItem = ({ game }) => {
-  const { id, title, tags, subscribers } = game;
+  const { id, title, tags, isSubscribe } = game;
 
   const { user } = useSelector(({ user }) => ({ user: user.user }));
   const history = useHistory();
-
   // // 해당 코드는 isBookmarked가 column에 추가 되면 불필요
   // let initialBookmarked = false;
   // if (subscribers && user) {
@@ -104,7 +103,7 @@ export const ResultItem = ({ game }) => {
   // };
   // // 해당 코드는 isBookmarked가 column에 추가 되면 불필요
   const [isBookmarked, setIsBookmarked] = useState(
-    game.isBookmarked || window.location.pathname === '/profile' ? true : false,
+    isSubscribe || window.location.pathname === "/profile" ? true : false
   );
 
   const onBookmark = () => {
@@ -145,7 +144,9 @@ export const ResultItem = ({ game }) => {
         <FlexDiv>
           <ItemTagBlock>
             {tags?.length &&
-              tags.map((tag) => <ItemTag key={tag}>{tag}</ItemTag>)}
+              tags.map((tag, index) => (
+                <ItemTag key={index}>{tag}</ItemTag>
+              ))}
           </ItemTagBlock>
           <ImgDiv
             src={require(isBookmarked

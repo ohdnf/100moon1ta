@@ -13,5 +13,4 @@ urlpatterns = [
     path('mng/ban/<int:uid>/', BanManagement.as_view()),
     path('', include("rest_auth.urls")),
     path('all-auth/', include('allauth.urls')),
-    
 ]
