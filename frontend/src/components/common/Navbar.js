@@ -10,8 +10,8 @@ const NavbarBlock = styled.div`
   display: flex;
   height: 4rem;
   width: 100%;
-  background: DodgerBlue;
   justify-content: space-between;
+  border-bottom-style: solid;
 `;
 
 const NavbarItemBlock = styled.div`
@@ -24,18 +24,25 @@ const NavbarItem = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background: DeepSkyBlue;
   margin: 0 0.5rem 0 0.5rem;
-  opacity: 0.3;
+  opacity: 1;
   ${(props) =>
     props.now &&
     css`
-      opacity: 1;
+      background: blue;
     `}
   :hover {
     cursor: pointer;
   }
 `;
+const ImgDiv = styled.img`
+  display: block;
+  padding: 0.25rem;
+  height: 3.5rem;
+  :hover {
+    cursor: pointer;
+  }
+`
 
 // cursor: auto / default(화살표) / pointer / wait
 
@@ -49,27 +56,37 @@ const Navbar = ({ changeModal, onLogout }) => {
     { name: '오늘의 타자', toLink: '/today' },
     { name: '소스 목록', toLink: '/games' },
     { name: '커뮤니티', toLink: '/community' },
-    // { name: '내 페이지', toLink: '/profile' },
     { name: '랭킹', toLink: '/rank' },
     { name: 'ADMIN', toLink: '/admin' },
   ];
   const history = useHistory();
-  // const nowActive = window.location.pathname
   const [nowActive, setNowActive] = useState(window.location.pathname);
   useEffect(() => {
-    setNowActive(window.location.pathname);
-  }, [history]);
+    // setNowActive(window.location.pathname);
+    console.log("바꿔!", window.location.pathname)
+  }, []);
+  
   return (
     <>
       <NavbarBlock>
         <div>
           <NavbarItemBlock>
+            <ImgDiv
+              src={require('../../images/logo.jpg')}
+              height="4rem"
+              alt="logo2"
+              onClick={()=>{
+                setNowActive('/');
+                history.push('/');
+              }}
+            />
             {navItems.map((item) => (
               <>
                 {nowActive === item.toLink ? (
                   <NavbarItem
+                    // now 기능에 제대로 구현 되기 전까지 보류
                     key={item.name}
-                    onClick={() => history.push(item.toLink)}
+                    onClick={() => {setNowActive(item.toLink); history.push(item.toLink);}}
                   >
                     {item.name}
                   </NavbarItem>
