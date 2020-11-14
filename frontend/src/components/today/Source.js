@@ -8,42 +8,42 @@ import { saveRecord } from '../../lib/api/game';
 // import { useHistory } from 'react-router-dom';
 
 const SourceBlock = styled.div`
-  width: 100%;
-  background: teal;
-  div {
-    margin: 0 1rem; 
-    background: silver
+  width: 80%;
+  margin: auto;
+  h1 {
+    font-size: 4rem;
+    margin: 0.25rem 0;
+  }
+  h3 {
+    font-size: 2rem;
+    margin: 0.5rem 0;
   }
 `;
 
 const TagBlock = styled.div`
-  margin: 1rem 0;
   align-items: center;
   display: flex;
+  margin: 1rem 0;
 `;
 
 const TagItem = styled.div`
   font-size: 1.25rem;
   font-weight: bold;
-  margin-right: 0.5rem;
-  color: White;
+  margin: 0 0.5rem;
 `;
 
 const ContentDiv = styled.div`
   border: 0.25rem solid #808080;
-  background: silver;
 `;
 
 const DescriptionDiv = styled.div`
   margin: 1rem 0;
   font-size: 1.25rem;
   font-weight: bold;
-  background: silver;
 `;
 const LinkDiv = styled.div`
   font-weight: bold;
   font-size: 1.25rem;
-  backoground: silver;
 `;
 const TypingWindow = styled.pre`
   .not-visit {
@@ -58,10 +58,11 @@ const TypingWindow = styled.pre`
   .incorrect {
     color: red;
   }
-  background: silver;
-  margin: 0 0.5rem;
+  margin: 1rem 0.5rem;
+  padding: 0.5rem;
   white-space: pre-wrap;
-  border-style: outlet;
+  border-width: 2px;
+  border-style: ridge;
 `;
 
 // const StyledPre = styled.pre`
@@ -77,10 +78,14 @@ const Source = ({ game }) => {
   //chList = {game.content.split('')} 받아서 쓰던거 삭제
   let chList = [];
   for (let i of game.content) {
-    if (i === '\r') continue; // C언의 \r\n 핸들링
+    if (i === "\r") continue;
     chList.push(i);
   }
-  if (chList[chList.length] !== '\n') chList.push('\n'); // 마지막에 \n 끝나지 않을때 핸들링`
+
+  if (chList[chList.length - 1] !== "\n") {
+    chList.push("\n")
+  }
+
   const { title, tags, description, link } = {
     title: game?.title,
     tags: game?.tags,
@@ -99,12 +104,11 @@ const Source = ({ game }) => {
   const [wrong, setWrong] = useState(0); // 틀린 갯수
 
   const handleKeyPress = (e) => {
-    // console.log(`handleKeyPress ${e}, ${e.key}`)
+    e.preventDefault();
     if (!start) {
       setStart(new Date());
     }
-    // console.log(cursor, chList.length, )
-    if (cursor === chList.length - 1) {
+    if (cursor === chList.length-1) {
       // 현준 수정 => enter가 생김에 따라 변화 핸들링
       // 종료시점
       if (e.key !== 'Enter') return; // 엔터를 누르기 전까진 안 끝내줌
@@ -158,9 +162,9 @@ const Source = ({ game }) => {
     } else {
       setCursor(cursor + 1); // 평범하게 바로 다음 Index로 이동
     }
-    // e.preventDefault()
   };
   const deleteKeyDown = (e) => {
+    e.preventDefault();
     // console.log(`deleteKeyDown ${e}, ${e.key}`)
     if (e.key === 'Backspace') {
       // indention 뒤로가서 도달하게 되는 cursor 위치
@@ -183,45 +187,44 @@ const Source = ({ game }) => {
       // if (chList[indention] === '\n') { setCursor(indention - 1)}
       // else { setCursor(indention) }
     }
-    // e.preventDefault()
   };
 
-  console.log(cursor, chList[cursor]);
+  // console.log(cursor, chList[cursor]);
   return (
     <SourceBlock>
       <h3>타자 연습</h3>
       <h1>{title}</h1>
-      <TagBlock>
-        {tags.map((tag) => (
-          <TagItem key={tag}>{tag}</TagItem>
+      <TagBlock>태그: 
+        {tags.map((tag, index) => (
+          <TagItem key={index + tag}>{tag}</TagItem>
         ))}
       </TagBlock>
       <TimerContainer start={start} end={end} />
       {/* <ContentDiv>
       </ContentDiv> */}
-        <TypingWindow
-          tabIndex={0}
-          onKeyPress={!end ? handleKeyPress : null}
-          onKeyDown={!end ? deleteKeyDown : null}
-        >
-          {chList.map((ch, index) => (
-            <span
-              className={`${
-                typo[index] && index < cursor ? 'incorrect' : 'correct'
-              } ${
-                cursor === index
-                  ? 'current'
-                  : cursor > index
-                  ? 'visit'
-                  : 'not-visit'
-              }`}
-              key={index}
-            >
-              {ch === '\n' && '↵'}
-              {ch}
-            </span>
-          ))}
-        </TypingWindow>
+      <TypingWindow
+        tabIndex={0}
+        onKeyPress={!end ? handleKeyPress : null}
+        onKeyDown={!end ? deleteKeyDown : null}
+      >
+        {chList.map((ch, index) => (
+          <span
+            className={`${
+              typo[index] && index < cursor ? 'incorrect' : 'correct'
+            } ${
+              cursor === index
+                ? 'current'
+                : cursor > index
+                ? 'visit'
+                : 'not-visit'
+            }`}
+            key={index}
+          >
+            {ch === '\n' && '↵'}
+            {ch}
+          </span>
+        ))}
+      </TypingWindow>
       <DescriptionDiv>설명:{description}</DescriptionDiv>
       <LinkDiv>출처:{link}</LinkDiv>
       {point >= 0 && end ? (

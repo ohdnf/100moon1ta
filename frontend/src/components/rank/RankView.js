@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { getRanking } from '../../lib/api/rank';
+
+const PlayersRank = styled.div`
+  text-align: center;
+  list-style-position: inside;
+  cursor: default;
+`
 
 const Rank = () => {
   const [ranking, setRanking] = useState([]);
 
   useEffect(() => {
-    // 브라우저 API를 이용하여 문서 타이틀을 업데이트합니다.
     getRanking()
       .then((response) => {
         // 성공시 => 뭐가 성공인지는 확인 필요
         if (typeof response.data === 'object') {
           setRanking(response.data);
+          console.log(response.data)
         } else {
           console.log('타입이 object가 아닙니다!', typeof response.data);
         }
@@ -23,14 +30,33 @@ const Rank = () => {
       });
   }, []);
 
+  class Bot {
+    constructor() {
+      this.avg_precision = "---";
+      this.avg_speed = "---";
+      this.game_count = "---";
+      this.player__username = "---";
+      this.player__commnet = "---";
+      this.total_score = "---";
+    }
+  }
+
+  const currentRank = new Array(30).fill(new Bot());
+  for (let i = 0; i < ranking.length; i++) {
+    currentRank[i] = ranking[i]
+  }
+  // console.log(currentRank)
+
   return (
-    <ol>
-      {ranking.map((e, index) => (
-        <li key={index}>
-          {e.player__username} : {e.total_score}
-        </li>
-      ))}
-    </ol>
+    <PlayersRank>
+      <ol>
+        {currentRank.map((e, index) => (
+          <li key={index}>
+            {e.player__username} | 총 {e.total_score}점 | 평균 속도: {e.avg_speed}타
+          </li>
+        ))}
+      </ol>
+    </PlayersRank>
   );
 };
 

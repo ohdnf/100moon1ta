@@ -19,7 +19,6 @@ const GameContainer = () => {
         query,
         mostTags
       }
-      console.log("query와 mostTags를 활용해 요청을 보냅니다.", data)
     }
   }
 
@@ -31,14 +30,14 @@ const GameContainer = () => {
         setGames(gameList);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
     getTags()
       .then((res) => {
         setMostTags(res.data)
       })
       .catch((error) => {
-        console.log(error)
+        console.error(error)
       })
   }, []);
 
@@ -58,7 +57,7 @@ const GameContainer = () => {
           />
         </>
       ) : (
-        <div> 검색 결과가 없습니다.</div>
+        <div style={{textAlign: "center"}}> 검색 결과가 없습니다.</div>
       )}
     </>
   );

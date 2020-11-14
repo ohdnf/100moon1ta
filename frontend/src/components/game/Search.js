@@ -3,23 +3,24 @@ import styled, { css } from 'styled-components';
 import PageTitle from '../common/PageTitle';
 
 const SearchBlock = styled.div`
-  background: silver;
-  border: 0.25rem solid teal;
+  width: 67%;
+  margin: 2rem auto;
 `;
 
 const SearchInput = styled.input`
-  margin: 1rem;
-  width: 95%;
+  margin: 1rem 2rem;
+  padding: 0.5rem 1rem;
+  width: 82%;
 `;
 const TagBlock = styled.div`
-  margin: 0.25rem;
+  margin: 0rem 2rem;
   display: flex;
 `;
 
 const TagItemBlock = styled.div`
   margin-right: 0.25rem;
   padding: 0.25rem;
-  background: DodgerBlue;
+  background: Gray;
   border: 0.01rem solid black;
   border-radius: 0.5rem;
   text-align: center;

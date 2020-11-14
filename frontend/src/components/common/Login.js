@@ -6,7 +6,6 @@ import Input from './Input';
 
 const modalSize = '15rem';
 const SelectMeModal = styled.div`
-  background: silver;
   position: fixed;
   top: 30%;
   left: calc(50% - ${modalSize} / 2);
@@ -43,7 +42,7 @@ const Login = ({ onChange, changeModal, onLogin }) => {
         <Button onClick={() => console.log('소셜로그인!')} github fullWidth>
           <img src={require('../../images/github.png')}
             height="20rem"
-            background="white"
+            background="none"
             alt="githubLogin"
           />
           Github Login

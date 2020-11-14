@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { getUserList } from '../../lib/api/admin';
 import CheckBox from '../../components/admin/CheckBox';
+
+const Users = styled.div`
+  margin: 1rem 5rem;
+  font-size; larger;
+  h1 {
+    cursor: default;
+  }
+`
 
 const UserList = () => {
   const [ userList, setUserList] = useState([]);
 
   useEffect(() => {
-    // 브라우저 API를 이용하여 문서 타이틀을 업데이트합니다.
     getUserList()
       .then((response) => {
         // 성공시 => 뭐가 성공인지는 확인 필요
@@ -25,16 +33,17 @@ const UserList = () => {
   }, []);
 
   return (
-    <ol>
-      asdf
-      {userList.map((e, index) => (
-        <li key={index}>
-          {e.email} : {e.username}
-          <CheckBox uid={e.id} verified={e.verified} isStaff={e.is_staff} isBan={e.is_ban}/>
-        </li>
-      ))}
-
-    </ol>
+    <Users>
+      <ol>
+        <h1>유저 목록 (인증 / 관리자 / 블랙)</h1>
+        {userList.map((e, index) => (
+          <li key={index}>
+            {e.email} : {e.username}
+            <CheckBox uid={e.id} verified={e.verified} isStaff={e.is_staff} isBan={e.is_ban}/>
+          </li>
+        ))}
+      </ol>
+    </Users>
   );
 };
 

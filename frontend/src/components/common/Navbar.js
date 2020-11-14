@@ -8,16 +8,16 @@ import { useSelector } from 'react-redux';
 
 const NavbarBlock = styled.div`
   display: flex;
-  height: 4rem;
+  height: 5rem;
+  margin-bottom: 1rem;
   width: 100%;
   justify-content: space-between;
   border-bottom-style: solid;
-  background: silver;
 `;
 
 const NavbarItemBlock = styled.div`
   display: flex;
-  height: 4rem;
+  height: 5rem;
 `;
 
 const NavbarItem = styled.div`
@@ -25,7 +25,8 @@ const NavbarItem = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin: 0 0.5rem 0 0.5rem;
+  margin: 0 1rem 0 1rem;
+  font-size: 1.5rem;
   opacity: 1;
   ${(props) =>
     props.now &&
@@ -39,6 +40,7 @@ const NavbarItem = styled.div`
 const ImgDiv = styled.img`
   display: block;
   padding: 0.25rem;
+  margin: 0 1rem;
   height: 3.5rem;
   :hover {
     cursor: pointer;
@@ -54,10 +56,10 @@ const Navbar = ({ changeModal, onLogout }) => {
   const isLogin = user === null ? false : true;
   const userName = user === null ? '' : user.username;
   const navItems = [
-    { name: '오늘의 타자', toLink: '/today' },
-    { name: '소스 목록', toLink: '/games' },
-    { name: '랭킹', toLink: '/rank' },
-    { name: 'ADMIN', toLink: '/admin' },
+    // { name: '오늘의 타자', toLink: '/today' },
+    { name: '연습할 글', toLink: '/games' },
+    { name: '순위', toLink: '/rank' },
+    { name: '관리자', toLink: '/admin' },
   ];
   const history = useHistory();
   const [nowActive, setNowActive] = useState(window.location.pathname);
@@ -74,7 +76,7 @@ const Navbar = ({ changeModal, onLogout }) => {
             <ImgDiv
               src={require('../../images/logo.svg')}
               height="4rem"
-              alt="logo2"
+              alt="logo"
               onClick={()=>{
                 setNowActive('/');
                 history.push('/');
