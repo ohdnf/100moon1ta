@@ -11,6 +11,18 @@ const GameContainer = () => {
   const [query, setQuery] = useState(null)
   const [queryTags, setQueryTags] = useState([])
 
+  const onEnter = () => {
+    if (!query) {
+      alert("검색어를 입력하세요")
+    } else {
+      const data = {
+        query,
+        mostTags
+      }
+      console.log("query와 mostTags를 활용해 요청을 보냅니다.", data)
+    }
+  }
+
   useEffect(() => {
     // 브라우저 API를 이용하여 문서 타이틀을 업데이트합니다.
     getGames()
@@ -37,6 +49,7 @@ const GameContainer = () => {
         setQuery={setQuery}
         queryTags={queryTags}
         setQueryTags={setQueryTags}
+        onEnter={onEnter}
       />
       {games ? (
         <>
