@@ -19,7 +19,7 @@ from django.conf import settings
 from rest_framework import  permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from users.views import Nickname, GitHubLogin, GitHubCallback, GitHubTest, CustomOAuth2CallbackView
+from users.views import Nickname, GitHubCallback, CustomOAuth2CallbackView, GitHubTest
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +27,7 @@ urlpatterns = [
     path('api/rest-auth/', include("rest_auth.urls")),
     path('api/rest-auth/nickname-duplicated/', Nickname.as_view()),
     path('api/rest-auth/signup/', include('rest_auth.registration.urls')),
-    path('api/v1/accounts/all-auth/github/login/', GitHubLogin ),
+    # path('api/v1/accounts/all-auth/github/login/', GitHubLogin ),
     path('api/v1/accounts/all-auth/github/login/callback/', GitHubCallback ),
     # path('accounts/github/login/',GitHubLogin),
     path('api/v1/accounts/all-auth/', include('allauth.urls')), # 이메일 발송에 사용됨

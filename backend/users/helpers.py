@@ -16,6 +16,7 @@ from allauth.socialaccount.providers.base import AuthError, AuthProcess
 
 import requests
 from rest_auth.registration.views import SocialLoginView
+
 def perform_login(
     request,
     user,
@@ -105,6 +106,8 @@ def _process_signup(request, sociallogin):
         get_adapter(request).save_user(request, sociallogin, form=None)
         
         # ret = complete_social_signup(request, sociallogin) # HttpResponse임 
+        # response = HttpResponse(requests.post('http://localhost:8000/api/rest-auth/social/test/',data={'access_token':sociallogin.token}))
+        ret = HttpResponseRedirect('http://localhost:8000/admin/')
     return ret
 
 

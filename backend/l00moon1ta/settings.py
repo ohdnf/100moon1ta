@@ -175,7 +175,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-
+# SOCIALACCOUNT_HELPERS = 'users.helplers'
 
 
 
