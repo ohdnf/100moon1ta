@@ -54,17 +54,37 @@ const TagItem = ({ tag, queryTags, setQueryTags }) => {
       setQueryTags(nextArray);
     }
   };
+
   return (
     <TagItemBlock selected={isSelected} onClick={onClick}>
       {content}
     </TagItemBlock>
   );
 };
-const Search = ({ mostTags, query, setQuery, queryTags, setQueryTags }) => {
+const Search = ({
+  mostTags,
+  query,
+  setQuery,
+  queryTags,
+  setQueryTags,
+  onEnter,
+}) => {
+  const onKeyPress = (e) => {
+    if (e.code === 'Enter') {
+      onEnter();
+    } else {
+      setQuery(e.target.value + e.key);
+    }
+  };
+
   return (
     <SearchBlock>
       <PageTitle>소스 목록</PageTitle>
-      <SearchInput placeholder="검색어를 입력하세요" onChange={(e) => {setQuery(e.target.value)}}/>
+      <SearchInput
+        placeholder="검색어를 입력하세요"
+        value={query}
+        onKeyPress={onKeyPress}
+      />
       <TagBlock>
         {mostTags &&
           mostTags.map((tag) => (
