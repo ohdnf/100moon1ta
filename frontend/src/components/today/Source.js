@@ -9,12 +9,10 @@ import { saveRecord } from '../../lib/api/game';
 
 const SourceBlock = styled.div`
   width: 100%;
-  background: LightGreen;
 `;
 
 const TagBlock = styled.div`
   margin: 1rem 0;
-  background: DarkSeaGreen;
   align-items: center;
   display: flex;
 `;
@@ -23,23 +21,21 @@ const TagItem = styled.div`
   font-size: 1.25rem;
   font-weight: bold;
   margin-right: 0.5rem;
-  background: ForestGreen;
-  color: White;
 `;
 
 const ContentDiv = styled.div`
-  border: 0.25rem solid Black;
-  background: LightSteelBlue;
+  margin: 1rem 0;
+  padding: 1rem 2rem;
+  background: Lightgray;
 `;
 
 const DescriptionDiv = styled.div`
+  margin: 1rem 0;
   font-size: 1.25rem;
-  font-weight: bold;
-  background: LightSalmon;
 `;
 const LinkDiv = styled.div`
+  font-weight: bold;
   font-size: 1.25rem;
-  backoground: LightSkyBlue;
 `;
 const TypingWindow = styled.pre`
   .not-visit {
@@ -54,8 +50,7 @@ const TypingWindow = styled.pre`
   .incorrect {
     color: red;
   }
-  border: 0.25rem solid Black;
-  background: LightSteelBlue;
+  background: Lightgray;
   white-space: pre-wrap;
 `;
 
@@ -191,9 +186,9 @@ const Source = ({ game }) => {
   // console.log(chList);
   return (
     <SourceBlock>
-      <div>오늘의 타자</div>
-      <div>{title}</div>
-      <TagBlock>
+      <h3>타자 연습</h3>
+      <h1>{title}</h1>
+      <TagBlock>태그: 
         {tags.map((tag) => (
           <TagItem key={tag}>{tag}</TagItem>
         ))}
