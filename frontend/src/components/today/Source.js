@@ -9,7 +9,11 @@ import { saveRecord } from '../../lib/api/game';
 
 const SourceBlock = styled.div`
   width: 100%;
-  background: silver;
+  background: teal;
+  div {
+    margin: 0 1rem; 
+    background: silver
+  }
 `;
 
 const TagBlock = styled.div`
@@ -186,6 +190,7 @@ const Source = ({ game }) => {
     // onKeyPress={!end ? handleKeyPress : null}
     // onKeyDown={!end ? deleteKeyDown : null}
     >
+      <div>
       <div>오늘의 타자</div>
       <div>{title}</div>
       <TagBlock>
@@ -225,7 +230,9 @@ const Source = ({ game }) => {
         <Summary point={point} accuracy={accuracy} end={end}></Summary>
       ) : (
         <Keyboard />
-      )}
+      )}  
+      </div>
+      
     </SourceBlock>
   );
 };

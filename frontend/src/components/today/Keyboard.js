@@ -2,10 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const KeyboardBlock = styled.div`
-  width: 100%;
 `
 const LayoutBlock = styled.div`
-	width: 100%;
 	height: 10rem;
 	background: silver;
 	border: 1px solid Black;
