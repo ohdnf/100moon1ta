@@ -23,7 +23,7 @@ class Source(models.Model):
     category = models.CharField(max_length=2, choices=TYPE_CHOICES, default=CODE)
     content = models.TextField()
     length = models.IntegerField()
-    difficulty = models.IntegerField(blank=True)
+    difficulty = models.IntegerField(null=True, blank=True)
     likers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_source', blank=True)
     subscribers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='subscribed_source', blank=True)
     players = models.ManyToManyField(settings.AUTH_USER_MODEL, through='GameHistory', blank=True)
