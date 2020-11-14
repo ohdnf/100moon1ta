@@ -20,6 +20,14 @@ from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.core.cache import cache
 from django.conf import settings
 
+from allauth.socialaccount.helpers import complete_social_login
+from allauth.account.adapter import get_adapter
+# from django.http import HttpResponseRedirect, JsonResponse
+# from rest_framework.request import Request as rest_request
+from django.http.request import HttpRequest
+from django.http import HttpResponse
+from allauth.socialaccount.providers.oauth2.views import OAuth2View,OAuth2LoginView, OAuth2Adapter, OAuth2CallbackView
+
 # Create your views here.
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
@@ -85,16 +93,6 @@ class Like(APIView):
             like_status = "좋아요!"
         return Response({"sources" : like_status})   
 
-class GitHubLogin(SocialLoginView):
-    adapter_class = github_views.GitHubOAuth2Adapter
-    client_class = OAuth2Client
-
-    @property
-    def callback_url(self):
-        # use the same callback url as defined in your GitHub app, this url
-        # must be absolute:
-        return self.request.build_absolute_uri(reverse('github_callback'))
-
 # 권한 세부화
 class StaffManagement(APIView):
     def patch(self, request, uid):
@@ -118,3 +116,41 @@ class BanManagement(APIView):
             else:
                 return Response(status=200)
         return  Response(status=403)
+
+
+
+class CustomOAuth2CallbackView(OAuth2CallbackView):
+
+    def dispatch(self, request, *args, **kwargs):
+        # ?code 가 없을경우의 에러처리
+        # if "error" in request.GET or "code" not in request.GET:
+        #     # Distinguish cancel from error
+        #     auth_error = request.GET.get("error", None)
+        #     if auth_error == self.adapter.login_cancelled_error:
+        #         error = AuthError.CANCELLED
+        #     else:
+        #         error = AuthError.UNKNOWN
+        #     return render_authentication_error(
+        #         request, self.adapter.provider_id, error=error
+        #     )
+        app = self.adapter.get_provider().get_app(self.request)
+        client = self.get_client(self.request, app)
+
+        # access_token = client.get_access_token(request.GET["code"])
+        access_token = self.adapter.get_access_token_data(request, app, client)
+        token = self.adapter.parse_token(access_token)
+        token.app = app
+        login = self.adapter.complete_login(
+            request, app, token, response=access_token
+        )
+        login.token = token
+
+        complete_social_login(request, login)
+        return HttpResponse(token)
+
+class GitHubLogin(SocialLoginView):
+    
+    adapter_class = github_views.GitHubOAuth2Adapter
+    client_class = OAuth2Client
+
+GitHubCallback = CustomOAuth2CallbackView.adapter_view(github_views.GitHubOAuth2Adapter)
