@@ -7,7 +7,7 @@ const KeyboardBlock = styled.div`
 const LayoutBlock = styled.div`
 	width: 100%;
 	height: 10rem;
-	background: DarkSeaGreen;
+	background: silver;
 	border: 1px solid Black;
 `
 const Keyboard = () => {
