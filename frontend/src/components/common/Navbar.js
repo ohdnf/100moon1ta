@@ -55,8 +55,6 @@ const Navbar = ({ changeModal, onLogout }) => {
   const navItems = [
     { name: '오늘의 타자', toLink: '/today' },
     { name: '소스 목록', toLink: '/games' },
-    // { name: '커뮤니티', toLink: '/community' },
-    // { name: '내 페이지', toLink: '/profile' },
     { name: '랭킹', toLink: '/rank' },
     { name: 'ADMIN', toLink: '/admin' },
   ];
@@ -73,7 +71,7 @@ const Navbar = ({ changeModal, onLogout }) => {
         <div>
           <NavbarItemBlock>
             <ImgDiv
-              src={require('../../images/logo.jpg')}
+              src={require('../../images/logo.svg')}
               height="4rem"
               alt="logo2"
               onClick={()=>{
