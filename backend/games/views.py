@@ -1,9 +1,9 @@
 from django.conf import settings
-from django.core.cache.backends.base import DEFAULT_TIMEOUT
-from django.db.models import Sum, Avg, Count, F, FloatField, ExpressionWrapper, Func, Q
-from django.shortcuts import get_object_or_404
-from django.views.decorators.cache import cache_page
 from django.core.cache import cache
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.db.models import Sum, Avg, Count, Max, F, FloatField, ExpressionWrapper, Func, Q
+from django.shortcuts import get_object_or_404
+from django.views.decorators.cache import cache_page, never_cache
 
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
@@ -15,30 +15,32 @@ from .models import Tag, Source, GameHistory
 from .serializers import TagSerializer, SourceSerializer, GameHistorySerializer, RankSerializer, SourceListSerializer
 from users.models import CustomUser
 
-from django.views.decorators.cache import never_cache
-
 import random
 
+
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
+
+
+class Round(Func):
+    function = 'ROUND'
+    template='%(function)s(%(expressions)s, 2)'
 
 
 # 타자 연습 소스 관련 API
 
 @api_view(['GET', 'POST'])
-@cache_page(CACHE_TTL)
 def source_retrieve_create(request):
-    
     def source_retrieve(request):
         """
         타자 연습 소스 목록 보기
         """    
         sources = cache.get_or_set('sources', Source.objects.prefetch_related('tags')
-        .annotate(like_count=Count('likers'), is_like=Count('likers', filter=Q(likers__id = request.user.id)), 
-        is_subscribe=Count('subscribers', filter=Q(subscribers__id = request.user.id))))
-      
-        # 추후 정렬 방식 구현
+        .annotate(
+            like_count=Count('likers'), 
+            is_like=Count('likers', filter=Q(likers__id = request.user.id)), 
+            is_subscribe=Count('subscribers', filter=Q(subscribers__id = request.user.id)))
+        )
         serializer = SourceListSerializer(sources, many=True)
-        
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @permission_classes([IsAuthenticated])
@@ -60,29 +62,25 @@ def source_retrieve_create(request):
     elif request.method == 'POST':
         return source_create(request)
 
-@api_view(['GET'])
-def count(request):
-    return Response(Source.objects.count(), status=status.HTTP_200_OK)
-
+# @never_cache
 @api_view(['GET'])
 def random_source(request):
-    sources = Source.objects.all()
-    rs = sources[random.choice(range(len(sources)))]
-    serializer = SourceSerializer(rs)
-    return Response(serializer.data, status=200)
-
-
-@api_view(['GET'])
-def pages(request):
-    start = request.data.get('start')
-    end = request.data.get('end')
-    # step = request.data.get('step',10)
-    sources = cache.get_or_set('sources', Source.objects.prefetch_related('tags')
-    .annotate(like_count=Count('likers'), is_like=Count('likers', filter=Q(likers__id = request.user.id)), 
-    is_subscribe=Count('subscribers', filter=Q(subscribers__id = request.user.id))))[start:end]
-    # 추후 정렬 방식 구현
-    serializer = SourceListSerializer(sources, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    """
+    타자 연습 소스 랜덤으로 선택하기
+    """
+    max_id = Source.objects.all().aggregate(max_id=Max('id'))['max_id']
+    cnt = 0
+    while True:
+        cnt += 1
+        pk = random.randint(1, max_id)
+        # source = get_object_or_404(Source, pk=pk)
+        source = Source.objects.filter(pk=pk).first()
+        if source:
+            serializer = SourceSerializer(source)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        if cnt > 10000:
+            break
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 def source_detail_update_destroy(request, pk):
@@ -223,25 +221,21 @@ def history_retrieve_create(request, pk):
     elif request.method == 'POST':
         return history_create(request)
 
-# 반올림 용
-class Round(Func):
-    function = 'ROUND'
-    template='%(function)s(%(expressions)s, 2)'
 
-# 사용자 순위 관련 API   
+# 사용자 순위 관련 API
+
 @api_view(['GET'])
-@cache_page(CACHE_TTL)
 def rank_retrieve(request):
     """
     각 플레이어마다 갖고 있는 모든 점수를 합산하여 30위까지 랭킹을 반환
     """
-    # annotate 하나로 합쳐야됨
-    queryset = cache.get_or_set('queryset', GameHistory.objects.values('player__username', 'player__comment')
-        .annotate(game_count=Count('source'))
-        .annotate(avg_precision=Round(Avg('precision')))
-        .annotate(total_score=Sum('score'))
-        .annotate(avg_speed=Round(Avg(ExpressionWrapper(F('source__length')/F('game_time'), output_field=FloatField()))))
-        .order_by('-total_score')[:30])
+    queryset = cache.get_or_set('queryset', GameHistory.objects.values('player__username', 'player__comment').annotate(
+    # queryset = GameHistory.objects.values('player__username', 'player__comment').annotate(
+            game_count=Count('source'), 
+            avg_precision=Round(Avg('precision')), 
+            total_score=Sum('score'),
+            avg_speed=Round(Avg(ExpressionWrapper(F('source__length')/F('game_time'), output_field=FloatField())))
+        # ).order_by('-total_score')[:30]
+        ).order_by('-total_score')[:30])
     serializer = RankSerializer(queryset, many=True)
     return Response(serializer.data, status=status.HTTP_201_CREATED)
-
