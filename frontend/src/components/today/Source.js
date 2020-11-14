@@ -9,12 +9,11 @@ import { saveRecord } from '../../lib/api/game';
 
 const SourceBlock = styled.div`
   width: 100%;
-  background: LightGreen;
+  background: silver;
 `;
 
 const TagBlock = styled.div`
   margin: 1rem 0;
-  background: DarkSeaGreen;
   align-items: center;
   display: flex;
 `;
@@ -23,23 +22,22 @@ const TagItem = styled.div`
   font-size: 1.25rem;
   font-weight: bold;
   margin-right: 0.5rem;
-  background: ForestGreen;
   color: White;
 `;
 
 const ContentDiv = styled.div`
-  border: 0.25rem solid Black;
-  background: LightSteelBlue;
+  border: 0.25rem solid #808080;
+  background: silver;
 `;
 
 const DescriptionDiv = styled.div`
   font-size: 1.25rem;
   font-weight: bold;
-  background: LightSalmon;
+  background: silver;
 `;
 const LinkDiv = styled.div`
   font-size: 1.25rem;
-  backoground: LightSkyBlue;
+  backoground: silver;
 `;
 const TypingWindow = styled.pre`
   .not-visit {
@@ -54,16 +52,17 @@ const TypingWindow = styled.pre`
   .incorrect {
     color: red;
   }
-  border: 0.25rem solid Black;
-  background: LightSteelBlue;
+  background: silver;
+  margin: 0 0.5rem;
   white-space: pre-wrap;
+  border-style: outlet;
 `;
 
-const StyledPre = styled.pre`
-  display: inline;
-  margin: 0;
-  padding: 0;
-`;
+// const StyledPre = styled.pre`
+//   display: inline;
+//   margin: 0;
+//   padding: 0;
+// `;
 // cursor: auto / default(화살표) / pointer / wait
 let typo = [];
 let typoMap = {};
@@ -195,7 +194,8 @@ const Source = ({ game }) => {
         ))}
       </TagBlock>
       <TimerContainer start={start} end={end} />
-      <ContentDiv>
+      {/* <ContentDiv>
+      </ContentDiv> */}
         <TypingWindow
           tabIndex={0}
           onKeyPress={!end ? handleKeyPress : null}
@@ -219,7 +219,6 @@ const Source = ({ game }) => {
             </span>
           ))}
         </TypingWindow>
-      </ContentDiv>
       <DescriptionDiv>설명:{description}</DescriptionDiv>
       <LinkDiv>출처:{link}</LinkDiv>
       {point >= 0 && end ? (

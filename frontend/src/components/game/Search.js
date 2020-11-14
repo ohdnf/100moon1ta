@@ -3,13 +3,9 @@ import styled, { css } from 'styled-components';
 import PageTitle from '../common/PageTitle';
 
 const SearchBlock = styled.div`
-  background: Azure;
-  border: 0.25rem solid BlueViolet;
+  background: silver;
+  border: 0.25rem solid teal;
 `;
-// const SearchTitle = styled.div`
-//   font-size: 1.2rem;
-//   font-weight: bolder;
-// `;
 
 const SearchInput = styled.input`
   margin: 1rem;
@@ -18,7 +14,6 @@ const SearchInput = styled.input`
 const TagBlock = styled.div`
   margin: 0.25rem;
   display: flex;
-  background: Aquamarine;
 `;
 
 const TagItemBlock = styled.div`

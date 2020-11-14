@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const PaginationBlock = styled.div`
+  background: teal;
   position: fixed;
   left: 50%;
   margin-left: -${(props)=>props.number+1}rem;

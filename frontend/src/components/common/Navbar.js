@@ -12,6 +12,7 @@ const NavbarBlock = styled.div`
   width: 100%;
   justify-content: space-between;
   border-bottom-style: solid;
+  background: silver;
 `;
 
 const NavbarItemBlock = styled.div`

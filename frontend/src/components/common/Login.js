@@ -6,7 +6,7 @@ import Input from './Input';
 
 const modalSize = '15rem';
 const SelectMeModal = styled.div`
-  background: white;
+  background: silver;
   position: fixed;
   top: 30%;
   left: calc(50% - ${modalSize} / 2);
@@ -15,6 +15,7 @@ const SelectMeModal = styled.div`
   width: ${modalSize};
   border-radius: 20px;
   border: ridge;
+  border-style: outset;
   div.modalLabel {
     font-size: 1.5rem;
     color: 241654;
