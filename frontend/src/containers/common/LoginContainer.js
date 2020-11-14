@@ -4,7 +4,6 @@ import Login from '../../components/common/Login';
 import client from '../../lib/api/client';
 
 import { login } from '../../modules/user';
-import sampleData from '../../sampleData';
 import { errorDelete } from '../../modules/user';
 
 const LoginContainer = ({ changeModal }) => {
@@ -43,7 +42,7 @@ const LoginContainer = ({ changeModal }) => {
   //   // JWT 반환
   // };
 
-  useEffect(() => {
+useEffect(() => {
     if (user) {
       // 로그인 성공시
       localStorage.setItem('user', JSON.stringify(user));
@@ -52,7 +51,7 @@ const LoginContainer = ({ changeModal }) => {
       alert("로그인 되었습니다.")
       changeModal('');
     }
-  }, [dispatch, changeModal, login]);
+  }, [user]);
 
   useEffect(() => {
     if (error) {
@@ -63,7 +62,7 @@ const LoginContainer = ({ changeModal }) => {
       }
     }
     dispatch(errorDelete())
-  }, [dispatch, error])
+  }, [error])
   return (
     <Login onChange={onChange} changeModal={changeModal} onLogin={onLogin} />
   );

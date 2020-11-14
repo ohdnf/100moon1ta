@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
+import React from 'react';
 import RankView from '../../components/rank/RankView';
 
 const RankContainer = () => {
