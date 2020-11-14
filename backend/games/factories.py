@@ -43,15 +43,15 @@ class SourceFactory(DjangoModelFactory):
     link = factory.Faker('domain_name')
     category = factory.fuzzy.FuzzyChoice(CATEGORIES)
     content = factory.Faker('paragraph', nb_sentences=3, variable_nb_sentences=True)
-    length = factory.Faker('random_number')
-    difficulty = factory.Faker('random_digit_not_null')
+    length = factory.Faker('random_int', min=1, max=2000)
+    # difficulty = factory.Faker('random_digit_not_null')
 
 
 class GameHistoryFactory(DjangoModelFactory):
     class Meta:
         model = GameHistory
     
-    game_time = factory.Faker('random_int',min=0, max=100)
+    game_time = factory.Faker('random_int', min=0, max=100)
     precision = factory.Faker('random_int', min=0, max=100)
     typo = factory.Faker('json')
     score = factory.Faker('random_int', min=0, max=100)

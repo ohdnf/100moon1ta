@@ -8,6 +8,8 @@ services:
                 command: gunicorn l00moon1ta.wsgi:application --bind 0.0.0.0:8000
                 ports:
                         - "8000:8000"
+                volumes:
+                        - "./backend:/code"
                 env_file:
                         - ./backend/.env
         web:
