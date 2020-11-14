@@ -68,18 +68,9 @@ const StyledPre = styled.pre`
 let typo = [];
 let typoMap = {};
 
-const Source = ({ game }) => {
-  const code = `123 4567:
-    8901
-      234
-      567
-`;
-//23개
-
-console.log("코드 길이:", code.length)
-  // const chList = code.split("")
+const Source = ({ game }) => { //chList = {game.content.split('')} 받아서 쓰던거 삭제
   let chList = [];
-  for (let i of code) {
+  for (let i of game.content) {
     chList.push(i);
   }
 
