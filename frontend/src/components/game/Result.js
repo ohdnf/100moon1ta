@@ -7,34 +7,28 @@ import { bookmarkGame } from '../../lib/api/user';
 import { useSelector } from 'react-redux';
 
 const ResultBlock = styled.div`
-  background: DeepSkyBlue;
-  border: 0.25rem solid BlueViolet;
+  background: teal;
+  border: 0.25rem solid;
   margin-bottom: 20rem;
 `;
 
 const ResultTitleBlock = styled.div`
   display: flex;
   justify-content: space-between;
-  background: LightGray;
 `;
 const ResultTitle = styled.div`
   font-size: 1.2rem;
   font-weight: bolder;
 `;
 
-// const HamburgerButton = styled.image`
-//   display: block;
-// `;
-
 const ResultItemBlock = styled.div`
   margin: 0.25rem;
-  background: DeepPink;
 `;
 
 const ResultItemDiv = styled.div`
-  margin: 0.25rem 0;
   display: flex;
-  background: ForestGreen;
+  background: silver;
+  margin: 0.25rem 0;
   justify-content: space-between;
 `;
 
@@ -53,7 +47,6 @@ const ItemTitle = styled.div`
 const ItemTagBlock = styled.div`
   margin: 0.25rem;
   display: flex;
-  background: Aquamarine;
 `;
 
 const ItemTag = styled.div`

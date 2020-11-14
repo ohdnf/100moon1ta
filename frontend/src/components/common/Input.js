@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 const StyledInput = styled.input`
   margin-top: 1rem;
   color: SlateGrey;
+  border-style: outset;
   ${(props) =>
     props.fullWidth &&
     css`
