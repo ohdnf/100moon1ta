@@ -68,22 +68,11 @@ const StyledPre = styled.pre`
 let typo = [];
 let typoMap = {};
 
-const Source = ({ game }) => {
-  const code = `def go(n):
-    if n:
-        return False
-
-
-    else:
-        return True
-`;
-// console.log(code)
-  // const chList = code.split("")
+const Source = ({ game }) => { //chList = {game.content.split('')} 받아서 쓰던거 삭제
   let chList = [];
-  for (let i of code) {
+  for (let i of game.content) {
     chList.push(i);
   }
-  // console.log(chList);
 
   const { title, tags, description, link } = {
     title: game?.title,
@@ -100,93 +89,91 @@ const Source = ({ game }) => {
 
   let indention = 0;
   const [accuracy, setAccuracy] = useState(100)
+  const [wrong, setWrong] = useState(0)
   
   const handleKeyPress = (e) => {
     if (!start) {
       setStart(new Date());
     }
-    if (cursor === chList.length) {
+    console.log(cursor, chList.length, )
+    if (cursor === chList.length-1) {
+      // 현준 수정 => enter가 생김에 따라 변화 핸들링
       // 종료시점
-      if (e.key === 'Enter') {
-        let dtEnd = new Date();
-        let game_time = (dtEnd - start) / 1000;
-        let precision =
-          (1 - typo.reduce((a, b) => a + b, 0) / game.length) * 100;
-        let score = Math.round((precision * game.length) / game_time);
-        setPoint(score); // 게임 종료 시 점수 반환, 정확도랑 속도 추가
-        setEnd(game_time);
-        let data = {
-          game_time: game_time,
-          precision: precision,
-          typo: JSON.stringify(typoMap),
-          score: score,
-        };
-        saveRecord(data, game.id)
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
+      if (e.key !== 'Enter') return; // 엔터를 누르기 전까진 안 끝내줌
+      let dtEnd = new Date();
+      let game_time = (dtEnd - start) / 1000;
+      let precision =
+        (1 - typo.reduce((a, b) => a + b, 0) / game.length) * 100;
+      let score = Math.round((precision * game.length) / game_time);
+      let acc = Math.round((chList.length - wrong) * 100 / chList.length)//정확도
+      setPoint(score); // 게임 종료 시 점수 반환, 정확도랑 속도 추가
+      setEnd(game_time);
+      setAccuracy(acc)//정확도
+      let data = {
+        game_time: game_time,
+        precision: precision,
+        typo: JSON.stringify(typoMap),
+        score: score,
+      };
+      saveRecord(data, game.id)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      
     }
     if (cursor >= chList.length) return; // 본문을 초과한 입력 무시
-    //&& chList[cursor].charCodeAt(0) === 8629
-    if (e.key === "Enter" && chList[cursor].charCodeAt(0) === 10) {
-      // 현재 ↵의 chrome 값은 10
-      console.log(chList[cursor].charCodeAt(0))
-      // console.log(`e.key는 ${e.key}, e.key === ↵ 결과 ${e.key === "↵"}, char값 ${chList[cursor]} ↵값 ${"↵"} char === ↵ 결과${chList[cursor] === "↵"} ${chList[cursor] == "↵"} 실험${"↵".charCodeAt(0)}`)
-      typo[cursor] = 0;
-    } else if (e.key === chList[cursor]) {
-      typo[cursor] = 0;
-      // setCursor(cursor + 1);
-    } else if (e.key !== chList[cursor]) {
-      setAccuracy(accuracy - 1)
-      typo[cursor] = 1;
+
+    // 1. 맞고 틀리고 판단하는 부분
+    if (e.key === chList[cursor] || (e.key === "Enter" && chList[cursor].charCodeAt(0) === 10)) { // 현재 ↵의 chrome 값은 10
+      typo[cursor] = 0; // 맞음
+    } else {
+      setWrong(wrong + 1)
+      typo[cursor] = 1; // 틀림
       if (typoMap[chList[cursor]]) {
         ++typoMap[chList[cursor]];
       } else {
         typoMap[chList[cursor]] = 1;
       }
-      // setCursor(cursor + 1);
     }
-    // console.log(`정답${chList[cursor]} vs 입력값${e.key}`)
-    // console.log(cursor) // 언제 1++이 되는거지
-    if (chList[cursor] === '\n') {
-      // 이전 값이 enter면
+    // 다음 커서 포인트를 판단하는 부분
+    if (chList[cursor] === '\n') { // 현재 커서값이 "\n"
       indention = cursor;
       while (chList[indention + 1] === ' ') {
         ++indention;
       }
-      setCursor(indention + 1); //원래 코드
-      // setCursor(indention + 2); // +1 하자
+      setCursor(indention + 1); // 들여쓰기 공백을 건너뛴 Index로 이동 
     } else {
-      setCursor(cursor + 1);
+      setCursor(cursor + 1); // 평범하게 바로 다음 Index로 이동
     }
   };
   const deleteKeyDown = (e) => {
     if (e.key === 'Backspace') {
-      if (cursor > 0) {
-        setCursor(cursor - 1);
+      // indention 뒤로가서 도달하게 되는 cursor 위치
+      if (cursor === 0) return; // 더 뒤로갈 공간 X
+      indention = cursor - 1 // 기본 한 칸 뒤로
+
+      if (typo[cursor] === 1 && wrong !== 0) setWrong(wrong - 1);// 틀렸던 숫자, 다시 되돌리는 코드, 음의 값은 되지 않도록 핸들링
+      while (chList[indention] === ' ' && indention !== 0){ // 뒤로 이동할 공간이 탭으로 인한 공간일때 핸들링
+        --indention
       }
-      if (chList[cursor - 1] === ' ') {
-        indention = cursor - 1;
-        while (chList[indention] === ' ') {
-          --indention;
-        }
-        if (chList[indention] === '\n') {
-          setCursor(indention - 1); // 백스페이스 시 enter로 커서가 가지 않고 글자로 감
-        }
+      if (indention === cursor - 2) {
+        setCursor(cursor - 1) // 뒤로 이동할 공간이 탭으로 인한 공간 아니였음!!! 정상적인 한 칸 띄기
+      } else {
+        setCursor(indention); 
       }
+      // 백스페이스 시 enter로 가도 되게 변화하였으므로 아래 코드 삭제
+      // 백스페이스 시 enter로 커서가 가지 않고 글자로 감 
+      // if (chList[indention] === '\n') { setCursor(indention - 1)} 
+      // else { setCursor(indention) }
     }
-  };
-  // console.log("↵")
-  const isTabOrEnter = (char) => {
-    if (char === '\n') return true;
-    // if (char === ' ') return true;
-    return false;
+
   };
 
+  console.log(chList)
+  console.log(chList.length)
   // useEffect(()=>{ console.log(chList)}, [])
   // console.log(chList);
   return (
