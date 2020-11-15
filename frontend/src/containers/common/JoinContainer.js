@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import { useDispatch } from 'react-redux';
 import Join from '../../components/common/Join';
-// import { useHistory } from "react-router-dom";
-
-// import { signup } from '../../modules/user';
 import { signup, checkNickname } from '../../lib/api/user';
 
 const JoinContainer = ({ changeModal }) => {
@@ -15,9 +11,6 @@ const JoinContainer = ({ changeModal }) => {
     nickname: false,
   });
   const [submitEnable, setSubmitEnable] = useState(false);
-  // const dispatch = useDispatch();
-  // const history = useHistory();
-  //   const [nextUrl, setNextUrl] = useStae("");
 
   const onChange = (e) => {
     if (e.target.name === 'email') {
@@ -38,14 +31,12 @@ const JoinContainer = ({ changeModal }) => {
     }
   };
   const onCheckNickname = () => {
-    // 입력이 없을때 핸들링 추가
     if (nickname === "") {
       alert('닉네임을 입력하세요.')
       return
     }
     checkNickname(nickname)
       .then((res) => {
-        //res.data.possible = true or false
         if (res.data.possible) {
           setValidation({ nickname: true });
           alert('사용 가능한 닉네임입니다.');
@@ -75,16 +66,12 @@ const JoinContainer = ({ changeModal }) => {
     };
     signup(data)
       .then((res) => {
-        //status:201, data.detail:"확인 이메일을 발송했습니다."
         alert(res.data.detail);
         changeModal('');
       })
       .catch((err) => {
-        // 1. 비밀번호가 모두 숫자 => {"password1":["비밀번호가 전부 숫자로 되어 있습니다."]}
-        // console.log(err.response)
         console.log(err.response.data)
         let alertMessage = ""
-        // key: [ values ]
 
         const entries = Object.entries(err.response.data)
         console.log(entries)
@@ -98,7 +85,6 @@ const JoinContainer = ({ changeModal }) => {
   };
 
   useEffect(() => {
-    // email, nickname(의 validation), password, passwordConfirm이 정상이면 버튼 오픈
     if (
       email.length &&
       password.length &&

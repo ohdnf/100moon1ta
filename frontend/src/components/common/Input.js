@@ -20,7 +20,7 @@ const Input = ({ name, onChange, fullWidth, placeholderString }) => {
         id={name}
         type={type}
         name={name}
-        placeholder={placeholderString||name}
+        placeholder={placeholderString || name}
         required
         fullWidth={fullWidth}
         onChange={onChange}

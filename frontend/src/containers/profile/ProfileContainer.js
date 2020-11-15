@@ -9,8 +9,6 @@ import Post from '../../components/profile/Post';
 
 import { getMy } from '../../lib/api/user';
 
-// grid-template-columns : 좌우로 프레임 분할
-// grid-template-rows : 상하로 프레임 분할
 const MainBlock = styled.div`
   width: 100%;
   background: Gray;
@@ -21,10 +19,6 @@ const InfoBlock = styled.div`
   display: flex;
   align-items: center;
 `;
-// const ListBlock = styled.div`
-//   background: LightBlue;
-// `;
-
 const Block = styled.div`
   width: 100%;
   ${(props) =>
@@ -45,16 +39,7 @@ const StyledDiv = styled.div`
 `
 
 const ProfileContainer = () => {
-  // 유저 정보 => redux
   const [tab, setTab] = useState('record');
-//   {
-//     "id": 52,
-//     "email": "jhj9109@naver.com",
-//     "username": "jhj9109",
-//     "profile_image": "http://localhost:8000/media/2",
-//     "comment": "",
-//     "record": 0
-// }
   const [userProfile, setUserProfile] = useState(null)
   const [userRecord, setUserRecord] = useState(null)
   const emptyProfile = {
@@ -70,32 +55,29 @@ const ProfileContainer = () => {
     time: 0,
     accuracy: 0,
   }
-  useEffect(()=> {
+  useEffect(() => {
     getMy()
-    .then((res) => {
-      const userData = res.data
-      if (userProfile === null) {
-        setUserProfile(userData)
-      } else {
-        setUserProfile({
-          ...userProfile,
-          userData
-        })
-      }
-      /* 
-        이 부분엔 userRecord를 바꾸는 코드가 있어야 할듯
-      */
-    })
+      .then((res) => {
+        const userData = res.data
+        if (userProfile === null) {
+          setUserProfile(userData)
+        } else {
+          setUserProfile({
+            ...userProfile,
+            userData
+          })
+        }
+      })
   }, [])
   return (
     <>
       <MainBlock>
         <InfoBlock>
           <Block backColor="Yellow">
-            <Profile userProfile={userProfile === null ? emptyProfile : userProfile}/>
+            <Profile userProfile={userProfile === null ? emptyProfile : userProfile} />
           </Block>
           <Block backColor="Blue">
-            <ProfileRecord userRecord={userRecord === null ? emptyRecord : userRecord}/>
+            <ProfileRecord userRecord={userRecord === null ? emptyRecord : userRecord} />
           </Block>
         </InfoBlock>
         <Block backColor="Pink">
@@ -105,13 +87,12 @@ const ProfileContainer = () => {
             <StyledDiv onClick={() => setTab('post')}>작성글</StyledDiv>
           </FlexBox>
           {tab === 'record' ? (
-            // <Record records={records}/>
             <RecordContainer />
           ) : tab === 'source' ? (
             <BookmarkContainer />
           ) : (
-            <Post />
-          )}
+                <Post />
+              )}
         </Block>
       </MainBlock>
     </>

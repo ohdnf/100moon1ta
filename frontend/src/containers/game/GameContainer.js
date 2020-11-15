@@ -24,7 +24,6 @@ const GameContainer = () => {
   }
 
   useEffect(() => {
-    // 브라우저 API를 이용하여 문서 타이틀을 업데이트합니다.
     getGames()
       .then((res) => {
         const gameList = res.data;
@@ -58,8 +57,8 @@ const GameContainer = () => {
           />
         </>
       ) : (
-        <div> 검색 결과가 없습니다.</div>
-      )}
+          <div style={{ textAlign: "center" }}> 검색 결과가 없습니다.</div>
+        )}
     </>
   );
 };

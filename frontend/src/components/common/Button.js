@@ -37,7 +37,7 @@ const buttonStyle = css`
     css`
       background: #ccc;
     `}
-  ${(props) => 
+  ${(props) =>
     props.github &&
     css`
       background-color: #222222;

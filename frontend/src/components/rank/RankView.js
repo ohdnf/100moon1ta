@@ -8,7 +8,6 @@ const Rank = () => {
     // 브라우저 API를 이용하여 문서 타이틀을 업데이트합니다.
     getRanking()
       .then((response) => {
-        // 성공시 => 뭐가 성공인지는 확인 필요
         if (typeof response.data === 'object') {
           setRanking(response.data);
         } else {
@@ -16,12 +15,27 @@ const Rank = () => {
         }
       })
       .catch((error) => {
-        // 에러를 출력해주는 3가지 방식 => 각각 작동하는 환경이 다름
         console.error(error.response);
         console.error(error.request);
         console.error(error.message);
       });
   }, []);
+
+  class Bot {
+    constructor() {
+      this.avg_precision = "---";
+      this.avg_speed = "---";
+      this.game_count = "---";
+      this.player__username = "---";
+      this.player__commnet = "---";
+      this.total_score = "---";
+    }
+  }
+
+  const currentRank = new Array(30).fill(new Bot());
+  for (let i = 0; i < ranking.length; i++) {
+    currentRank[i] = ranking[i]
+  }
 
   return (
     <ol>

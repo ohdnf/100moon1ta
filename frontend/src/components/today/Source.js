@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-// import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TimerContainer from '../../containers/typing/TimerContainer';
 import Keyboard from './Keyboard';
 import Summary from './Summary';
 import { saveRecord } from '../../lib/api/game';
-// import { useHistory } from 'react-router-dom';
 
 const SourceBlock = styled.div`
   width: 100%;
@@ -59,11 +57,11 @@ const StyledPre = styled.pre`
   margin: 0;
   padding: 0;
 `;
-// cursor: auto / default(화살표) / pointer / wait
+
 let typo = [];
 let typoMap = {};
 
-const Source = ({ game }) => { //chList = {game.content.split('')} 받아서 쓰던거 삭제
+const Source = ({ game }) => {
   let chList = [];
   for (let i of game.content) {
     chList.push(i);
@@ -82,28 +80,25 @@ const Source = ({ game }) => { //chList = {game.content.split('')} 받아서 쓰
 
   const [point, setPoint] = useState(null);
 
-  let indention = 0;
-  const [accuracy, setAccuracy] = useState(100)
-  const [wrong, setWrong] = useState(0)
-  
+  let indentation = 0;
+  const [accuracy, setAccuracy] = useState(100);
+  const [wrong, setWrong] = useState(0);
+
   const handleKeyPress = (e) => {
+    e.preventDefault();
+
     if (!start) {
       setStart(new Date());
     }
-    console.log(cursor, chList.length, )
-    if (cursor === chList.length-1) {
-      // 현준 수정 => enter가 생김에 따라 변화 핸들링
-      // 종료시점
-      if (e.key !== 'Enter') return; // 엔터를 누르기 전까진 안 끝내줌
+    if (cursor === chList.length - 1) {
+      if (e.key !== 'Enter') return;
       let dtEnd = new Date();
       let game_time = (dtEnd - start) / 1000;
-      let precision =
-        (1 - typo.reduce((a, b) => a + b, 0) / game.length) * 100;
+      let precision = Number(((1 - typo.reduce((a, b) => a + b, 0) / game.length) * 100).toFixed(2));
       let score = Math.round((precision * game.length) / game_time);
-      let acc = Math.round((chList.length - wrong) * 100 / chList.length)//정확도
-      setPoint(score); // 게임 종료 시 점수 반환, 정확도랑 속도 추가
+      setPoint(score);
       setEnd(game_time);
-      setAccuracy(acc)//정확도
+      setAccuracy(precision)
       let data = {
         game_time: game_time,
         precision: precision,
@@ -112,107 +107,100 @@ const Source = ({ game }) => { //chList = {game.content.split('')} 받아서 쓰
       };
       saveRecord(data, game.id)
         .then((res) => {
-          console.log(res);
+          alert("기록이 저장되었습니다.")
         })
         .catch((error) => {
+          alert("기록 저장에 실패하였습니다.")
           console.log(error);
         });
-      
-    }
-    if (cursor >= chList.length) return; // 본문을 초과한 입력 무시
 
-    // 1. 맞고 틀리고 판단하는 부분
-    if (e.key === chList[cursor] || (e.key === "Enter" && chList[cursor].charCodeAt(0) === 10)) { // 현재 ↵의 chrome 값은 10
-      typo[cursor] = 0; // 맞음
+    }
+    if (cursor >= chList.length) return;
+
+    if (e.key === chList[cursor] || (e.key === 'Enter' && chList[cursor] === '\n')) {
+      typo[cursor] = 0;
     } else {
-      setWrong(wrong + 1)
-      typo[cursor] = 1; // 틀림
+      setWrong(wrong + 1);
+      typo[cursor] = 1;
       if (typoMap[chList[cursor]]) {
         ++typoMap[chList[cursor]];
       } else {
         typoMap[chList[cursor]] = 1;
       }
     }
-    // 다음 커서 포인트를 판단하는 부분
-    if (chList[cursor] === '\n') { // 현재 커서값이 "\n"
-      indention = cursor;
-      while (chList[indention + 1] === ' ') {
-        ++indention;
+    if (chList[cursor] === '\n') {
+      indentation = cursor;
+      while (chList[indentation + 1] === ' ') {
+        ++indentation;
       }
-      setCursor(indention + 1); // 들여쓰기 공백을 건너뛴 Index로 이동 
+      setCursor(indentation + 1);
     } else {
-      setCursor(cursor + 1); // 평범하게 바로 다음 Index로 이동
+      setCursor(cursor + 1);
     }
   };
   const deleteKeyDown = (e) => {
     if (e.key === 'Backspace') {
-      // indention 뒤로가서 도달하게 되는 cursor 위치
-      if (cursor === 0) return; // 더 뒤로갈 공간 X
-      indention = cursor - 1 // 기본 한 칸 뒤로
+      if (cursor === 0) return;
+      indentation = cursor - 1;
 
-      if (typo[cursor] === 1 && wrong !== 0) setWrong(wrong - 1);// 틀렸던 숫자, 다시 되돌리는 코드, 음의 값은 되지 않도록 핸들링
-      while (chList[indention] === ' ' && indention !== 0){ // 뒤로 이동할 공간이 탭으로 인한 공간일때 핸들링
-        --indention
+      if (typo[indentation] === 1) typo[indentation] = 0;
+
+      while (chList[indentation] === ' ' && indentation !== 0) {
+        --indentation;
       }
-      if (indention === cursor - 2) {
-        setCursor(cursor - 1) // 뒤로 이동할 공간이 탭으로 인한 공간 아니였음!!! 정상적인 한 칸 띄기
+      if (indentation === cursor - 2) {
+        setCursor(cursor - 1);
       } else {
-        setCursor(indention); 
+        setCursor(indentation);
       }
-      // 백스페이스 시 enter로 가도 되게 변화하였으므로 아래 코드 삭제
-      // 백스페이스 시 enter로 커서가 가지 않고 글자로 감 
-      // if (chList[indention] === '\n') { setCursor(indention - 1)} 
-      // else { setCursor(indention) }
     }
 
+    const nowElement = document.querySelector(`.current`)
+    if (nowElement) {
+      if (nowElement.getBoundingClientRect().top > 700) {
+        window.scrollTo(0, window.scrollY + 400);
+      }
+    }
   };
 
-  console.log(chList)
-  console.log(chList.length)
-  // useEffect(()=>{ console.log(chList)}, [])
-  // console.log(chList);
   return (
     <SourceBlock>
       <h3>타자 연습</h3>
       <h1>{title}</h1>
-      <TagBlock>태그: 
-        {tags.map((tag) => (
-          <TagItem key={tag}>{tag}</TagItem>
-        ))}
+      <TagBlock>태그:
+      {tags.map((tag, index) => (
+        <TagItem key={index + tag}>{tag}</TagItem>
+      ))}
       </TagBlock>
       <TimerContainer start={start} end={end} />
-      <ContentDiv>
-        <TypingWindow
-          tabIndex={0}
-          onKeyPress={!end ? handleKeyPress : null}
-          onKeyDown={!end ? deleteKeyDown : null}
-        >
-          {chList.map((ch, index) => (
-            <span
-            className={`${
-              typo[index] && index < cursor ? 'incorrect' : 'correct'
-            } ${
-              cursor === index
+      <TypingWindow
+        tabIndex={0}
+        onKeyPress={!end ? handleKeyPress : null}
+        onKeyDown={!end ? deleteKeyDown : null}
+      >
+        {chList.map((ch, index) => (
+          <span
+            className={`${typo[index] && index < cursor ? 'incorrect' : 'correct'
+              } ${cursor === index
                 ? 'current'
                 : cursor > index
-                ? 'visit'
-                : 'not-visit'
-            }`}
+                  ? 'visit'
+                  : 'not-visit'
+              }`}
             key={index}
           >
             {ch === "\n" && "↵"}
             {ch}
           </span>
-          ))}
-        </TypingWindow>
-      </ContentDiv>
+        ))}
+      </TypingWindow>
       <DescriptionDiv>설명:{description}</DescriptionDiv>
       <LinkDiv>출처:{link}</LinkDiv>
       {point >= 0 && end ? (
         <Summary point={point} accuracy={accuracy} end={end}></Summary>
       ) : (
-        <Keyboard />
-      )}
+          <Keyboard />
+        )}
     </SourceBlock>
   );
 };

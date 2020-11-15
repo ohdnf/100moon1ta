@@ -5,7 +5,6 @@ from users.serializers import UserSerializer
 
 
 class TagSerializer(serializers.ModelSerializer):
-    # content = serializers.CharField(error_messages={"unique":"중복된 태그가 이미 존재합니다!"})
     class Meta:
         model = Tag
         fields = ('id', 'content',)
@@ -45,7 +44,6 @@ class GameHistorySerializer(serializers.ModelSerializer):
         return GameHistory.objects.create(**validated_data)
     
     def update(self, instance, validated_data):
-        # 게임 신기록 검사
         new_score = validated_data.get('score', 0)
         if instance.score < new_score:
             instance.score = new_score

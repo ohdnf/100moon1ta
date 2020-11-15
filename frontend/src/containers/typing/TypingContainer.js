@@ -46,7 +46,6 @@ const TypingContainer = ({ location, match }) => {
         key={num}
         gameId={gameId}
         game={game}
-        // chList={game.content.split('')}
       />
       <button onClick={() => setNum(setRandomGameId())}>다시하기</button>
       {window.location.pathname === '/today' && (

@@ -62,7 +62,6 @@ def source_retrieve_create(request):
     elif request.method == 'POST':
         return source_create(request)
 
-# @never_cache
 @api_view(['GET'])
 def random_source(request):
     """
@@ -73,7 +72,6 @@ def random_source(request):
     while True:
         cnt += 1
         pk = random.randint(1, max_id)
-        # source = get_object_or_404(Source, pk=pk)
         source = Source.objects.filter(pk=pk).first()
         if source:
             serializer = SourceSerializer(source)
@@ -85,7 +83,6 @@ def random_source(request):
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 def source_detail_update_destroy(request, pk):
     source = get_object_or_404(Source, pk=pk)
-
     def source_detail(request):
         """
         타자 연습 소스 상세 정보 보기
@@ -204,13 +201,11 @@ def history_retrieve_create(request, pk):
         게임 결과 정보는 클라이언트에서 request.body.data로 받는다.
         현재 소스에 대한 기존 게임 기록이 존재하는 경우 신기록(기존 기록보다 높은 점수)만 반영한다.
         """
-        # 기존 게임 기록이 있으면
         if GameHistory.objects.filter(player=request.user, source=source).exists():
             history = GameHistory.objects.get(player=request.user, source=source)
-            serializer = GameHistorySerializer(data=request.data, instance=history) # 업데이트
-        # 없으면
+            serializer = GameHistorySerializer(data=request.data, instance=history)
         else:
-            serializer = GameHistorySerializer(data=request.data) # 신규 생성
+            serializer = GameHistorySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(player=request.user, source=source)
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -230,12 +225,10 @@ def rank_retrieve(request):
     각 플레이어마다 갖고 있는 모든 점수를 합산하여 30위까지 랭킹을 반환
     """
     queryset = cache.get_or_set('queryset', GameHistory.objects.values('player__username', 'player__comment').annotate(
-    # queryset = GameHistory.objects.values('player__username', 'player__comment').annotate(
-            game_count=Count('source'), 
-            avg_precision=Round(Avg('precision')), 
-            total_score=Sum('score'),
-            avg_speed=Round(Avg(ExpressionWrapper(F('source__length')/F('game_time'), output_field=FloatField())))
-        # ).order_by('-total_score')[:30]
-        ).order_by('-total_score')[:30])
+        game_count=Count('source'), 
+        avg_precision=Round(Avg('precision')), 
+        total_score=Sum('score'),
+        avg_speed=Round(Avg(ExpressionWrapper(F('source__length')/F('game_time'), output_field=FloatField())))
+    ).order_by('-total_score')[:30])
     serializer = RankSerializer(queryset, many=True)
     return Response(serializer.data, status=status.HTTP_201_CREATED)

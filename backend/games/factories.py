@@ -7,8 +7,8 @@ from games.models import Tag, Source, GameHistory
 
 from allauth.account.models import EmailAddress
 
-CATEGORIES = [x[0] for x in Source.TYPE_CHOICES]
 
+CATEGORIES = [x[0] for x in Source.TYPE_CHOICES]
 
 
 class UserFactory(DjangoModelFactory):
@@ -18,6 +18,7 @@ class UserFactory(DjangoModelFactory):
     email = factory.Faker('email')
     username = factory.Faker('name')
 
+
 class EmailAddressFactory(DjangoModelFactory):
     class Meta:
         model = EmailAddress
@@ -26,6 +27,7 @@ class EmailAddressFactory(DjangoModelFactory):
     primary = 1
     user = factory.SubFactory(UserFactory)
     email = factory.SelfAttribute('user.email')
+
 
 class TagFactory(DjangoModelFactory):
     class Meta:
@@ -44,7 +46,6 @@ class SourceFactory(DjangoModelFactory):
     category = factory.fuzzy.FuzzyChoice(CATEGORIES)
     content = factory.Faker('paragraph', nb_sentences=3, variable_nb_sentences=True)
     length = factory.Faker('random_int', min=1, max=2000)
-    # difficulty = factory.Faker('random_digit_not_null')
 
 
 class GameHistoryFactory(DjangoModelFactory):

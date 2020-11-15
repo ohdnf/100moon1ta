@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-// import { useHistory } from 'react-router-dom';
 
 const SummaryBlock = styled.div`
   width: 100%;
@@ -29,7 +28,6 @@ const GameDataItemText = styled.div`
 const GuideBlock = styled.div`
   background: DarkSeaGreen;
 `;
-// cursor: auto / default(화살표) / pointer / wait
 
 const Summary = ({ point, end, accuracy }) => {
   return (

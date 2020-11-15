@@ -3,8 +3,6 @@ import styled, { css } from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-// import Button from "./Button";
-// import Input from "./Input";
 
 const NavbarBlock = styled.div`
   display: flex;
@@ -35,6 +33,7 @@ const NavbarItem = styled.div`
     cursor: pointer;
   }
 `;
+
 const ImgDiv = styled.img`
   display: block;
   padding: 0.25rem;
@@ -44,8 +43,6 @@ const ImgDiv = styled.img`
   }
 `
 
-// cursor: auto / default(화살표) / pointer / wait
-
 const Navbar = ({ changeModal, onLogout }) => {
   const { user } = useSelector(({ user }) => ({
     user: user.user,
@@ -53,18 +50,12 @@ const Navbar = ({ changeModal, onLogout }) => {
   const isLogin = user === null ? false : true;
   const userName = user === null ? '' : user.username;
   const navItems = [
-    { name: '오늘의 타자', toLink: '/today' },
-    { name: '소스 목록', toLink: '/games' },
-    { name: '랭킹', toLink: '/rank' },
-    { name: 'ADMIN', toLink: '/admin' },
+    { name: '연습할 글', toLink: '/games' },
+    { name: '순위', toLink: '/rank' },
+    { name: '관리자', toLink: '/admin' },
   ];
   const history = useHistory();
   const [nowActive, setNowActive] = useState(window.location.pathname);
-  useEffect(() => {
-    // setNowActive(window.location.pathname);
-    console.log("바꿔!", window.location.pathname)
-  }, []);
-  
   return (
     <>
       <NavbarBlock>
@@ -73,8 +64,8 @@ const Navbar = ({ changeModal, onLogout }) => {
             <ImgDiv
               src={require('../../images/logo.svg')}
               height="4rem"
-              alt="logo2"
-              onClick={()=>{
+              alt="logo"
+              onClick={() => {
                 setNowActive('/');
                 history.push('/');
               }}
@@ -83,20 +74,19 @@ const Navbar = ({ changeModal, onLogout }) => {
               <React.Fragment key={index}>
                 {nowActive === item.toLink ? (
                   <NavbarItem
-                    // now 기능에 제대로 구현 되기 전까지 보류
                     key={item.name}
-                    onClick={() => {setNowActive(item.toLink); history.push(item.toLink);}}
+                    onClick={() => { setNowActive(item.toLink); history.push(item.toLink); }}
                   >
                     {item.name}
                   </NavbarItem>
                 ) : (
-                  <NavbarItem
-                    key={item.name}
-                    onClick={() => history.push(item.toLink)}
-                  >
-                    {item.name}
-                  </NavbarItem>
-                )}
+                    <NavbarItem
+                      key={item.name}
+                      onClick={() => history.push(item.toLink)}
+                    >
+                      {item.name}
+                    </NavbarItem>
+                  )}
               </React.Fragment>
             ))}
           </NavbarItemBlock>
@@ -107,10 +97,10 @@ const Navbar = ({ changeModal, onLogout }) => {
             {isLogin ? (
               <NavbarItem onClick={onLogout}>로그아웃</NavbarItem>
             ) : (
-              <NavbarItem onClick={() => changeModal('login')}>
-                로그인
-              </NavbarItem>
-            )}
+                <NavbarItem onClick={() => changeModal('login')}>
+                  로그인
+                </NavbarItem>
+              )}
           </NavbarItemBlock>
         </div>
       </NavbarBlock>

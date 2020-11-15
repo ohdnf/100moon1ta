@@ -21,7 +21,7 @@ const RecordItem = styled.div`
 const FlexBox = styled.div`
   display: flex;
   align-items: center;
-  ${(props)=>
+  ${(props) =>
     props.spaceBetween &&
     css`
       justify-content: space-between;
@@ -40,13 +40,13 @@ const Record = ({ records }) => {
           <FlexBox spaceBetween key={record.id} >
             <div>
               <FlexBox>
-                <RecordTitle onClick={()=>{history.push(`/games/${record.id}`)}} >{record.title}</RecordTitle>
-                <RecordItem>{ record.time }초</RecordItem>
-                <RecordItem>{ record.percent }%</RecordItem>
-                <RecordItem>{ record.grade }점</RecordItem>
+                <RecordTitle onClick={() => { history.push(`/games/${record.id}`) }} >{record.title}</RecordTitle>
+                <RecordItem>{record.time}초</RecordItem>
+                <RecordItem>{record.percent}%</RecordItem>
+                <RecordItem>{record.grade}점</RecordItem>
               </FlexBox>
             </div>
-            <RecordItem>{ record.createAt }</RecordItem>
+            <RecordItem>{record.createAt}</RecordItem>
           </FlexBox>
         ))}
     </RecordBlock>

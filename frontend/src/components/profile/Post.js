@@ -17,7 +17,7 @@ const PostItem = styled.div`
 const FlexBox = styled.div`
   display: flex;
   align-items: center;
-  ${(props)=>
+  ${(props) =>
     props.spaceBetween &&
     css`
       justify-content: space-between;
@@ -29,9 +29,9 @@ const FlexBox = styled.div`
 
 const Post = () => {
   const sampleData = [
-    { title: "Post 샘플 1", createAt: "2020.10.03"},
-    { title: "Post 샘플 2", createAt: "2020.10.05"},
-    { title: "Post 샘플 3", createAt: "2020.10.07"},
+    { title: "Post 샘플 1", createAt: "2020.10.03" },
+    { title: "Post 샘플 2", createAt: "2020.10.05" },
+    { title: "Post 샘플 3", createAt: "2020.10.07" },
   ]
   return (
     <PostBlock>
@@ -41,10 +41,10 @@ const Post = () => {
             <PostTitle>{item.title}</PostTitle>
             <div>
               <FlexBox>
-                <PostItem>{ item.createAt }</PostItem>
+                <PostItem>{item.createAt}</PostItem>
                 <PostItem onClick={() => alert("삭제버튼이 눌렸습니다.")}>삭제</PostItem>
               </FlexBox>
-            </div>  
+            </div>
           </FlexBox>
         ))}
     </PostBlock>
