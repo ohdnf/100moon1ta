@@ -45,7 +45,6 @@ const StyledDiv = styled.div`
 const ProfileContainer = () => {
   const [tab, setTab] = useState('record');
   const [userProfile, setUserProfile] = useState(null)
-  const [userRecord, setUserRecord] = useState(null)
   const emptyProfile = {
     id: 0,
     email: "",
@@ -70,10 +69,6 @@ const ProfileContainer = () => {
     })
     .catch((err) => {
       console.log(err)
-    })
-    getMyRecord()
-    .then((res) => {
-      console.log(res.data)
     })
   }, [])
   return (
