@@ -35,12 +35,13 @@ const LoginContainer = ({ changeModal }) => {
     dispatch(login(data));
   };
 
-  // const githubLogin = () => {
-  //   // 소셜 로그인 버튼을 누른다.
-  //   // href = "적혀있는주소"로 요청
-  //   // 적혀있는 주소로 링크를 연다.
-  //   // JWT 반환
-  // };
+  const githubLogin = () => {
+    window.open(
+      `${process.env.REACT_APP_API_URL}api/v1/accounts/all-auth/github/login/`,
+      "",
+      "width=400,height=500" 
+      );
+  };
 
 useEffect(() => {
     if (user) {
@@ -64,7 +65,7 @@ useEffect(() => {
     dispatch(errorDelete())
   }, [error])
   return (
-    <Login onChange={onChange} changeModal={changeModal} onLogin={onLogin} />
+    <Login onChange={onChange} changeModal={changeModal} onLogin={onLogin} githubLogin={githubLogin} />
   );
 };
 

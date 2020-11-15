@@ -28,7 +28,7 @@ const FlexDiv = styled.div`
   justify-content: space-between;
 `
 
-const Login = ({ onChange, changeModal, onLogin }) => {
+const Login = ({ onChange, changeModal, onLogin, githubLogin }) => {
   return (
     <>
       <SelectMeModal>
@@ -40,7 +40,7 @@ const Login = ({ onChange, changeModal, onLogin }) => {
         </Button>
         <br />
 
-        <Button onClick={() => console.log('소셜로그인!')} github fullWidth>
+        <Button onClick={() => githubLogin()} github fullWidth>
           <img src={require('../../images/github.png')}
             height="20rem"
             background="none"
