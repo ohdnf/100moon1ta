@@ -40,7 +40,7 @@ const Record = ({ records }) => {
           <RecordBox key={record.id} >
             <div>
               <FlexBox >
-                <RecordTitle blod onClick={()=>{history.push(`/games/${record.id}`)}} >{record.title}</RecordTitle>
+                <RecordTitle bold onClick={()=>{history.push(`/games/${record.id}`)}} >{record.title}</RecordTitle>
                 <RecordItem>{ record.game_time }초 </RecordItem>
                 <RecordItem>{ record.precision }% </RecordItem>
                 <RecordItem>{ record.score }점</RecordItem>
