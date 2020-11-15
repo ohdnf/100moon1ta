@@ -55,8 +55,12 @@ const Navbar = ({ changeModal, onLogout }) => {
   const navItems = [
     { name: '연습할 글', toLink: '/games' },
     { name: '순위', toLink: '/rank' },
-    { name: '관리자', toLink: '/admin' },
   ];
+  if (isLogin ) {
+    if (user.is_superuser || user.is_staff) {
+      navItems.push({ name: '관리자', toLink: '/admin'})
+    }
+  }
   const history = useHistory();
   const [nowActive, setNowActive] = useState(window.location.pathname);
   return (

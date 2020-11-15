@@ -7,6 +7,7 @@ import JoinContainer from "./JoinContainer";
 
 import { logout } from '../../modules/user';
 import client from "../../lib/api/client";
+import { useHistory } from "react-router-dom";
 
 const NavbarContainer = () => {
   const [modal, setModal] = useState("");
@@ -15,6 +16,7 @@ const NavbarContainer = () => {
     setModal(target);
   };
   const dispatch = useDispatch();
+  const history = useHistory()
 
   const onLogout = () => {
     localStorage.removeItem('user');
@@ -22,7 +24,8 @@ const NavbarContainer = () => {
     delete client.defaults.headers.common["Authorization"];
     alert("로그아웃 되었습니다.")
     dispatch(logout());
-    changeModal('')
+    changeModal('') //이 코드는 혹시 몰라 modal 닫기위해 추가
+    history.push('/')
   };
 
   return (

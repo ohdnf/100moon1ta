@@ -4,7 +4,7 @@ import { getBookmarkedGames } from '../../lib/api/user'
 
 const BookmarkContainer = () => {
   const [bookmarkedGame, setBookmarkedGame] = useState([])
-  const [msg, setMsg] = useState("북마킹된 소스가 없져...")
+  const [msg, setMsg] = useState("북마킹된 소스가 없습니다.")
 
   useEffect(() => {
     getBookmarkedGames()
