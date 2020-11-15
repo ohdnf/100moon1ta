@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Source from '../../components/today/Source';
 import { getGame } from '../../lib/api/game';
 import { getTodaySource } from '../../lib/api/today';
 
 const TypingContainer = ({ location, match }) => {
-  const max = 20;
-  const min = 1;
-  const setRandomGameId = () =>
-    Math.floor(Math.random() * (max + 1 - min) + min);
   const [gameId, setGameId] = useState(
-    window.location.pathname === '/today' ? 0 : match?.params?.gameId,
+    window.location.pathname === '/today' ? 0 : parseInt(match?.params?.gameId),
   );
   const [game, setGame] = useState(null);
   const [num, setNum] = useState(0);
-
+  const history = useHistory()
   useEffect(() => {
-    if (gameId === 0) {
+    if (isNaN(gameId) || gameId < 0) history.push('/404') // 잘 못된 접근시 404페이지로 이동
+    if (gameId === 0) { // /today로 첫 입장시 or 다른게임 버튼 입력시 랜덤 소스 로드
       getTodaySource()
         .then((res) => {
+          
           const gameData = res.data;
-          console.log(res.data);
           setGame({
             ...gameData,
           });
@@ -27,7 +25,7 @@ const TypingContainer = ({ location, match }) => {
         })
         .catch((err) => console.log(err));
     } else if (gameId !== game?.id) {
-      getGame(gameId).then((res) => {
+      getGame(gameId).then((res) => { // path의 파라미터에서 gameId값을 찾아 해당 소스 로드
         const gameData = res.data;
         setGame({
           ...gameData,
@@ -46,18 +44,17 @@ const TypingContainer = ({ location, match }) => {
         key={num}
         gameId={gameId}
         game={game}
-        // chList={game.content.split('')}
       />
-      <button onClick={() => setNum(setRandomGameId())}>다시하기</button>
+      <button onClick={() => setNum(num+1)}>다시하기</button>
       {window.location.pathname === '/today' && (
         <button
           onClick={() => {
-            setGameId(setRandomGameId());
-            setNum(setRandomGameId());
+            setGameId(0); // /today로 입장 === gameId = 0 을 활용
+            setNum(num+1);
           }}
         >
           다른게임
-        </button>
+        </button> 
       )}
     </>
   );
