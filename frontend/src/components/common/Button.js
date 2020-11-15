@@ -13,7 +13,9 @@ const buttonStyle = css`
   outline: none;
   margin: 0.45rem 0 0 0;
   cursor: pointer;
-  background: #241654;
+  background: silver;
+  border-style: outset;
+
 
   ${(props) =>
     props.fullWidth &&

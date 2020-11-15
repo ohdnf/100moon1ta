@@ -1,9 +1,9 @@
 import React from 'react';
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const KeyboardBlock = styled.div`
-  width: 100%;
-`
+`;
+
 const LayoutBlock = styled.div`
 	max-width: 1085px;
 	padding: 20px;
@@ -84,21 +84,21 @@ const UpperLetter = styled.div`
  padding-top: -3px;
 `;
 
-const Keyboard = ({typos}) => {
+const Keyboard = ({ typos }) => {
 
 	const keyMapping = {
-		"`":"tilt", "~":"tilt", "1":"one", "!":"one", "2":"two", "@":"two", "3":"three", "#":"three",
-		"4":"four", "$":"four", "5":"five", "%":"five", "6":"six", "^":"six", "7":"seven", "&":"seven",
-		"8":"eight", "*":"eight", "9":"nine", "(":"nine", "0":"zero", ")":"zero", "-":"hyphen", "_":"hyphen",
-		"=":"equal", "+":"equal", "q":"ch-q", "Q":"ch-q", "w":"ch-w", "W":"ch-w", "e":"ch-e", "E":"ch-e",
-		"r":"ch-r", "R": "ch-r", "t":"ch-t", "T":"ch-t", "y":"ch-y", "Y":"ch-y", "u":"ch-u", "U":"ch-u",
-		"i":"ch-i", "I":"ch-i", "o":"ch-o", "O":"ch-o", "p":"ch-p", "P":"ch-p", "[":"bracket-open", 
-		"{":"bracket-open", "\\":"backslash", "|":"backslash", "a":"ch-a", "A":"ch-a", "s":"ch-s", "S":"ch-s",
-		"d":"ch-d", "D":"ch-d", "f":"ch-f", "F":"ch-f", "g":"ch-g", "G":"ch-g", "h":"ch-h", "H":"ch-h",
-		"j":"ch-j", "J":"ch-j", "k":"ch-k", "K":"ch-k", "l":"ch-l", "L":"ch-l", ";":"semi-colon", ":":"semi-colon",
-		"'":"quote", "\"":"quote", "z":"ch-z", "Z":"ch-z", "x":"ch-x", "X":"ch-x", "c":"ch-c", "C":"ch-c",
-		"v":"ch-v", "V":"ch-v", "b":"ch-b", "B":"ch-b", "n":"ch-n", "N":"ch-n", "m":"ch-m", "M":"ch-m",
-		",":"comma", "<":"comma", ".":"dot", ">":"dot", "/":"slash", "?":"slash"
+		"`": "tilt", "~": "tilt", "1": "one", "!": "one", "2": "two", "@": "two", "3": "three", "#": "three",
+		"4": "four", "$": "four", "5": "five", "%": "five", "6": "six", "^": "six", "7": "seven", "&": "seven",
+		"8": "eight", "*": "eight", "9": "nine", "(": "nine", "0": "zero", ")": "zero", "-": "hyphen", "_": "hyphen",
+		"=": "equal", "+": "equal", "q": "ch-q", "Q": "ch-q", "w": "ch-w", "W": "ch-w", "e": "ch-e", "E": "ch-e",
+		"r": "ch-r", "R": "ch-r", "t": "ch-t", "T": "ch-t", "y": "ch-y", "Y": "ch-y", "u": "ch-u", "U": "ch-u",
+		"i": "ch-i", "I": "ch-i", "o": "ch-o", "O": "ch-o", "p": "ch-p", "P": "ch-p", "[": "bracket-open",
+		"{": "bracket-open", "\\": "backslash", "|": "backslash", "a": "ch-a", "A": "ch-a", "s": "ch-s", "S": "ch-s",
+		"d": "ch-d", "D": "ch-d", "f": "ch-f", "F": "ch-f", "g": "ch-g", "G": "ch-g", "h": "ch-h", "H": "ch-h",
+		"j": "ch-j", "J": "ch-j", "k": "ch-k", "K": "ch-k", "l": "ch-l", "L": "ch-l", ";": "semi-colon", ":": "semi-colon",
+		"'": "quote", "\"": "quote", "z": "ch-z", "Z": "ch-z", "x": "ch-x", "X": "ch-x", "c": "ch-c", "C": "ch-c",
+		"v": "ch-v", "V": "ch-v", "b": "ch-b", "B": "ch-b", "n": "ch-n", "N": "ch-n", "m": "ch-m", "M": "ch-m",
+		",": "comma", "<": "comma", ".": "dot", ">": "dot", "/": "slash", "?": "slash"
 	};
 
 	const countTypo = {
@@ -158,10 +158,72 @@ const Keyboard = ({typos}) => {
 		};
 	};
 
-  return (
+	return (
 		<KeyboardBlock>
 			<h3> 히트맵 </h3>
-			<LayoutBlock> 키보드 레이아웃 영역 </LayoutBlock>
+			<LayoutBlock>
+				<KeyBlock className="key" typoCount={countTypo["tilt"]}><UpperLetter>~</UpperLetter>`</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["one"]}><UpperLetter>!</UpperLetter>1</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["two"]}><UpperLetter>@</UpperLetter>2</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["three"]}><UpperLetter>#</UpperLetter>3</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["four"]}><UpperLetter>$</UpperLetter>4</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["five"]}><UpperLetter>%</UpperLetter>5</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["six"]}><UpperLetter>^</UpperLetter>6</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["seven"]}><UpperLetter>&</UpperLetter>7</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["eight"]}><UpperLetter>*</UpperLetter>8</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["nine"]}><UpperLetter>(</UpperLetter>9</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["zero"]}><UpperLetter>)</UpperLetter>0</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["hyphen"]}><UpperLetter>_</UpperLetter>-</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["equal"]}><UpperLetter>+</UpperLetter>=</KeyBlock>
+				<KeyBlock className="key delete" typoCount={countTypo["delete"]}>Backspace</KeyBlock>
+				<KeyBlock className="key tab" typoCount={countTypo["tab"]}>Tab</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-q"]}>Q</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-w"]}>w</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-e"]}>E</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-r"]}>R</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-t"]}>T</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-y"]}>Y</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-u"]}>U</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-i"]}>I</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-o"]}>O</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-p"]}>P</KeyBlock>
+				<KeyBlock className="key bracket-open" typoCount={countTypo["bracket-open"]}>[</KeyBlock>
+				<KeyBlock className="key brachet-close" typoCount={countTypo["brachet-close"]}>]</KeyBlock>
+				<KeyBlock className="key backslash" typoCount={countTypo["backslash"]}>\</KeyBlock>
+				<KeyBlock className="key capslock" typoCount={countTypo["capslock"]}>CapsLock</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-a"]}>A</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-s"]}>S</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-d"]}>D</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-f"]}>F</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-g"]}>G</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-h"]}>H</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-j"]}>J</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-k"]}>K</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-l"]}>L</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["semi-colon"]}><UpperLetter></UpperLetter>;</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["quote"]}><UpperLetter></UpperLetter>'</KeyBlock>
+				<KeyBlock className="key return" typoCount={countTypo["return"]}>Enter</KeyBlock>
+				<KeyBlock className="key leftshift" typoCount={countTypo["leftshift"]}>Shift</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-z"]}>Z</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-x"]}>X</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-c"]}>C</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-v"]}>V</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-b"]}>B</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-n"]}>N</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-m"]}>M</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["comma"]}><UpperLetter>{'<'}</UpperLetter>,</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["dot"]}><UpperLetter>{'>'}</UpperLetter>.</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["slash"]}><UpperLetter>?</UpperLetter>/</KeyBlock>
+				<KeyBlock className="key rightshift" typoCount={countTypo["rightshift"]}>Shift</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["leftctrl"]}>Ctrl</KeyBlock>
+				<KeyBlock className="key command">Win</KeyBlock>
+				<KeyBlock className="key">Alt</KeyBlock>
+				<KeyBlock className="key space" typoCount={countTypo["space"]}>Space</KeyBlock>
+				<KeyBlock className="key">한자</KeyBlock>
+				<KeyBlock className="key">Alt</KeyBlock>
+				<KeyBlock className="key command">Win</KeyBlock>
+				<KeyBlock className="key">Ctrl</KeyBlock>
+			</LayoutBlock>
 		</KeyboardBlock>
 	)
 };

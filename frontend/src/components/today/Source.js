@@ -6,34 +6,45 @@ import Summary from './Summary';
 import { saveRecord } from '../../lib/api/game';
 
 const SourceBlock = styled.div`
-  width: 100%;
+  width: 80%;
+  margin: auto;
+  h1 {
+    font-size: 4rem;
+    margin: 0.25rem 0;
+  }
+  h3 {
+    font-size: 2rem;
+    margin: 0.5rem 0;
+  }
+  cursor: default;
 `;
 
 const TagBlock = styled.div`
-  margin: 1rem 0;
   align-items: center;
   display: flex;
+  margin: 1rem 0;
+  cursor: default;
 `;
 
 const TagItem = styled.div`
   font-size: 1.25rem;
   font-weight: bold;
-  margin-right: 0.5rem;
-`;
-
-const ContentDiv = styled.div`
-  margin: 1rem 0;
-  padding: 1rem 2rem;
-  background: Lightgray;
+  margin: 0 0.5rem;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const DescriptionDiv = styled.div`
   margin: 1rem 0;
   font-size: 1.25rem;
+  font-weight: bold;
+  cursor: default;
 `;
 const LinkDiv = styled.div`
   font-weight: bold;
   font-size: 1.25rem;
+  cursor: default;
 `;
 const TypingWindow = styled.pre`
   .not-visit {
@@ -48,14 +59,17 @@ const TypingWindow = styled.pre`
   .incorrect {
     color: red;
   }
-  background: Lightgray;
+  margin: 1rem 0.5rem;
+  padding: 0.5rem;
   white-space: pre-wrap;
+  border-width: 2px;
+  border-style: ridge;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
-const StyledPre = styled.pre`
-  display: inline;
-  margin: 0;
-  padding: 0;
+const Result = styled.div`
 `;
 
 let typo = [];
@@ -64,7 +78,12 @@ let typoMap = {};
 const Source = ({ game }) => {
   let chList = [];
   for (let i of game.content) {
+    if (i === "\r") continue;
     chList.push(i);
+  }
+
+  if (chList[chList.length - 1] !== "\n") {
+    chList.push("\n")
   }
 
   const { title, tags, description, link } = {
@@ -89,6 +108,8 @@ const Source = ({ game }) => {
 
     if (!start) {
       setStart(new Date());
+      typo = [];
+      typoMap = {};
     }
     if (cursor === chList.length - 1) {
       if (e.key !== 'Enter') return;
@@ -113,7 +134,6 @@ const Source = ({ game }) => {
           alert("기록 저장에 실패하였습니다.")
           console.log(error);
         });
-
     }
     if (cursor >= chList.length) return;
 
@@ -189,18 +209,19 @@ const Source = ({ game }) => {
               }`}
             key={index}
           >
-            {ch === "\n" && "↵"}
+            {ch === '\n' && '↵'}
             {ch}
           </span>
         ))}
       </TypingWindow>
       <DescriptionDiv>설명:{description}</DescriptionDiv>
       <LinkDiv>출처:{link}</LinkDiv>
-      {point >= 0 && end ? (
-        <Summary point={point} accuracy={accuracy} end={end}></Summary>
-      ) : (
-          <Keyboard />
-        )}
+      {point >= 0 && end &&
+        <Result>
+          <Summary point={point} accuracy={accuracy} end={end}></Summary>
+          <Keyboard typos={typoMap} />
+        </Result>
+      }
     </SourceBlock>
   );
 };

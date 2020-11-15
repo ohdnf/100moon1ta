@@ -5,38 +5,32 @@ import { bookmarkGame } from '../../lib/api/user';
 import { useSelector } from 'react-redux';
 
 const ResultBlock = styled.div`
-  background: DeepSkyBlue;
-  border: 0.25rem solid BlueViolet;
-  margin-bottom: 20rem;
+  width: 60%;
+  margin: 2rem auto;
 `;
 
 const ResultTitleBlock = styled.div`
   display: flex;
   justify-content: space-between;
-  background: LightGray;
 `;
 const ResultTitle = styled.div`
   font-size: 1.2rem;
   font-weight: bolder;
+  cursor: default;
 `;
-
-// const HamburgerButton = styled.image`
-//   display: block;
-// `;
 
 const ResultItemBlock = styled.div`
   margin: 0.25rem;
-  background: DeepPink;
 `;
 
 const ResultItemDiv = styled.div`
-  margin: 0.25rem 0;
   display: flex;
-  background: ForestGreen;
+  margin: 0.25rem 0;
   justify-content: space-between;
 `;
 
 const ItemTitle = styled.div`
+
   font-size: 1.25rem;
   font-weight: bold;
   height: 100%;
@@ -47,16 +41,16 @@ const ItemTitle = styled.div`
 const ItemTagBlock = styled.div`
   margin: 0.25rem;
   display: flex;
-  background: Aquamarine;
 `;
 
 const ItemTag = styled.div`
   margin-right: 0.25rem;
   padding: 0.25rem;
-  background: DodgerBlue;
+  background: Silver;
   border: 0.01rem solid black;
   border-radius: 0.5rem;
   text-align: center;
+  cursor: default;
 `;
 
 const FlexDiv = styled.div`
@@ -79,6 +73,9 @@ const StyledDiv = styled.div`
     css`
       background: blue;
     `}
+  :hover {
+    cursor: pointer;
+  }
 `;
 export const ResultItem = ({ game }) => {
   const { id, title, tags, isSubscribe } = game;

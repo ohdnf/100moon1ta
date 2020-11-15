@@ -34,6 +34,14 @@ const LoginContainer = ({ changeModal }) => {
     dispatch(login(data));
   };
 
+  const githubLogin = () => {
+    window.open(
+      `${process.env.REACT_APP_API_URL}api/v1/accounts/all-auth/github/login/`,
+      "",
+      "width=400,height=500"
+    );
+  };
+
   useEffect(() => {
     if (user) {
       localStorage.setItem('user', JSON.stringify(user));
@@ -55,7 +63,7 @@ const LoginContainer = ({ changeModal }) => {
     dispatch(errorDelete())
   }, [error])
   return (
-    <Login onChange={onChange} changeModal={changeModal} onLogin={onLogin} />
+    <Login onChange={onChange} changeModal={changeModal} onLogin={onLogin} githubLogin={githubLogin} />
   );
 };
 

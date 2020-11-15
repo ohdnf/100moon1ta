@@ -6,7 +6,6 @@ import Input from './Input';
 
 const modalSize = '15rem';
 const SelectMeModal = styled.div`
-  background: white;
   position: fixed;
   top: 30%;
   left: calc(50% - ${modalSize} / 2);
@@ -15,6 +14,8 @@ const SelectMeModal = styled.div`
   width: ${modalSize};
   border-radius: 20px;
   border: ridge;
+  border-style: outset;
+  background: white;
   div.modalLabel {
     font-size: 1.5rem;
     color: 241654;
@@ -27,7 +28,7 @@ const FlexDiv = styled.div`
   justify-content: space-between;
 `
 
-const Login = ({ onChange, changeModal, onLogin }) => {
+const Login = ({ onChange, changeModal, onLogin, githubLogin }) => {
   return (
     <>
       <SelectMeModal>
@@ -39,10 +40,10 @@ const Login = ({ onChange, changeModal, onLogin }) => {
         </Button>
         <br />
 
-        <Button onClick={() => console.log('소셜로그인!')} github fullWidth>
+        <Button onClick={() => githubLogin()} github fullWidth>
           <img src={require('../../images/github.png')}
             height="20rem"
-            background="white"
+            background="none"
             alt="githubLogin"
           />
           Github Login

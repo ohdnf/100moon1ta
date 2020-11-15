@@ -44,3 +44,10 @@ export const getMy = () =>
     method: 'get',
     url: `/accounts/user/`,
   });
+
+export const socialJWT = (data) => 
+  client({
+    method: 'post',
+    url: `/accounts/social/`,
+    data: data
+  })

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const PaginationBlock = styled.div`
+  background: teal;
   position: fixed;
   left: 50%;
   margin-left: -${(props) => props.number + 1}rem;
@@ -44,19 +45,19 @@ const Pagination = ({
   const number = endOfPage;
   const pageRange = Array.from({ length: endOfPage }, (v, i) => i + 1);
   return (
-    <PaginationBlock number={number}>
+    <PaginationBlock number={endOfPage}>
       <FlexDiv>
-        <StyledDiv onClick={onLeft} disabled={disableLeft}>
+        <ArrowDiv onClick={onLeft} disabled={disableLeft}>
           {'<'}
-        </StyledDiv>
+        </ArrowDiv>
         {pageRange.map((p) => (
           <StyledDiv now={page === p} onClick={() => onClick(p)} key={p}>
             {p}
           </StyledDiv>
         ))}
-        <StyledDiv onClick={onRight} disabled={disableRight}>
+        <ArrowDiv onClick={onRight} disabled={disableRight}>
           {'>'}
-        </StyledDiv>
+        </ArrowDiv>
       </FlexDiv>
     </PaginationBlock>
   );
