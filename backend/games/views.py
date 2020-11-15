@@ -33,7 +33,7 @@ def source_retrieve_create(request):
     def source_retrieve(request):
         """
         타자 연습 소스 목록 보기
-        """    
+        """
         sources = cache.get_or_set('sources', Source.objects.prefetch_related('tags')
         .annotate(
             like_count=Count('likers'), 
@@ -125,6 +125,9 @@ def source_detail_update_destroy(request, pk):
     elif request.method == 'DELETE':
         return source_delete(request)
 
+@api_view(['GET'])
+def source_search(request):
+    pass
 
 # 태그 관련 API
 

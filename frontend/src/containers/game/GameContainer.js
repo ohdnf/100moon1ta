@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Search from '../../components/game/Search';
+// import Search from '../../components/game/Search';
 import { getGames } from '../../lib/api/game';
 import { getTags } from '../../lib/api/tag';
 
@@ -17,8 +17,22 @@ const GameContainer = () => {
     } else {
       const data = {
         query,
-        mostTags
+        queryTags
       }
+      const filteredGames = games.reduce((acc, cur) => {
+        if (cur.title.includes(query)) {
+          acc.push(cur);
+        } else{
+          for (const tag of cur.tags) {
+            if (queryTags.includes(tag)) {
+              acc.push(cur);
+              break
+            }
+          }
+        }
+        return acc;
+      }, []);
+      setGames(filteredGames);
     }
   }
 
@@ -42,13 +56,13 @@ const GameContainer = () => {
 
   return (
     <>
-      <Search
+      {/* <Search
         mostTags={mostTags}
         setQuery={setQuery}
         queryTags={queryTags}
         setQueryTags={setQueryTags}
         onEnter={onEnter}
-      />
+      /> */}
       {games ? (
         <>
           <PaginationContainer

@@ -6,7 +6,7 @@ const PaginationBlock = styled.div`
   position: fixed;
   left: 50%;
   margin-left: -${(props) => props.number + 1}rem;
-  bottom: 0rem;
+  bottom: 4rem;
   text-align: center;
 `;
 const FlexDiv = styled.div`

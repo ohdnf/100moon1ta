@@ -24,3 +24,10 @@ export const getGame = (id) =>
     method: 'get',
     url: `/games/${id}/`,
   });
+
+export const searchGame = (data) =>
+  client({
+    method: 'get',
+    url: `/games/search/`,
+    data: data
+  });

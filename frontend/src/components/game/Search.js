@@ -67,10 +67,11 @@ const Search = ({
   const onKeyPress = (e) => {
     if (e.code === 'Enter') {
       onEnter();
-    } else {
-      setQuery(e.target.value + e.key);
     }
   };
+  const onChange = (e) => {
+    setQuery(e.target.value)
+  }
 
   return (
     <SearchBlock>
@@ -78,6 +79,7 @@ const Search = ({
       <SearchInput
         placeholder="검색어를 입력하세요"
         value={query}
+        onChange={onChange}
         onKeyPress={onKeyPress}
       />
       <TagBlock>
