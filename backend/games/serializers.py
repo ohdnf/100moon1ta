@@ -36,9 +36,10 @@ class SourceSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'description', 'link', 'category', 'content', 'length', 'tags',)
 
 class GameHistorySerializer(serializers.ModelSerializer):
+    source = SourceSerializer(read_only=True)
     class Meta:
         model = GameHistory
-        fields = ('id', 'game_time', 'precision', 'typo', 'score',)
+        fields = ('id', 'game_time', 'precision', 'typo', 'score', 'created_at', 'updated_at', 'source')
     
     def create(self, validated_data):
         return GameHistory.objects.create(**validated_data)

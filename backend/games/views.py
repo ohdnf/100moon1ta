@@ -182,39 +182,34 @@ def tag_update_destroy(request, pk):
 
 # 게임 결과 관련 API
 
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def history_retrieve_create(request, pk):
+def history_retrieve(request):
+    """
+    현재 유저의 게임 결과 목록 불러오기
+    """
+    game_histories = GameHistory.objects.filter(player=request.user).prefetch_related('source')
+    serializer = GameHistorySerializer(game_histories, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def history_create(request, pk):
+    """
+    게임 결과 등록하기
+    게임 결과 정보는 클라이언트에서 request.body.data로 받는다.
+    현재 소스에 대한 기존 게임 기록이 존재하는 경우 신기록(기존 기록보다 높은 점수)만 반영한다.
+    """
     source = get_object_or_404(Source, pk=pk)
-
-    def history_retrieve(request):
-        """
-        현재 유저의 게임 결과 목록 불러오기
-        """
-        game_histories = GameHistory.objects.filter(player=request.user, source=source)
-        serializer = GameHistorySerializer(game_histories, many=True)
+    if GameHistory.objects.filter(player=request.user, source=source).exists():
+        history = GameHistory.objects.get(player=request.user, source=source)
+        serializer = GameHistorySerializer(data=request.data, instance=history)
+    else:
+        serializer = GameHistorySerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(player=request.user, source=source)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def history_create(request):
-        """
-        게임 결과 등록하기
-        게임 결과 정보는 클라이언트에서 request.body.data로 받는다.
-        현재 소스에 대한 기존 게임 기록이 존재하는 경우 신기록(기존 기록보다 높은 점수)만 반영한다.
-        """
-        if GameHistory.objects.filter(player=request.user, source=source).exists():
-            history = GameHistory.objects.get(player=request.user, source=source)
-            serializer = GameHistorySerializer(data=request.data, instance=history)
-        else:
-            serializer = GameHistorySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(player=request.user, source=source)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    if request.method == 'GET':
-        return history_retrieve(request)
-    elif request.method == 'POST':
-        return history_create(request)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # 사용자 순위 관련 API
