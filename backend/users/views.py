@@ -24,10 +24,11 @@ from allauth.socialaccount.helpers import complete_social_login
 from allauth.account.adapter import get_adapter
 # from django.http import HttpResponseRedirect, JsonResponse
 # from rest_framework.request import Request as rest_request
-from django.http.request import HttpRequest
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.providers.oauth2.views import OAuth2View,OAuth2LoginView, OAuth2Adapter, OAuth2CallbackView
 
+import requests
+from decouple import config
 # Create your views here.
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
@@ -146,8 +147,10 @@ class CustomOAuth2CallbackView(OAuth2CallbackView):
         login.token = token
 
         complete_social_login(request, login)
-        return HttpResponse(token)
-
+        
+        redirect_url = config('EMAIL_REDIRECT_URL')
+        return HttpResponseRedirect(f'{redirect_url}/login-complete/?access_token={token}')
+        
 class GitHubLogin(SocialLoginView):
     
     adapter_class = github_views.GitHubOAuth2Adapter
