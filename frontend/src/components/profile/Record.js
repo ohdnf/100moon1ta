@@ -14,39 +14,48 @@ const RecordTitle = styled.div`
   }
 `;
 const RecordItem = styled.div`
-  ${(props)=> props.bold && 'font-weight: bolder;'}
+  ${(props) => props.bold && 'font-weight: bolder;'}
   margin: 0 0.25rem;
-`
+`;
 const RecordBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
-`
+`;
 
 const FlexBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`
+`;
 
 const Record = ({ records }) => {
-
-  const history = useHistory()
+  const history = useHistory();
   return (
-    <RecordBlock >
+    <RecordBlock>
       {records &&
         records.map((record) => (
-          <RecordBox key={record.id} >
+          <RecordBox key={record.id}>
             <div>
-              <FlexBox >
-                <RecordTitle bold onClick={()=>{history.push(`/games/${record.id}`)}} >{record.title}</RecordTitle>
-                <RecordItem>{ record.game_time }초 </RecordItem>
-                <RecordItem>{ record.precision }% </RecordItem>
-                <RecordItem>{ record.score }점</RecordItem>
+              <RecordTitle
+                bold
+                onClick={() => {
+                  history.push(`/games/${record.source.id}`);
+                }}
+              >
+                {record.source.title}
+              </RecordTitle>
+            </div>
+
+            <div>
+              <FlexBox>
+                <RecordItem>{record.game_time}초 </RecordItem>
+                <RecordItem>{record.precision}% </RecordItem>
+                <RecordItem>{record.score}점</RecordItem>
+                <RecordItem>{record.create_at.slice(0, 10)}</RecordItem>
               </FlexBox>
             </div>
-            <RecordItem>{ record.create_At }</RecordItem>
           </RecordBox>
         ))}
     </RecordBlock>
