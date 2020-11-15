@@ -6,10 +6,10 @@ export const getGames = () =>
     url: `/games/`,
   });
 
-export const getAllRecord = (userId) =>
+export const getAllRecord = () =>
   client({
     method: 'get',
-    url: `/games/${userId}/history/`,
+    url: `/games/history/`,
   });
 
 export const saveRecord = (data, sid) =>

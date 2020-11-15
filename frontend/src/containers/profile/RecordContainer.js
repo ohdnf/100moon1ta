@@ -27,7 +27,7 @@ const RecordContainer = () => {
     })
     .catch((err) => {
       const error = err.response
-      if (error.status === 404 ){
+      if (error?.status === 404 ){
         console.log("기록이 없습니다.")
       } else {
         console.log("에러가 발생했습니다.")
