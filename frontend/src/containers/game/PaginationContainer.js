@@ -6,19 +6,20 @@ const PaginationContainer = ({ games }) => {
   const numOfGames = games.length
   // 초기 페이지네이션 : 1 ~ step || 마지막 페이지
   const [step, setStep] = useState(10);
-  const [endOfPage, setEndOfPage] = useState(Math.ceil(numOfGames / step))
-  const [start ,setStart] = useState(1)
-  const [page, setPage] = useState(1);//현재 페이지
+  const [endOfPage, setEndOfPage] = useState(Math.ceil(numOfGames / step));
+  // const [start ,setStart] = useState(1);
+  const [page, setPage] = useState(1);  //현재 페이지
   const [displayedGame, setDisplayedGame] = useState(games.slice(0, page < step ? page : step));
 
   // 페이지네이션 동작
   const onRight = () => {
-    if (start+10 > endOfPage) return// 동작X
-    setStart(start+10)
+    // console.log(page, step, endOfPage)
+    if (page+1 > endOfPage) return  // 동작X
+    setPage(page+1)
   }
   const onLeft = () => {
-    if (start-10 < 1) return // 동작X
-    setStart(start-step)
+    if (page-1 < 1) return  // 동작X
+    setPage(page-1)
   }
   const onClick = (numOfPage) => {
     setPage(numOfPage)
@@ -27,7 +28,7 @@ const PaginationContainer = ({ games }) => {
     if ( endOfPage !== Math.ceil(numOfGames / step) ) {
       setEndOfPage(Math.ceil(numOfGames / step))
     }
-    setStart(1)
+    // setStart(1)
     setPage(1)
     }, [step, setStep])
 
@@ -47,10 +48,10 @@ const PaginationContainer = ({ games }) => {
       />
       <Pagination
         page={page}
-        start={start}
+        // start={start}
         endOfPage={endOfPage}
-        disableRight={start+10 > endOfPage}
-        disableLeft={start-10 < 1}
+        disableRight={page+1 > endOfPage}
+        disableLeft={page-1 < 1}
         onRight={onRight}
         onLeft={onLeft}
         onClick={onClick}

@@ -15,6 +15,7 @@ const SelectMeModal = styled.div`
   border-radius: 20px;
   border: ridge;
   border-style: outset;
+  background: white;
   div.modalLabel {
     font-size: 1.5rem;
     color: 241654;
