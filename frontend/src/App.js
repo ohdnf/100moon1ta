@@ -15,6 +15,9 @@ import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 import RankPage from './pages/RankPage';
 import AdminPage from './pages/AdminPage';
+import LoginCompletePage from './pages/LoginCompletePage';
+
+
 
 function App() {
   return (
@@ -22,7 +25,8 @@ function App() {
       <Helmet>
         <title>100moon1ta</title>
       </Helmet>
-      <NavbarContainer />
+      
+      { (window.location.pathname === '/login-complete/') ? null : <NavbarContainer /> }
       <Switch>
         <Route component={MainPage} path="/" exact />
         <Route component={TodayPage} path="/today/" exact />
@@ -31,8 +35,10 @@ function App() {
         <Route component={ProfilePage} path="/profile/" exact />
         <Route component={RankPage} path="/rank/" exact />
         <Route component={AdminPage} path="/admin/" exact />
+        <Route component={LoginCompletePage} path="/login-complete/"  />
         <Route component={NotFoundPage} path="*" />
       </Switch>
+      
     </div>
   );
 }
