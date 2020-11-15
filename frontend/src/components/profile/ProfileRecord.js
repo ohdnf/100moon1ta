@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-// import PageTitle from '../common/PageTitle'
 
 const ProfileRecordBlock = styled.div`
   background: Azure;

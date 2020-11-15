@@ -39,12 +39,12 @@ const NavbarContainer = () => {
           changeModal={changeModal}
         />
       ) : (
-        modal === "join" && (
-          <JoinContainer
-            changeModal={changeModal}
-          />
-        )
-      )}
+          modal === "join" && (
+            <JoinContainer
+              changeModal={changeModal}
+            />
+          )
+        )}
     </>
   );
 };

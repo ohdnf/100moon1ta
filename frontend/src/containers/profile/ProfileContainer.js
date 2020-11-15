@@ -9,8 +9,6 @@ import Post from '../../components/profile/Post';
 
 import { getMy, getMyRecord } from '../../lib/api/user';
 
-// grid-template-columns : 좌우로 프레임 분할
-// grid-template-rows : 상하로 프레임 분할
 const MainBlock = styled.div`
   width: 67%;
   margin: 2rem auto;

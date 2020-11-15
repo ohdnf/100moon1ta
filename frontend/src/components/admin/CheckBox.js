@@ -5,16 +5,16 @@ const CheckBox = ({ uid, verified, isStaff, isBan }) => {
 	const [staff, setStaff] = useState(isStaff)
 	const [ban, setBan] = useState(isBan)
 	const checkSwitch = (action) => {
-		changeChecked( action, uid)
-      .then((response) => {
+		changeChecked(action, uid)
+			.then((response) => {
 				action === 'staff' ? setStaff(!staff) : setBan(!ban)
-        
-      })
-      .catch((error) => {
-        // console.error(error.response);
-        // console.error(error.request);
-        // console.error(error.message);
-      });
+
+			})
+			.catch((error) => {
+        console.error(error.response);
+        console.error(error.request);
+        console.error(error.message);
+			});
 	}
 	return (
 		<>
@@ -27,13 +27,13 @@ const CheckBox = ({ uid, verified, isStaff, isBan }) => {
 			<input
 				type={"checkbox"}
 				checked={staff}
-				onChange={() => checkSwitch('staff') }
+				onChange={() => checkSwitch('staff')}
 			>
 			</input>
 			<input
 				type={"checkbox"}
 				checked={isBan}
-				onChange={() =>checkSwitch('ban')}
+				onChange={() => checkSwitch('ban')}
 			>
 			</input>
 		</>

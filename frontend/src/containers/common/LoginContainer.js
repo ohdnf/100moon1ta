@@ -15,8 +15,7 @@ const LoginContainer = ({ changeModal }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  //   const [nextUrl, setNextUrl] = useStae("");
-  
+
   const onChange = (e) => {
     if (e.target.name === 'email') {
       setEmail(e.target.value);
@@ -26,7 +25,7 @@ const LoginContainer = ({ changeModal }) => {
       }
     }
   };
-  
+
   const onLogin = () => {
     const data = {
       email: email,
@@ -39,13 +38,12 @@ const LoginContainer = ({ changeModal }) => {
     window.open(
       `${process.env.REACT_APP_API_URL}api/v1/accounts/all-auth/github/login/`,
       "",
-      "width=400,height=500" 
-      );
+      "width=400,height=500"
+    );
   };
 
-useEffect(() => {
+  useEffect(() => {
     if (user) {
-      // 로그인 성공시
       localStorage.setItem('user', JSON.stringify(user));
       localStorage.setItem('token', token);
       client.defaults.headers.common['Authorization'] = 'JWT ' + token;
@@ -56,7 +54,7 @@ useEffect(() => {
 
   useEffect(() => {
     if (error) {
-      if(error.message.indexOf('400') === -1) {
+      if (error.message.indexOf('400') === -1) {
         alert(error.message + '\n' + '로그인 요청에 실패했습니다.')
       } else {
         alert(error.message + '\n' + '이메일 혹은 비밀번호가 잘못되었습니다.')

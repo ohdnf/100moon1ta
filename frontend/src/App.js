@@ -1,12 +1,7 @@
 import React from 'react';
-// import './App.css';
 import { Helmet } from 'react-helmet-async';
 import { Route, Switch } from 'react-router-dom';
-
-// 공통 컴포넌트
 import NavbarContainer from './containers/common/NavbarContainer';
-
-// Page
 import MainPage from './pages/MainPage';
 import TodayPage from './pages/TodayPage';
 import GamePage from './pages/GamePage';

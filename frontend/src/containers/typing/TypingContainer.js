@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import Source from '../../components/today/Source';
 import { getGame } from '../../lib/api/game';
 import { getTodaySource } from '../../lib/api/today';
+
+const Buttons = styled.div`
+  margin: 1rem auto;
+  padding: 0rem 1rem;
+  width: 80%;
+`;
 
 const TypingContainer = ({ location, match }) => {
   const [gameId, setGameId] = useState(
@@ -45,17 +52,19 @@ const TypingContainer = ({ location, match }) => {
         gameId={gameId}
         game={game}
       />
-      <button onClick={() => setNum(num+1)}>다시하기</button>
-      {window.location.pathname === '/today' && (
-        <button
-          onClick={() => {
-            setGameId(0); // /today로 입장 === gameId = 0 을 활용
-            setNum(num+1);
-          }}
-        >
-          다른게임
-        </button> 
-      )}
+      <Buttons>
+        <button onClick={() => setNum(num+1)}>다시하기</button>
+        {window.location.pathname === '/today' && (
+          <button
+            onClick={() => {
+              setGameId(0); // /today로 입장 === gameId = 0 을 활용
+              setNum(num+1);
+            }}
+          >
+            다른게임
+          </button>
+        )}
+      </Buttons>
     </>
   );
 };

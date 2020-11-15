@@ -5,12 +5,12 @@ import Game from '../components/game/Game'
 const GamePage = () => {
   const code = "asdfasdf"
   return (
-  <>
-    <Helmet>
-      <title>TypingPage | 100moon1ta</title>
-    </Helmet>
-    <Game inputCode={code}/>
-  </>
+    <>
+      <Helmet>
+        <title>TypingPage | 100moon1ta</title>
+      </Helmet>
+      <Game inputCode={code} />
+    </>
   );
 };
 

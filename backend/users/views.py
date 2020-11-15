@@ -25,22 +25,21 @@ from allauth.account.adapter import get_adapter
 # from django.http import HttpResponseRedirect, JsonResponse
 # from rest_framework.request import Request as rest_request
 from django.http import HttpResponse, HttpResponseRedirect
-from allauth.socialaccount.providers.oauth2.views import OAuth2View,OAuth2LoginView, OAuth2Adapter, OAuth2CallbackView
+from allauth.socialaccount.providers.oauth2.views import OAuth2View, OAuth2LoginView, OAuth2Adapter, OAuth2CallbackView
 
 import requests
 from decouple import config
-# Create your views here.
+
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
+
 class Nickname(APIView):
     def get(self, request, nickname):
-        # nickname = request.GET.get('nickname',0)
         User = get_user_model()
         if nickname:
-            return Response({"possible" : not User.objects.filter(username=nickname).exists()})   
-        # else:
-        #     return Res
+            return Response({"possible" : not User.objects.filter(username=nickname).exists()})
+
 
 class UserList(APIView):
     permission_classes = [IsAdminUser]
@@ -51,6 +50,7 @@ class UserList(APIView):
         serializer = UserListSerializer(users, many=True)
         return Response(serializer.data, status=200)
 
+
 class Record(APIView):
     def get(self, request):
         total_point = GameHistory.objects.filter(user=request.user).aggregate(Sum('points'))
@@ -58,6 +58,7 @@ class Record(APIView):
             return Response({"총점" : total_point})
         else:
             return Response('플레이한 게임이 없습니다.', status=404)
+
 
 # login으로 redirect 시킴, login_url='/example url you want redirect/' 로 지정가능
 class Bookmark(APIView):
@@ -79,7 +80,8 @@ class Bookmark(APIView):
         else:
             source.subscribers.add(user)
             bookmark_status = True
-        return Response({"sources" : bookmark_status}, status=200)   
+        return Response({"sources" : bookmark_status}, status=200)
+
 
 class Like(APIView):
     def post(self,request):
@@ -105,13 +107,14 @@ class StaffManagement(APIView):
             return  Response(status=200)
         return Response(status=403)
 
+
 # 권한 세부화
 class BanManagement(APIView):
     def patch(self, request, uid):
         User = get_user_model()
         if request.user.is_staff:
             ban = User.objects.get(pk=uid)
-            if not ban.is_staff: # user만 밴가능
+            if not ban.is_staff:
                 ban.is_ban = not ban.is_ban
                 ban.save()
             else:

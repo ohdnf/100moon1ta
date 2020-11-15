@@ -33,7 +33,7 @@ const MainPage = () => {
       <MainComponent>
         <h1>백문이 불여일타</h1>
         <p>백 번 보는 것이 한 번 쳐보는 것만 못하다.</p>
-        <button onClick={() => {history.push('/today')}}>연습하러가기</button>
+        <button onClick={() => { history.push('/today') }}>연습하러가기</button>
       </MainComponent>
     </>
   );

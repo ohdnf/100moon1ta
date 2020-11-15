@@ -34,17 +34,16 @@ const TagItemBlock = styled.div`
       opacity: 1;
     `}
 `;
+
 const TagItem = ({ tag, queryTags, setQueryTags }) => {
   const [isSelected, setIsSelected] = useState(false);
   const { content, id } = tag;
   const onClick = () => {
     if (isSelected) {
-      // 체크 해제
       setIsSelected(!isSelected);
       let nextArray = queryTags.filter((t) => t.id !== id);
       setQueryTags(nextArray);
     } else {
-      // 체크
       setIsSelected(!isSelected);
       let nextArray = queryTags.concat(tag);
       setQueryTags(nextArray);

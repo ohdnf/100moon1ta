@@ -1,7 +1,5 @@
 import client from './client';
 
-// accounts에 해당하는 API콜
-
 export const signup = (data) =>
   client({
     method: 'post',

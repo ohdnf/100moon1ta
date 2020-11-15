@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-// import { useHistory } from 'react-router-dom';
 
 const SummaryBlock = styled.div`
   margin-top: 3rem;
@@ -29,7 +28,6 @@ const TableData = styled.td`
 const GuideBlock = styled.div`
   margin-bottom: 3rem;
 `;
-// cursor: auto / default(화살표) / pointer / wait
 
 const Summary = ({ point, end, accuracy }) => {
   return (

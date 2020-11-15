@@ -12,12 +12,11 @@ const Users = styled.div`
 `
 
 const UserList = () => {
-  const [ userList, setUserList] = useState([]);
+  const [userList, setUserList] = useState([]);
 
   useEffect(() => {
     getUserList()
       .then((response) => {
-        // 성공시 => 뭐가 성공인지는 확인 필요
         if (typeof response.data === 'object') {
           setUserList(response.data);
         } else {
@@ -25,7 +24,6 @@ const UserList = () => {
         }
       })
       .catch((error) => {
-        // 에러를 출력해주는 3가지 방식 => 각각 작동하는 환경이 다름
         console.error(error.response);
         console.error(error.request);
         console.error(error.message);
@@ -39,7 +37,7 @@ const UserList = () => {
         {userList.map((e, index) => (
           <li key={index}>
             {e.email} : {e.username}
-            <CheckBox uid={e.id} verified={e.verified} isStaff={e.is_staff} isBan={e.is_ban}/>
+            <CheckBox uid={e.id} verified={e.verified} isStaff={e.is_staff} isBan={e.is_ban} />
           </li>
         ))}
       </ol>

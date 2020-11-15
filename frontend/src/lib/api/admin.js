@@ -6,7 +6,7 @@ export const getUserList = () =>
     url: `/accounts/mng/`,
   });
 
-export const changeChecked = (action,uid) =>
+export const changeChecked = (action, uid) =>
   client({
     method: 'patch',
     url: `/accounts/mng/${action}/${uid}/`

@@ -49,8 +49,8 @@ const Login = ({ onChange, changeModal, onLogin, githubLogin }) => {
           Github Login
         </Button>
         <FlexDiv>
-        <Button onClick={() => changeModal('join')}>
-          회원가입으로
+          <Button onClick={() => changeModal('join')}>
+            회원가입으로
         </Button>
           <Button onClick={() => changeModal('')}>
             닫기

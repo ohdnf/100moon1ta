@@ -67,10 +67,7 @@ const KeyBlock = styled.div`
 	}
 
 	${(props) => {
-		console.log('props', props);
-		// console.log(props.typoCount);
 		const currCount = props.typoCount;
-		console.log(currCount);
 		if (currCount > 0 && currCount <= 5) {
 			return css`background: yellow;`
 		} else if (currCount > 5 && currCount < 10) {
@@ -87,21 +84,21 @@ const UpperLetter = styled.div`
  padding-top: -3px;
 `;
 
-const Keyboard = ({typos}) => {
+const Keyboard = ({ typos }) => {
 
 	const keyMapping = {
-		"`":"tilt", "~":"tilt", "1":"one", "!":"one", "2":"two", "@":"two", "3":"three", "#":"three",
-		"4":"four", "$":"four", "5":"five", "%":"five", "6":"six", "^":"six", "7":"seven", "&":"seven",
-		"8":"eight", "*":"eight", "9":"nine", "(":"nine", "0":"zero", ")":"zero", "-":"hyphen", "_":"hyphen",
-		"=":"equal", "+":"equal", "q":"ch-q", "Q":"ch-q", "w":"ch-w", "W":"ch-w", "e":"ch-e", "E":"ch-e",
-		"r":"ch-r", "R": "ch-r", "t":"ch-t", "T":"ch-t", "y":"ch-y", "Y":"ch-y", "u":"ch-u", "U":"ch-u",
-		"i":"ch-i", "I":"ch-i", "o":"ch-o", "O":"ch-o", "p":"ch-p", "P":"ch-p", "[":"bracket-open", 
-		"{":"bracket-open", "\\":"backslash", "|":"backslash", "a":"ch-a", "A":"ch-a", "s":"ch-s", "S":"ch-s",
-		"d":"ch-d", "D":"ch-d", "f":"ch-f", "F":"ch-f", "g":"ch-g", "G":"ch-g", "h":"ch-h", "H":"ch-h",
-		"j":"ch-j", "J":"ch-j", "k":"ch-k", "K":"ch-k", "l":"ch-l", "L":"ch-l", ";":"semi-colon", ":":"semi-colon",
-		"'":"quote", "\"":"quote", "z":"ch-z", "Z":"ch-z", "x":"ch-x", "X":"ch-x", "c":"ch-c", "C":"ch-c",
-		"v":"ch-v", "V":"ch-v", "b":"ch-b", "B":"ch-b", "n":"ch-n", "N":"ch-n", "m":"ch-m", "M":"ch-m",
-		",":"comma", "<":"comma", ".":"dot", ">":"dot", "/":"slash", "?":"slash"
+		"`": "tilt", "~": "tilt", "1": "one", "!": "one", "2": "two", "@": "two", "3": "three", "#": "three",
+		"4": "four", "$": "four", "5": "five", "%": "five", "6": "six", "^": "six", "7": "seven", "&": "seven",
+		"8": "eight", "*": "eight", "9": "nine", "(": "nine", "0": "zero", ")": "zero", "-": "hyphen", "_": "hyphen",
+		"=": "equal", "+": "equal", "q": "ch-q", "Q": "ch-q", "w": "ch-w", "W": "ch-w", "e": "ch-e", "E": "ch-e",
+		"r": "ch-r", "R": "ch-r", "t": "ch-t", "T": "ch-t", "y": "ch-y", "Y": "ch-y", "u": "ch-u", "U": "ch-u",
+		"i": "ch-i", "I": "ch-i", "o": "ch-o", "O": "ch-o", "p": "ch-p", "P": "ch-p", "[": "bracket-open",
+		"{": "bracket-open", "\\": "backslash", "|": "backslash", "a": "ch-a", "A": "ch-a", "s": "ch-s", "S": "ch-s",
+		"d": "ch-d", "D": "ch-d", "f": "ch-f", "F": "ch-f", "g": "ch-g", "G": "ch-g", "h": "ch-h", "H": "ch-h",
+		"j": "ch-j", "J": "ch-j", "k": "ch-k", "K": "ch-k", "l": "ch-l", "L": "ch-l", ";": "semi-colon", ":": "semi-colon",
+		"'": "quote", "\"": "quote", "z": "ch-z", "Z": "ch-z", "x": "ch-x", "X": "ch-x", "c": "ch-c", "C": "ch-c",
+		"v": "ch-v", "V": "ch-v", "b": "ch-b", "B": "ch-b", "n": "ch-n", "N": "ch-n", "m": "ch-m", "M": "ch-m",
+		",": "comma", "<": "comma", ".": "dot", ">": "dot", "/": "slash", "?": "slash"
 	};
 
 	const countTypo = {
@@ -161,7 +158,7 @@ const Keyboard = ({typos}) => {
 		};
 	};
 
-  return (
+	return (
 		<KeyboardBlock>
 			<h3> 히트맵 </h3>
 			<LayoutBlock>
