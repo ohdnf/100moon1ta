@@ -1,11 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import PageTitle from '../common/PageTitle';
 
 const ProfileBlock = styled.div`
-  background: Azure;
-  border: 0.25rem solid BlueViolet;
 `;
+
+const PageTitle = styled.div`
+  margin: 1rem 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+  cursor: default;
+`
 
 const FlexBox = styled.div`
   display: flex;
@@ -22,7 +26,6 @@ const Profile = ({ userProfile }) => {
   return (
     <ProfileBlock>
       <PageTitle>내페이지</PageTitle>
-      <div>기본정보</div>
       <FlexBox>
         <ImgDiv src={profile_image} />
         <div>
