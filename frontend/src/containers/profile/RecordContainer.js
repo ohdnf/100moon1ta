@@ -43,7 +43,7 @@ const RecordContainer = () => {
     <>
       {records.length === 0?
       <>
-        <div>레코드가 없져...</div>
+        <div>레코드가 없습니다.</div>
       </>
       :
       <>

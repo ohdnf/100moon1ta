@@ -7,7 +7,7 @@ import { getBookmarkedGames } from '../../lib/api/user'
 const BookmarkContainer = () => {
   // 유저 정보 => redux
   const [bookmarkedGame, setBookmarkedGame] = useState([])
-  const [msg, setMsg] = useState("북마킹된 소스가 없져...")
+  const [msg, setMsg] = useState("북마킹된 소스가 없습니다.")
 
   useEffect(()=>{
     // 1. 북마크한 소스들 받아오기
