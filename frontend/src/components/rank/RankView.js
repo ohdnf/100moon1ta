@@ -33,14 +33,16 @@ const Rank = () => {
       this.avg_speed = "---";
       this.game_count = "---";
       this.player__username = "---";
-      this.player__commnet = "---";
+      this.player__comment = "---";
       this.total_score = "---";
     }
   }
 
   const currentRank = new Array(30).fill(new Bot());
   for (let i = 0; i < ranking.length; i++) {
-    currentRank[i] = ranking[i]
+    const data = ranking[i];
+    data["avg_speed"] = Number((data["avg_speed"] * 60).toFixed(2));
+    currentRank[i] = data;
   }
 
   return (
@@ -48,7 +50,7 @@ const Rank = () => {
       <ol>
         {currentRank.map((e, index) => (
           <li key={index}>
-            {e.player__username} | 총 {e.total_score}점 | 분당: {e.avg_speed * 60}타
+            {e.player__username} | 총 {e.total_score}점 | 분당: {e.avg_speed}타
           </li>
         ))}
       </ol>
