@@ -19,6 +19,7 @@ const UserList = () => {
       .then((response) => {
         if (typeof response.data === 'object') {
           setUserList(response.data);
+          console.log(response.data)
         } else {
           console.log('타입이 object가 아닙니다!', typeof response.data);
         }
@@ -37,7 +38,7 @@ const UserList = () => {
         {userList.map((e, index) => (
           <li key={index}>
             {e.email} : {e.username}
-            <CheckBox uid={e.id} verified={e.verified} isStaff={e.is_staff} isBan={e.is_ban} />
+            <CheckBox uid={e.id} verified={e.emailaddress_set[0]} isStaff={e.is_staff} isBan={e.is_ban} />
           </li>
         ))}
       </ol>
