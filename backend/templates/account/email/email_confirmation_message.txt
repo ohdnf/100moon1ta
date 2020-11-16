@@ -1,0 +1,15 @@
+{% extends "account/email/base_message.txt" %}
+{% load account %}
+{% load i18n %}
+
+{% block content %}
+{% autoescape off %}
+{% user_display user as user_display %}
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
+{{ user_display }}님, {{ site_domain }} 서비스에 가입을 요청하셨습니다.
+
+이메일 인증을 위해서 다음 링크를 클릭해주세요!
+{{ activate_url }}
+{% endblocktrans %}
+{% endautoescape %}
+{% endblock %}
