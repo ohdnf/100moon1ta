@@ -19,7 +19,6 @@ const UserList = () => {
       .then((response) => {
         if (typeof response.data === 'object') {
           setUserList(response.data);
-          console.log(response.data)
         } else {
           console.log('타입이 object가 아닙니다!', typeof response.data);
         }

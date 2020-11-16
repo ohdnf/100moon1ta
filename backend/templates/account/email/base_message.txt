@@ -1,7 +1,8 @@
-{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name %}환영합니다 :){% endblocktrans %}
+{% load i18n %}{% autoescape off %}
+환영합니다 :)
+
+{% blocktrans with site_name=current_site.name %}{{ site_name }}는 개발자를 위한 타자 연습 서비스입니다.{% endblocktrans %}
 
 {% block content %}{% endblock %}
 
-{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}{{ site_name }}는 개발자를 위한 타자 연습 서비스입니다.
-{{ site_domain }}를 눌러 서비스에 접속하실 수 있습니다!{% endblocktrans %}
 {% endautoescape %}

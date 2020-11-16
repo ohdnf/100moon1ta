@@ -30,7 +30,7 @@ const TypingContainer = ({ location, match }) => {
           });
           setGameId(res.data.id);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
     } else if (gameId !== game?.id) {
       getGame(gameId).then((res) => { // path의 파라미터에서 gameId값을 찾아 해당 소스 로드
         const gameData = res.data;

@@ -22,7 +22,7 @@ const LoginCompletePage = ( { location } ) => {
         localStorage.setItem('token', response.data.token);
         client.defaults.headers.common['Authorization'] = 'JWT ' + response.data.token;
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.error(err))
   });
 
   return (

@@ -57,11 +57,6 @@ const KeyBlock = styled.div`
 		grid-column: span 3;
 	}
 
-	&.command {
-		grid-column: span 3;
-		font-size: 14px;
-	}
-
 	&.space {
 		grid-column: span 13;
 	}
@@ -178,7 +173,7 @@ const Keyboard = ({ typos }) => {
 				<KeyBlock className="key delete" typoCount={countTypo["delete"]}>Backspace</KeyBlock>
 				<KeyBlock className="key tab" typoCount={countTypo["tab"]}>Tab</KeyBlock>
 				<KeyBlock className="key" typoCount={countTypo["ch-q"]}>Q</KeyBlock>
-				<KeyBlock className="key" typoCount={countTypo["ch-w"]}>w</KeyBlock>
+				<KeyBlock className="key" typoCount={countTypo["ch-w"]}>W</KeyBlock>
 				<KeyBlock className="key" typoCount={countTypo["ch-e"]}>E</KeyBlock>
 				<KeyBlock className="key" typoCount={countTypo["ch-r"]}>R</KeyBlock>
 				<KeyBlock className="key" typoCount={countTypo["ch-t"]}>T</KeyBlock>
@@ -216,12 +211,12 @@ const Keyboard = ({ typos }) => {
 				<KeyBlock className="key" typoCount={countTypo["slash"]}><UpperLetter>?</UpperLetter>/</KeyBlock>
 				<KeyBlock className="key rightshift" typoCount={countTypo["rightshift"]}>Shift</KeyBlock>
 				<KeyBlock className="key" typoCount={countTypo["leftctrl"]}>Ctrl</KeyBlock>
-				<KeyBlock className="key command">Win</KeyBlock>
+				<KeyBlock className="key">Win</KeyBlock>
 				<KeyBlock className="key">Alt</KeyBlock>
 				<KeyBlock className="key space" typoCount={countTypo["space"]}>Space</KeyBlock>
 				<KeyBlock className="key">한자</KeyBlock>
 				<KeyBlock className="key">Alt</KeyBlock>
-				<KeyBlock className="key command">Win</KeyBlock>
+				<KeyBlock className="key">Win</KeyBlock>
 				<KeyBlock className="key">Ctrl</KeyBlock>
 			</LayoutBlock>
 		</KeyboardBlock>

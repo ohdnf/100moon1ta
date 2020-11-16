@@ -14,7 +14,6 @@ COPY . ./
 
 RUN npm run build --silent
 
-
 FROM nginx:latest
 
 COPY nginx.conf /etc/nginx/conf.d

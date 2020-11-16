@@ -15,9 +15,9 @@ const BookmarkContainer = () => {
       .catch((err) => {
         const error = err.response
         if (error.status === 404) {
-          console.log("기록이 없습니다.")
+          console.error("기록이 없습니다.")
         } else {
-          console.log("에러가 발생했습니다.")
+          console.error("에러가 발생했습니다.")
           setMsg("로드중 에러가 발생했습니다.")
         }
       })

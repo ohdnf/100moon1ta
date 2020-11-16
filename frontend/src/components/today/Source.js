@@ -57,7 +57,8 @@ const TypingWindow = styled.pre`
     background: yellow;
   }
   .incorrect {
-    color: red;
+    color: white;
+    background: red;
   }
   margin: 1rem 0.5rem;
   padding: 0.5rem;
@@ -132,7 +133,7 @@ const Source = ({ game }) => {
         })
         .catch((error) => {
           alert("기록 저장에 실패하였습니다.")
-          console.log(error);
+          console.error(error);
         });
     }
     if (cursor >= chList.length) return;
@@ -200,6 +201,7 @@ const Source = ({ game }) => {
       >
         {chList.map((ch, index) => (
           <span
+            style={{"font-size": "1.75rem"}}
             className={`${typo[index] && index < cursor ? 'incorrect' : 'correct'
               } ${cursor === index
                 ? 'current'

@@ -70,11 +70,10 @@ const JoinContainer = ({ changeModal }) => {
         changeModal('');
       })
       .catch((err) => {
-        console.log(err.response.data)
+        console.error(err.response.data)
         let alertMessage = ""
 
         const entries = Object.entries(err.response.data)
-        console.log(entries)
         entries.forEach(kv => {
           kv[1].forEach(msg => {
             alertMessage += String(`${kv[0]}: ${msg}\n`)

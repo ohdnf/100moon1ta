@@ -16,7 +16,6 @@ const Rank = () => {
       .then((response) => {
         if (typeof response.data === 'object') {
           setRanking(response.data);
-          console.log(response.data)
         } else {
           console.log('타입이 object가 아닙니다!', typeof response.data);
         }
@@ -49,7 +48,7 @@ const Rank = () => {
       <ol>
         {currentRank.map((e, index) => (
           <li key={index}>
-            {e.player__username} | 총 {e.total_score}점 | 평균 속도: {e.avg_speed}타
+            {e.player__username} | 총 {e.total_score}점 | 분당: {e.avg_speed * 60}타
           </li>
         ))}
       </ol>
