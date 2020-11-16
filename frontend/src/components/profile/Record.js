@@ -50,10 +50,10 @@ const Record = ({ records }) => {
 
             <div>
               <FlexBox>
-                <RecordItem>{record.game_time}초 </RecordItem>
-                <RecordItem>{record.precision}% </RecordItem>
-                <RecordItem>{record.score}점</RecordItem>
-                <RecordItem>{record.create_at.slice(0, 10)}</RecordItem>
+                <RecordItem>{record.game_time}초</RecordItem> | 
+                <RecordItem>{record.precision}%</RecordItem> | 
+                <RecordItem>{record.score}점</RecordItem> | 
+                <RecordItem>{record.created_at.slice(0, 10)}</RecordItem>
               </FlexBox>
             </div>
           </RecordBox>

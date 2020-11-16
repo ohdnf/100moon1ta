@@ -7,7 +7,7 @@ import RecordContainer from './RecordContainer';
 import BookmarkContainer from './BookmarkContainer';
 import Post from '../../components/profile/Post';
 
-import { getMy, getMyRecord } from '../../lib/api/user';
+import { getMy } from '../../lib/api/user';
 
 const MainBlock = styled.div`
   width: 67%;

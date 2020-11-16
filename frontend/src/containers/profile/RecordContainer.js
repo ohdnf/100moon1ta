@@ -11,7 +11,6 @@ const RecordContainer = () => {
     user: user.user
   }))
   const history = useHistory()
-  console.log(user)
   useEffect(() => {
     if (!user) {
       alert("로그인이 필요합니다.")
@@ -20,20 +19,16 @@ const RecordContainer = () => {
     }
     getAllRecord(user.id)
     .then((res) => {
-      // 아래 코드 동작하는지 확인 요망
       setRecords(res.data)
     })
     .catch((err) => {
-      const error = err.response
+      const error = err.response;
       if (error?.status === 404 ){
         console.log("기록이 없습니다.")
       } else {
         console.log("에러가 발생했습니다.")
       }
     })
-
-    // 아래는 목업데이터 => API로 변경해야함
-    // setRecords(records.concat(sampleData.getRecords(20))) //n개의 데이터 생성
   }, [])
 
   return (

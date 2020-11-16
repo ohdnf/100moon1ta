@@ -22,15 +22,15 @@ const ImgDiv = styled.img`
   height: ${100 / 16}rem;
 `;
 const Profile = ({ userProfile }) => {
-  const { email, nickname, profile_image } = userProfile;
+  const { email, username, profile_image } = userProfile;
   return (
     <ProfileBlock>
-      <PageTitle>내페이지</PageTitle>
+      <PageTitle>마이 페이지</PageTitle>
       <FlexBox>
         <ImgDiv src={profile_image} />
         <div>
-          <div>이메일 {email} </div>
-          <div>닉네임 {nickname} </div>
+          <div>이메일 | {email} </div>
+          <div>닉네임 | {username} </div>
         </div>
       </FlexBox>
     </ProfileBlock>

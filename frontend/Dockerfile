@@ -12,7 +12,7 @@ RUN npm install react-scripts@3.0.1 -g --silent
 
 COPY . ./
 
-RUN npm run build
+RUN npm run build --silent
 
 
 FROM nginx:latest
