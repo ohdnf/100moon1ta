@@ -28,8 +28,73 @@
 
 ## 기능
 
-> 프로젝트의 기능들을 설명해주세요  
-> 스크린샷이나 gif등으로 한눈에 볼 수 있게 하면 더 좋습니다
+> [100moon1ta.com](http://100moon1ta.com)
+
+<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\landing_page.png" alt="landing page" style="zoom:50%;" />
+
+<hr>
+
+### 로그인 & 회원가입
+
+> 소셜 로그인(Github) 제공
+
+<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\login.png" alt="login page" style="zoom:50%;" />
+
+<hr>
+
+<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\signup.png" alt="signup page" style="zoom:50%;" />
+
+<hr>
+
+### 프로필
+
+> 프로필 이미지는 랜덤으로 제공
+
+<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\profile_records.png" alt="record page" style="zoom:50%;" />
+
+<hr>
+
+<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\profile_records.png" alt="bookmark page" style="zoom:50%;" />
+
+<hr>
+
+### 연습할 글 목록
+
+> Pagination, Bookmark 기능 제공
+
+<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\game_lists.png" alt="game lists page" style="zoom:50%;" />
+
+<hr>
+
+### 게임 화면
+
+> 오타 처리
+
+<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\typing_01.png" alt="typing page" style="zoom:50%;" />
+
+<hr>
+
+<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\typing_02.png" alt="shows typo" style="zoom:50%;" />
+
+<hr>
+
+### 결과 표시
+
+> 점수 산정
+> 결과 제출 시 틀렸던 부분만 반영
+>
+> 히트맵
+> 게임 진행 동안 누적된 모든 오타 수를 반영
+
+<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\result.png" alt="Landing page" style="zoom:50%;" />
+
+<hr>
+
+### 프로필 업데이트
+
+<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\record_saved.png" alt="record saved" style="zoom:50%;" />
+
+<hr>
 
 
 
@@ -43,28 +108,30 @@
 
 - http://www.speedcoder.net/
 
-### 차별점
-
-- 코딩 스타일, 클린 코드, 기술 블로그의 포스팅 제공
-- 언어별, 개발 분야별 로드맵 제공
-
 
 
 ## 향후 전망
 
-> 부득이한 사정으로 프로젝트에 구현하지는 못했지만 보완할 점이나 추가할 점이 있다면 적어주세요
+> 보완할 점 및 추가 구현할 사항
+
+- 게임 검색 및 필터 기능
+- 로드맵 제시 및 사용자 정보 기반 코드 추천
+- Docker network로 호스트 포트 개방 없이 컨테이너 간 연결
+- Caching data 업데이트
 
 
 
 ## 기술 스택
 
-> 프로젝트를 구현 할 때 사용한 기술들을 적어주세요
+<img src="/assets/100moon1ta_tech_stacks.png" alt="Tech stacks" style="zoom:50%;" />
 
 
 
 ## 기술 설명
 
 ### ERD
+
+<img src="/assets/100moon1ta_erd.png" alt="ER Diagram" style="zoom:50%;" />
 
 
 
@@ -73,129 +140,129 @@
 ```
 📁100moon1ta
 ├─📁backend
+│   ├─📁games
 │   ├─📁l00moon1ta
-│   ├─main.py
+│   ├─📁users
+│   ├─Dockerfile
+│   ├─manage.py
 │   └─requirements.py
-└─📁frontend
-    ├─📁Components
-    ├─App.js
-    └─packages.json
+├─📁frontend
+│   ├─📁components
+│   ├─📁containers
+│   ├─📁lib
+│   ├─📁modules
+│   ├─📁pages
+│   ├─App.js
+│   ├─Dockerfile
+│   ├─nginx.conf
+│   └─packages.json
+└─docker-compose.yml
 ```
 
 
 
 ### 아키텍처
 
+<img src="/assets/100moon1ta_architecture.png" alt="ER Diagram" style="zoom:50%;" />
 
 
-### 기타
 
-> 이외에도 프로젝트를 이해하기 위해 필요한 것들을 적어주세요 (팀별 개발표준, API Documentation 등등...)
+## 기타
+
+### Git Strategy
+
+#### Branch
+
+```
+master
+	develop
+		back
+			jira_ticket_number-feature
+			...
+		front
+			jira_ticket_number-feature
+			...
+```
+
+#### Commit Message
+
+```
+jira_ticket_number #comment 설명 #status
+```
+
+- `jira_ticket_number`: Jira 티켓 번호
+- `#status`
+  - `#to-do`
+  - `#in-progress`
+  - `#done`
 
 
 
 ## 테스트 방법
 
-> 프로젝트를 배포한 url과 테스트하기 위한 계정 ID/PW를 적어주세요
-> 자세한건 localhost:8000/swagger/
+> 로컬 테스트
 
-### Login
+### Backend
 
-```
-POST api/rest-auth/login/
+1. Python 설치
 
-{
-    email: string,
-    password: string
-}
-```
+2. 가상 환경 설정 및 의존성 주입
 
-### Logout
+   ```shell
+   $ cd backend
+   $ python -m venv venv
+   $ source venv/bin/activate
+   (venv) $ python -m pip install -r requirements.txt
+   ```
 
-```
-POST api/rest-auth/logout/
-```
+3. `.env` 설정
 
-- jwt 인증방식이기 때문에 로그아웃은 별 효과가 없음, 만료시간을 짧게 하거나 블랙리스트를 사용
+   ```shell
+   DEBUG=
+   DJANGO_SECRET_KEY=
+   DJANGO_ALLOWED_HOSTS=
+   MYSQL_NAME=
+   MYSQL_USER=
+   MYSQL_PASSWORD=
+   MYSQL_HOST=
+   EMAIL_REDIRECT_URL=
+   NAVER_ID=
+   NAVER_PASSWORD=
+   ```
 
-### Password
+4. 마이그레이션 및 로컬 테스트 서버 실행
 
-```
-Password change
+   ```shell
+   # 마이그레이션
+   $ python manage.py makemigrations
+   $ python manage.py migrate
+   # 테스트 데이터 생성
+   $ python manage.py setup_test_data
+   # 서버 실행
+   $ python manage.py runserver 8000
+   ```
 
-POST api/rest-auth/password/change/
+### Frontend
 
-header = { Authorization : JWT {JWT token} }
-{
-    new_password1: string,
-    new_password2: string
-}
-```
+1. node.js 설치
 
-```
-Password reset
+2. 환경 설정 및 의존성 주입
 
-POST api/rest-auth/password/reset/
+   ```shell
+   $ cd frontend
+   $ npm install --silent
+   ```
 
-{
-    email: string,
-}
-```
+3. `.env.local` 설정
 
-### Signup
+   ```shell
+   REACT_APP_API_URL=http://localhost:8000/
+   ```
 
-```
-POST api/rest-auth/signup/
+4. 실행
 
-{
-    username: string,  # 아직 안바꿈
-    email: string,
-    password1: string,
-    password2: string
-}
+   ```shell
+   $ npm start
+   ```
 
-```
-
-### Social
-
-```
-POST api/rest-auth/social/
-
-{
-    access_token: string
-}
-```
-
-- github의 경우 access_token만 있으면 됨
-
-### User
-
-```
-User 정보
-
-GET api/rest-auth/user/
-header = { Authorization : JWT {JWT token} }
-```
-
-- token에 해당하는 유저 정보 리턴
-
-```
-User 정보 수정
-
-PUT pi/rest-auth/user/
-header = { Authorization : JWT {JWT token} }
-{
-    id: int,
-    email: string,
-    username: string,
-    profile_image,
-    comment,
-}
-```
-
-### Username 중복 검사
-
-```
-GET api/rest-auth/nickname-duplicated/?nickname={nickname}
-
-```
+   
