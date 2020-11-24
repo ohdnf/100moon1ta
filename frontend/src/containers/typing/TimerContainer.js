@@ -8,6 +8,13 @@ const Timer = styled.div`
 
 const TimerContainer = ({ start, end }) => {
   const [current, setCurrent] = useState(new Date());
+  userInterval(
+    () => {
+      //  왜 -1 나오지
+      setCurrent(new Date());
+    },
+    end ? null : 1000,
+  );
   return (
     <>
       <Timer>
