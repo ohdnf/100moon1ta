@@ -215,8 +215,9 @@ DEFAULT_FROM_EMAIL = config('NAVER_ID') # 보내는 이를 변경, 네이버는 
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        # "LOCATION": "redis://127.0.0.1:6379/1",
-        "LOCATION": "redis://k3a406.p.ssafy.io:6379/1",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": "redis://cache:6379/1",
+        # "LOCATION": "redis://k3a406.p.ssafy.io:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient"
         },

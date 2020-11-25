@@ -1,22 +1,39 @@
 version: "3"
 
 services:
-        back:
-                build:
-                        context: ./backend
-                        dockerfile: Dockerfile
-                command: gunicorn l00moon1ta.wsgi:application --bind 0.0.0.0:8000
-                ports:
-                        - "8000:8000"
-                volumes:
-                        - "./backend:/code"
-                env_file:
-                        - ./backend/.env
-        front:
-                build:
-                        context: ./frontend
-                        dockerfile: Dockerfile
-                ports:
-                        - "80:80"
-                depends_on:
-                        - back
+  back:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: gunicorn l00moon1ta.wsgi:application --bind 0.0.0.0:8000
+    expose:
+      - "8000"
+    volumes:
+      - "./backend:/code"
+    env_file:
+      - ./backend/.env
+    networks:
+      - frontend
+      - backend
+  front:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - back
+    networks:
+      - frontend
+  cache:
+    image: "redis:alpine"
+    expose:
+      - "6379"
+    networks:
+      - backend
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge

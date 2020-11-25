@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.core.cache import cache
 from django_mysql.models import JSONField
 
 
@@ -45,6 +46,14 @@ class GameHistory(models.Model):
 
     class Meta:
         verbose_name_plural = "game histories"
+
+    def save(self, *args, **kwargs):
+        cache.delete('ranking')
+        super().save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        cache.delete('ranking')
+        super().delete(*args, **kwargs)
 
     def __str__(self):
         return f'User:{self.player}\nSource:{self.source}\nScore:{self.score} pts'
