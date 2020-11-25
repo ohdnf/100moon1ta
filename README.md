@@ -30,7 +30,7 @@
 
 > [100moon1ta.com](http://100moon1ta.com)
 
-<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\landing_page.png" alt="landing page" style="zoom:50%;" />
+<img src="/assets/screenshots/landing_page.png" alt="landing page" style="zoom:50%;" />
 
 <hr>
 
@@ -38,11 +38,11 @@
 
 > 소셜 로그인(Github) 제공
 
-<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\login.png" alt="login page" style="zoom:50%;" />
+<img src="/assets/screenshots/login.png" alt="login page" style="zoom:50%;" />
 
 <hr>
 
-<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\signup.png" alt="signup page" style="zoom:50%;" />
+<img src="/assets/screenshots/signup.png" alt="signup page" style="zoom:50%;" />
 
 <hr>
 
@@ -50,11 +50,11 @@
 
 > 프로필 이미지는 랜덤으로 제공
 
-<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\profile_records.png" alt="record page" style="zoom:50%;" />
+<img src="/assets/screenshots/profile_records.png" alt="record page" style="zoom:50%;" />
 
 <hr>
 
-<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\profile_records.png" alt="bookmark page" style="zoom:50%;" />
+<img src="/assets/screenshots/profile_records.png" alt="bookmark page" style="zoom:50%;" />
 
 <hr>
 
@@ -62,7 +62,7 @@
 
 > Pagination, Bookmark 기능 제공
 
-<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\game_lists.png" alt="game lists page" style="zoom:50%;" />
+<img src="/assets/screenshots/game_lists.png" alt="game lists page" style="zoom:50%;" />
 
 <hr>
 
@@ -70,11 +70,11 @@
 
 > 오타 처리
 
-<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\typing_01.png" alt="typing page" style="zoom:50%;" />
+<img src="/assets/screenshots/typing_01.png" alt="typing page" style="zoom:50%;" />
 
 <hr>
 
-<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\typing_02.png" alt="shows typo" style="zoom:50%;" />
+<img src="/assets/screenshots/typing_02.png" alt="shows typo" style="zoom:50%;" />
 
 <hr>
 
@@ -86,13 +86,13 @@
 > 히트맵
 > 게임 진행 동안 누적된 모든 오타 수를 반영
 
-<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\result.png" alt="Landing page" style="zoom:50%;" />
+<img src="/assets/screenshots/result.png" alt="Landing page" style="zoom:50%;" />
 
 <hr>
 
 ### 프로필 업데이트
 
-<img src="C:\Users\multicampus\Workspace\100moon1ta\assets\screenshots\record_saved.png" alt="record saved" style="zoom:50%;" />
+<img src="/assets/screenshots/record_saved.png" alt="record saved" style="zoom:50%;" />
 
 <hr>
 
