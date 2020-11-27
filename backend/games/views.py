@@ -19,9 +19,6 @@ import random
 import sys
 
 
-# CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
-
-
 class Round(Func):
     function = 'ROUND'
     template='%(function)s(%(expressions)s, 2)'
@@ -50,22 +47,6 @@ def source_retrieve_create(request):
         타자 연습 소스 등록
         관리자 계정만 허용
         """
-
-        # 들어온 소스 데이터를 전처리하는 과정이 필요
-
-        # fi = open('algorithm/test.txt')
-        # data = ''
-        # lines = fi.readlines()
-        # for line in lines:
-        #     line = line.replace(' ', '')
-        #     data += line
-        # print(len(data))
-        # fi.close()
-
-        # fo = open('algorithm/test.txt', 'w')
-        # fo.write(data)
-        # fo.close()
-
         if request.user.is_staff or request.user.is_superuser:
             serializer = SourceSerializer(data=request.data)
             if serializer.is_valid():
@@ -241,7 +222,6 @@ def rank_retrieve(request):
     """
 
     ranking = cache.get('ranking')
-    # print(ranking)
 
     if not ranking:
         ranking = GameHistory.objects.values('player__username', 'player__comment').annotate(
