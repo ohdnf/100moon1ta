@@ -16,9 +16,7 @@ from .serializers import TagSerializer, SourceSerializer, GameHistorySerializer,
 from users.models import CustomUser
 
 import random
-
-
-CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
+import sys
 
 
 class Round(Func):
@@ -34,12 +32,12 @@ def source_retrieve_create(request):
         """
         타자 연습 소스 목록 보기
         """
-        sources = cache.get_or_set('sources', Source.objects.prefetch_related('tags')
-        .annotate(
+        sources = Source.objects.prefetch_related('tags').annotate(
             like_count=Count('likers'), 
             is_like=Count('likers', filter=Q(likers__id = request.user.id)), 
-            is_subscribe=Count('subscribers', filter=Q(subscribers__id = request.user.id)))
+            is_subscribe=Count('subscribers', filter=Q(subscribers__id = request.user.id))
         )
+        
         serializer = SourceListSerializer(sources, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -222,11 +220,16 @@ def rank_retrieve(request):
     """
     각 플레이어마다 갖고 있는 모든 점수를 합산하여 30위까지 랭킹을 반환
     """
-    queryset = cache.get_or_set('queryset', GameHistory.objects.values('player__username', 'player__comment').annotate(
-        game_count=Count('source'), 
-        avg_precision=Round(Avg('precision')), 
-        total_score=Sum('score'),
-        avg_speed=Round(Avg(ExpressionWrapper(F('source__length')/F('game_time'), output_field=FloatField())))
-    ).order_by('-total_score')[:30])
-    serializer = RankSerializer(queryset, many=True)
+
+    ranking = cache.get('ranking')
+
+    if not ranking:
+        ranking = GameHistory.objects.values('player__username', 'player__comment').annotate(
+                game_count=Count('source'), 
+                avg_precision=Round(Avg('precision')), 
+                total_score=Sum('score'),
+                avg_speed=Round(Avg(ExpressionWrapper(F('source__length')/F('game_time'), output_field=FloatField())))
+            ).order_by('-total_score')[:30]
+        cache.set('ranking', ranking)
+    serializer = RankSerializer(ranking, many=True)
     return Response(serializer.data, status=status.HTTP_201_CREATED)

@@ -74,11 +74,13 @@ const JoinContainer = ({ changeModal }) => {
         let alertMessage = ""
 
         const entries = Object.entries(err.response.data)
-        entries.forEach(kv => {
-          kv[1].forEach(msg => {
-            alertMessage += String(`${kv[0]}: ${msg}\n`)
-          })
-        });
+        if (Boolean(entries) && entries.length) {
+          entries.forEach(kv => {
+            kv[1].forEach(msg => {
+              alertMessage += String(`${kv[0]}: ${msg}\n`)
+            })
+          });
+        }
         alert(alertMessage || '회원 가입 시도가 실패하였습니다.');
       });
   };
